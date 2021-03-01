@@ -4,6 +4,12 @@
  * @file
  * Minishell header, state and other unsorted functions
  */
+
+/**
+ * \mainpage Minishell project
+ * Welcome to the generated HTML Documentation of minishell<br />
+ * View the docs through the top menu!, glhf.
+ */
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
