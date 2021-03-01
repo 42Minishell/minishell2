@@ -1,8 +1,8 @@
-#minishell2
+# minishell2
 
 Minishell 42 project; second iteration
 
-##Documentation
+## Documentation
 
 Doxygen is used to generate documentation
 
@@ -10,7 +10,7 @@ The config for this is contained in the Doxyfile at the root of the repo
 
 To generate HTML documentation just execute `doxygen` at the root of the repo, the output will be in `doc/`
 
-##Compiling
+## Compiling
 
 Currently using CMake, 
 biggest difference is that CMake compiles out-of-tree.
