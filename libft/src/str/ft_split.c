@@ -39,7 +39,7 @@ static char	*get_next_str(char const **s, char c)
 	size_t	ns_len;
 	size_t	ns_pos;
 
-	str = (char*)*s;
+	str = (char *)*s;
 	ns_len = 0;
 	while (str[ns_len] && str[ns_len] != c)
 		ns_len++;
@@ -85,7 +85,7 @@ char	**ft_split(char const *s, char c)
 		s++;
 	arr_index = 0;
 	arr_size = calc_arr_size(s, c);
-	arr = malloc(sizeof(char*) * (arr_size + 1));
+	arr = malloc(sizeof(char *) * (arr_size + 1));
 	if (!arr)
 		return (NULL);
 	while (arr_index < arr_size && *s)
@@ -98,6 +98,6 @@ char	**ft_split(char const *s, char c)
 		}
 		arr_index++;
 	}
-	arr[arr_index] = (char*) NULL;
+	arr[arr_index] = (char *) NULL;
 	return (arr);
 }

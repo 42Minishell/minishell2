@@ -24,7 +24,7 @@ void	*ft_realloc_safe(void *ptr, size_t old_size, size_t new_size)
 	newptr = malloc(new_size);
 	while (i < old_size)
 	{
-		newptr[i] = ((char*)ptr)[i];
+		newptr[i] = ((char *)ptr)[i];
 		i++;
 	}
 	free(ptr);
