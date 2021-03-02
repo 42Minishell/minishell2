@@ -44,9 +44,6 @@ void	state_free(t_state *state);
 
 /**
  * Show a prompt and take user input
- * @warning
- * Currently it also handles _env and returns an empty string.
- * This is behaviour that does not belong here, and is purely for POC reasons
  * @param[in] state The application state
  * @return C string of user input, or NULL on failure
  */
