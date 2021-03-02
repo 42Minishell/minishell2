@@ -16,7 +16,7 @@ static void	bucket_overflow_free(t_bucket *bucket)
 	}
 }
 
-t_bucket	*bucket_new(void)
+t_bucket	*bucket_new_table(void)
 {
 	t_bucket	*ptr;
 
@@ -41,7 +41,7 @@ void	bucket_del(t_bucket *table, char *key)
 	}
 }
 
-void	bucket_free(t_bucket *table)
+void	bucket_free_table(t_bucket *table)
 {
 	int	i;
 

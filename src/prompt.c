@@ -19,7 +19,7 @@ char	*prompt(t_state *state)
 {
 	char	*ret;
 
-	printf("MS > ");
+	write(1, "MS > ", 6);
 	if (fd_readline(state->sin, &ret) == -1)
 		return (NULL);
 	if (ft_strncmp(ret, "exit", 5) == 0)

@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
 {
 	t_state	state;
 
-	setbuf(stdout, NULL);
 	(void)argc;
 	state_init(&state, argv);
 	loop(&state);

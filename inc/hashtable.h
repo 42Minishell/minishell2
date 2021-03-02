@@ -64,7 +64,7 @@ typedef void *(*t_bucket_iterator)(char *key, char *val, void *data);
 
 /// Generate new hash table with the amount of elements as defined in
 /// HASHTABLE_SIZE
-t_bucket	*bucket_new(void);
+t_bucket	*bucket_new_table(void);
 /**
  * @warning
  * ft_strdup() is used to copy key and value. The original strings input into
@@ -88,7 +88,7 @@ void		bucket_del(t_bucket *table, char *key);
  * Frees hashtable and cleans up everything in memory
  * @param[in] table Table to clear
  */
-void		bucket_free(t_bucket *table);
+void		bucket_free_table(t_bucket *table);
 /**
  * Internal function to get and/or create a bucket
  * @warning Do not use outside the hashtable implementation, if you want to

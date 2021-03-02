@@ -36,7 +36,7 @@ t_env	*env_init(void)
 	t_env	*env;
 
 	env = calloc(1, sizeof(t_env));
-	env->env = bucket_new();
+	env->env = bucket_new_table();
 	env_update_envp(env);
 	return (env);
 }
@@ -44,7 +44,7 @@ t_env	*env_init(void)
 void	env_free(t_env *env)
 {
 	env_free_envp(env);
-	bucket_free(env->env);
+	bucket_free_table(env->env);
 	free(env);
 }
 
