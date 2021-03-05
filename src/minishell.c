@@ -22,6 +22,16 @@ static void	exec(t_state *state, char *path)
 	}
 }
 
+static void	exec_builtin(t_state *state, t_resolve_result *result, char *input)
+{
+	char	**argv;
+
+	argv = ft_calloc(1, sizeof(char *));
+	argv[0] = input;
+	result->builtin(1, argv, state);
+	free(argv);
+}
+
 static void	loop(t_state *state)
 {
 	char					*input;
@@ -41,7 +51,7 @@ static void	loop(t_state *state)
 				printf("Error: %s\n", strerror(errno));
 		}
 		else if (res_type == BUILTIN)
-			result.builtin(0, NULL, state);
+			exec_builtin(state, &result, input);
 		else
 		{
 			exec(state, result.path);

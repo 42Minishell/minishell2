@@ -2,6 +2,7 @@
 
 #include <errno.h>
 #include "minishell.h"
+#include "builtins.h"
 
 static t_resolve_result_type	resolve_local(char *exec, char **dest)
 {
@@ -22,6 +23,7 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result)
 {
 	char	*presolve;
+	void	*builtin;
 
 	if (*exec == '/' || *exec == '.')
 		return (resolve_local(exec, &result->path));
@@ -30,6 +32,12 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 	{
 		result->path = presolve;
 		return (EXTERNAL_BINARY);
+	}
+	builtin = find_builtin_func(exec);
+	if (builtin)
+	{
+		result->builtin = builtin;
+		return (BUILTIN);
 	}
 	return (NOTFOUND);
 }

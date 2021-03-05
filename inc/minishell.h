@@ -37,6 +37,7 @@ typedef struct s_state
 	t_fdstream	*sin;
 }	t_state;
 
+/// Interface for builtin functions
 typedef int				(*t_builtin_function) \
 	(int argc, char **argv, t_state *state);
 
