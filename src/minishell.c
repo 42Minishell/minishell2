@@ -1,5 +1,5 @@
 // Created by Tom Jans on 27-02-21.
-#include <wait.h>
+#include <sys/wait.h>
 #include "minishell.h"
 
 static void	exec(t_state *state, char *path)
