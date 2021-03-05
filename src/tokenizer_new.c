@@ -6,7 +6,7 @@
 /*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/03 14:36:01 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/03/04 16:51:44 by zilisabethp   ########   odam.nl         */
+/*   Updated: 2021/03/05 16:51:59 by zilisabethp   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int find_end_token(char *in)
 	}
 	while (in[i] && in[i] != '\n')
 	{
-		if (in[i] == c && c != non_special)
+		if (in[i] == c && c != non_special && (i != 0 && in[i - 1] != '\\'))
 		{
 			i++;
 			break;
 		}
-		// replace 32 with iswhitespace
-		if (c == non_special && iswhitespace(in[i]) == true)
+		if (c == non_special && iswhitespace(in[i]) == true && 
+			(i != 0 && in[i - 1] != '\\'))
 			break;
 		i++;
 	}
@@ -107,10 +107,45 @@ void	get_token_list(t_token **token_l, char *in)
 // have to make a clean header still and norm.
 // 
 
-t_token *tokenizer(char *in)
+int env_length(char *in)
+{
+	int		i;
+
+	i = 0;
+	while (in[i] && iswhitespace(in[i]) != true && in[i] != '\n')
+		i++;
+	return (i);
+}
+
+void res_env(char **input, t_bucket *env)
+{
+	int		i;
+	int		env_len;
+	char	*in;
+	char	*ret;
+	char	*new;
+
+	in = *input;
+	i = 0;
+	while (in[i] && in[i] != '\n')
+	{
+		if (in[i] == '$')
+		{
+			env_len = env_length(in + i + 1);
+			ret = bucket_get_value(env, ft_substr(in,i + 1, env_len);
+				
+		}
+		i++;
+	}
+	free(*input);
+	*input = new;
+}
+
+t_token *tokenizer(char *in, t_bucket *env)
 {
 	t_token *token_l;
 
+	res_env(&in, env);
 	token_l = ft_calloc(1, sizeof(t_token));
 	if (!token_l)
 		ft_error("t_l head malloc went wrong", 27);
@@ -127,7 +162,7 @@ t_token *tokenizer(char *in)
 // ------------ test
 int		main(void)
 {
-	tokenizer(" \"\" '' abaca eraerg gerg 'agae  rgaerg'abc  \"geargareg\" \'");
+	tokenizer("\"\\\" \\\" a");
 	exit(0);
 }
 
