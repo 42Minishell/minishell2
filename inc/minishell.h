@@ -37,17 +37,40 @@ typedef struct s_state
 	t_fdstream	*sin;
 }	t_state;
 
+typedef int				(*t_builtin_function) \
+	(int argc, char **argv, t_state *state);
+
+/**
+ * @brief Type of result written by path_resolve()
+ */
+typedef enum e_resolve_result_type
+{
+	NOTFOUND,
+	EXTERNAL_BINARY,
+	BUILTIN
+}	t_resolve_result_type;
+
+/**
+ * @brief union containing the result of path_resolve()
+ */
+
+typedef union u_resolve_result
+{
+	char				*path;
+	t_builtin_function	builtin;
+}	t_resolve_result;
+
 /// Allocate and initialize a state object
-void	state_init(t_state *state, char **argv);
+void					state_init(t_state *state, char **argv);
 /// Free the state object and members
-void	state_free(t_state *state);
+void					state_free(t_state *state);
 
 /**
  * Show a prompt and take user input
  * @param[in] state The application state
  * @return C string of user input, or NULL on failure
  */
-char	*prompt(t_state *state);
+char					*prompt(t_state *state);
 
 /**
  * Resolves path to binary.
@@ -62,8 +85,9 @@ char	*prompt(t_state *state);
  * 4. If not found return NULL
  * @param[in] env Environment variables
  * @param[in] exec C String containing path or binary to look up
- * @return C string to path of executable, or NULL when not found
- * When NULL is returned do check the errno for exact reason.
+ * @param[out] result union to write result to
+ * @return Type of result found, or NOTFOUND/NULL if nothing is found
  */
-char	*path_resolve(t_env *env, char *exec);
+t_resolve_result_type	path_resolve(t_env *env, char *exec,
+							t_resolve_result *result);
 #endif

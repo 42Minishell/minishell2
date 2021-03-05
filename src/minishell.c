@@ -24,8 +24,9 @@ static void	exec(t_state *state, char *path)
 
 static void	loop(t_state *state)
 {
-	char	*input;
-	char	*res;
+	char					*input;
+	t_resolve_result		result;
+	t_resolve_result_type	res_type;
 
 	while (1)
 	{
@@ -33,16 +34,18 @@ static void	loop(t_state *state)
 		input = prompt(state);
 		if (!input)
 			break ;
-		res = path_resolve(state->env, input);
-		if (!res)
+		res_type = path_resolve(state->env, input, &result);
+		if (res_type == NOTFOUND)
 		{
 			if (errno != 0)
 				printf("Error: %s\n", strerror(errno));
 		}
+		else if (res_type == BUILTIN)
+			result.builtin(0, NULL, state);
 		else
 		{
-			exec(state, res);
-			free(res);
+			exec(state, result.path);
+			free(result.path);
 		}
 		free(input);
 	}
