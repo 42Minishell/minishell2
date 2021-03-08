@@ -39,5 +39,7 @@ void	*find_builtin_func(char *exec);
 
 /// Unset environment variable
 int		builtin_unset(int argc, char **argv, t_state *state);
+/// Set environment variable
+int		builtin_export(int argc, char **argv, t_state *state);
 
 #endif
