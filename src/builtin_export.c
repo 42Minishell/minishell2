@@ -26,6 +26,13 @@ static void	add_env(char *argv, t_env *env)
 	free(sfree);
 }
 
+static void	*print_env(char *key, char *value, void *data)
+{
+	(void)data;
+	printf("%s=%s\n", key, value);
+	return (NULL);
+}
+
 int	builtin_export(int argc, char **argv, t_state *state)
 {
 	int i;
@@ -33,8 +40,8 @@ int	builtin_export(int argc, char **argv, t_state *state)
 	i = 1;
 	if (argc < 2)
 	{
-		printf("%s: not enough arguments\n", argv[0]);
-		return (-1);
+		bucket_iter(state->env->env, &print_env, NULL);
+		return (0);
 	}
 	while (i < argc)
 	{
