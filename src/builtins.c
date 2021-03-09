@@ -30,7 +30,7 @@ void	*find_builtin_func(char *exec)
 	table = get_table();
 	while (table[i].exec)
 	{
-		if (ft_strncmp(exec, table[i].exec, e_len) == 0)
+		if (ft_strncmp(exec, table[i].exec, e_len + 1) == 0)
 			return (table[i].func_ptr);
 		i++;
 	}
