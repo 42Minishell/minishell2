@@ -132,9 +132,18 @@ void res_env(char **input, t_bucket *env)
 		{
 			env_len = env_length(in + i + 1);
 			ret = bucket_get_value(env, ft_substr(in,i + 1, env_len));
-			in = easyjoin(ft_substr(in, 0, i), ft_strdup(ret), ft_strdup(in +
-			i + env_len + 1));
-			i += ft_strlen(ret);
+			if (ret)
+			{
+				in = easyjoin(ft_substr(in, 0, i), ft_strdup(ret),
+							  ft_strdup(in +
+										i + env_len + 1));
+				i += ft_strlen(ret);
+			}
+			else
+			{
+				in = easyjoin(ft_substr(in, 0, i), ft_strdup(in + i + env_len
+				), NULL);
+			}
 		}
 		i++;
 	}
