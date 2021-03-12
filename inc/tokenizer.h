@@ -30,4 +30,6 @@ typedef enum	e_tokens
 int		iswhitespace(char c);
 void	ft_error(char *msg, int bytes);
 t_token	*tokenizer(char *in, t_bucket *env);
+char	*easyjoin(char *s1, char *s2, char *s3);
+void res_env(char **input, t_bucket *env);
 #endif

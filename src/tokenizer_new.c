@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-//#include "tokenizer_new.h"
+#include "tokenizer.h"
 
 
 /**
@@ -123,22 +123,23 @@ void res_env(char **input, t_bucket *env)
 	int		env_len;
 	char	*in;
 	char	*ret;
-	char	*new;
 
-	in = *input;
+	in = ft_strdup(*input);
 	i = 0;
 	while (in[i] && in[i] != '\n')
 	{
 		if (in[i] == '$')
 		{
 			env_len = env_length(in + i + 1);
-			ret = bucket_get_value(env, ft_substr(in,i + 1, env_len);
-				
+			ret = bucket_get_value(env, ft_substr(in,i + 1, env_len));
+			in = easyjoin(ft_substr(in, 0, i), ft_strdup(ret), ft_strdup(in +
+			i + env_len + 1));
+			i += ft_strlen(ret);
 		}
 		i++;
 	}
 	free(*input);
-	*input = new;
+	*input = in;
 }
 
 t_token *tokenizer(char *in, t_bucket *env)
@@ -159,11 +160,3 @@ t_token *tokenizer(char *in, t_bucket *env)
 	// --------------- test
 	return (token_l);
 }
-// ------------ test
-int		main(void)
-{
-	tokenizer("\"\\\" \\\" a");
-	exit(0);
-}
-
-// gcc tokenizer_new.c libft/*.c ./src/utils.c  -Wall -Werror -Wextra -fasnitize=address -I inc && ./a.out

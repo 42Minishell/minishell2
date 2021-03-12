@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+char	*easyjoin(char *s1, char *s2, char *s3)
+{
+	char	*dest;
+	char	*dest_triple;
+
+	dest = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	if (s3)
+	{
+		dest_triple = ft_strjoin(dest, s3);
+		free(s3);
+		free(dest);
+		return (dest_triple);
+	}
+	return (dest);
+}
+
 void	ft_error(char *msg, int bytes)
 {
 	char newline;
