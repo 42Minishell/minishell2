@@ -67,7 +67,7 @@ void	get_token_list(t_token **token_l, char *in)
 	j = find_end_token(in + i);
 	if (j < 0)
 		return ;
-	current->token = ft_substr(in, i, j);
+	current->token = strip_token(ft_substr(in, i, j));
 	if (current->token == NULL)
 		ft_error ("substr error in get_TL", 23);
 	current->next = new_token();

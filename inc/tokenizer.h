@@ -31,6 +31,7 @@ int			find_end_token(char *in);
 t_token		*new_token(void);
 void		get_token_list(t_token **token_l, char *in);
 int			env_length(char *in);
+char		*strip_token(char *token);
 
 int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);

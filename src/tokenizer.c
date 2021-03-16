@@ -13,6 +13,17 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
+char	*strip_token(char *token)
+{
+	char	*new_token;
+
+	if (*token != '\'' && *token != '"')
+		return (token);
+	new_token = ft_substr(token, 1, ft_strlen(token) - 2);
+	free(token);
+	return (new_token);
+}
+
 static int	replace_env(char **in, int i, t_bucket *env)
 {
 	int		env_len;
