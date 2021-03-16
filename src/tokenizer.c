@@ -72,7 +72,5 @@ t_token	*tokenizer(char *in, t_bucket *env)
 	if (!token_l)
 		ft_error("t_l head malloc went wrong", 27);
 	get_token_list(&token_l, in);
-	while (token_l->next)
-		token_l = token_l->next;
 	return (token_l);
 }
