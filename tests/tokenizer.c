@@ -27,6 +27,8 @@ static void	exec(t_state *state, char *path)
 int main(int argc, char **argv)
 {
 	char *test;
+	t_token *tk;
+	t_token *tkp;
 
 	if (argc < 2)
 		return (1);
@@ -36,9 +38,18 @@ int main(int argc, char **argv)
 	exec(&state, "/usr/bin/env");
 	test = ft_strdup(argv[1]);
 	printf("\nInput: %s\n", test);
-	res_env(&test, state.env->env);
-	printf("res_env: %s\n", test);
-	free(test);
+	//res_env(&test, state.env->env);
+	//printf("res_env: %s\n", test);
+	tk = tokenizer(test, state.env->env);
+	while (tk)
+	{
+		printf("token: %s\n", tk->token);
+		tkp = tk;
+		tk = tk->next;
+		if (tkp->token)
+			free(tkp->token);
+		free(tkp);
+	}
 	state_free(&state);
 	return (0);
 }
