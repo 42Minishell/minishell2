@@ -2,7 +2,7 @@
 
 #include "tokenizer.h"
 
-int find_next_token(char *in)
+int	find_next_token(char *in)
 {
 	int		i;
 
@@ -15,7 +15,7 @@ int find_next_token(char *in)
 		return (i);
 }
 
-int find_end_token(char *in)
+int	find_end_token(char *in)
 {
 	int		i;
 	char	c;
@@ -32,11 +32,11 @@ int find_end_token(char *in)
 		if (in[i] == c && c != non_special && (i != 0 && in[i - 1] != '\\'))
 		{
 			i++;
-			break;
+			break ;
 		}
-		if (c == non_special && iswhitespace(in[i]) == true &&
+		if (c == non_special && iswhitespace(in[i]) == true && \
 			(i != 0 && in[i - 1] != '\\'))
-			break;
+			break ;
 		i++;
 	}
 	if (i == 0)
@@ -44,7 +44,7 @@ int find_end_token(char *in)
 	return (i);
 }
 
-t_token *new_token()
+t_token	*new_token(void)
 {
 	t_token	*new;
 
@@ -56,7 +56,7 @@ t_token *new_token()
 
 void	get_token_list(t_token **token_l, char *in)
 {
-	t_token *current;
+	t_token	*current;
 	int		i;
 	int		j;
 
@@ -67,9 +67,6 @@ void	get_token_list(t_token **token_l, char *in)
 	j = find_end_token(in + i);
 	if (j < 0)
 		return ;
-	// ------------ test
-	printf("[%i], [%i]\n", i , j);
-	// -------------
 	current->token = ft_substr(in, i, j);
 	if (current->token == NULL)
 		ft_error ("substr error in get_TL", 23);

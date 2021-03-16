@@ -32,7 +32,7 @@ char	*easyjoin(char *s1, char *s2, char *s3)
 
 void	ft_error(char *msg, int bytes)
 {
-	char newline;
+	char	newline;
 
 	newline = '\n';
 	write(1, msg, bytes);
@@ -40,14 +40,14 @@ void	ft_error(char *msg, int bytes)
 	exit(1);
 }
 
-int		iswhitespace(char c)
+int	iswhitespace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
 		return (1);
 	return (0);
 }
 
-int env_length(char *in)
+int	env_length(char *in)
 {
 	int		i;
 
