@@ -42,17 +42,21 @@ void	res_env(char **input, t_bucket *env)
 	int		i;
 	char	*in;
 	char	*in_old;
+	int		is_literal;
 
 	in = ft_strdup(*input);
 	i = 0;
+	is_literal = 0;
 	while (in[i] && in[i] != '\n')
 	{
-		if (in[i] == '$')
+		if (in[i] == '$' && !is_literal)
 		{
 			in_old = in;
 			replace_env(&in, i, env);
 			free(in_old);
 		}
+		if (in[i] == '\'')
+			is_literal = !is_literal;
 		i++;
 	}
 	free(*input);
