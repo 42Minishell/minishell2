@@ -46,3 +46,13 @@ int		iswhitespace(char c)
 		return (1);
 	return (0);
 }
+
+int env_length(char *in)
+{
+	int		i;
+
+	i = 0;
+	while (in[i] && !iswhitespace(in[i]) && in[i] != '\n')
+		i++;
+	return (i);
+}
