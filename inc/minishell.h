@@ -19,6 +19,7 @@
 # include "config.h"
 # include "hashtable.h"
 # include "env.h"
+# include "tokenizer.h"
 # include "libft.h"
 
 /**
@@ -48,6 +49,8 @@ void	state_free(t_state *state);
  * @return C string of user input, or NULL on failure
  */
 char	*prompt(t_state *state);
+
+void	exec(t_state *state, char *path, t_token *args);
 
 /**
  * Resolves path to binary.

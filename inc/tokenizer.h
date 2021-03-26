@@ -13,7 +13,7 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 # include <stdbool.h>
-# include "minishell.h"
+# include "hashtable.h"
 
 typedef struct s_token
 {
@@ -36,6 +36,7 @@ char		*strip_token(char *token);
 int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 t_token		*tokenizer(char *in, t_bucket *env);
+void		tokenizer_list_free(t_token *head);
 char		*easyjoin(char *s1, char *s2, char *s3);
 void		res_env(char **input, t_bucket *env);
 #endif

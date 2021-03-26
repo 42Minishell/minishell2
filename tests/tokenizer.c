@@ -4,7 +4,7 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
-static void	exec(t_state *state, char *path)
+static void	eexec(t_state *state, char *path)
 {
 	pid_t	child;
 	char	**argv;
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 	t_state state;
 	state_init(&state, argv);
 
-	exec(&state, "/usr/bin/env");
+	eexec(&state, "/usr/bin/env");
 	test = ft_strdup(argv[1]);
 	printf("\nInput: %s\n", test);
 	//res_env(&test, state.env->env);

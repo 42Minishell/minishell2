@@ -1,5 +1,6 @@
 // Created by Tom Jans on 16-03-21.
 
+#include "minishell.h"
 #include "tokenizer.h"
 
 int	find_next_token(char *in)

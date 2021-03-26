@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "tokenizer.h"
 
 char	*strip_token(char *token)
 {
