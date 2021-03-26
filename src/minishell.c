@@ -1,24 +1,29 @@
 // Created by Tom Jans on 27-02-21.
-#include <sys/wait.h>
+
 #include "minishell.h"
 
-static void	exec(t_state *state, char *path)
+static void	process_input(t_state *state, char *input)
 {
-	pid_t	child;
-	char	**argv;
-	int		status;
+	t_token	*tokens;
+	char	*exec_path;
 
-	child = fork();
-	if (!child)
+	tokens = tokenizer(input, state->env->env);
+	if (!tokens || !tokens->token)
 	{
-		argv = ft_calloc(2, sizeof(char *));
-		argv[0] = path;
-		execve(path, argv, state->env->envp);
+		tokenizer_list_free(tokens);
+		return ;
 	}
-	while (waitpid(child, &status, 0))
+	exec_path = path_resolve(state->env, tokens->token);
+	if (!exec_path)
 	{
-		if (WIFEXITED(status) || WIFSIGNALED(status))
-			break ;
+		if (errno != 0)
+			printf("Error: %s\n", strerror(errno));
+	}
+	else
+	{
+		exec(state, exec_path, tokens);
+		tokenizer_list_free(tokens);
+		free(exec_path);
 	}
 }
 
@@ -34,9 +39,7 @@ static void	exec_builtin(t_state *state, t_resolve_result *result, char *input)
 
 static void	loop(t_state *state)
 {
-	char					*input;
-	t_resolve_result		result;
-	t_resolve_result_type	res_type;
+	char	*input;
 
 	while (1)
 	{
@@ -44,20 +47,7 @@ static void	loop(t_state *state)
 		input = prompt(state);
 		if (!input)
 			break ;
-		res_type = path_resolve(state->env, input, &result);
-		if (res_type == NOTFOUND)
-		{
-			if (errno != 0)
-				printf("Error: %s\n", strerror(errno));
-		}
-		else if (res_type == BUILTIN)
-			exec_builtin(state, &result, input);
-		else
-		{
-			exec(state, result.path);
-			free(result.path);
-		}
-		free(input);
+		process_input(state, input);
 	}
 }
 
@@ -65,6 +55,7 @@ int	main(int argc, char **argv)
 {
 	t_state	state;
 
+	setbuf(stdout, NULL);
 	(void)argc;
 	state_init(&state, argv);
 	loop(&state);
