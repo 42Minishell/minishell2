@@ -38,7 +38,7 @@ int	builtin_export(int argc, char **argv, t_state *state)
 	int	i;
 
 	i = 1;
-	if (argc < 2)
+	if (ft_strncmp("env", *argv, 4) == 0 || argc < 2)
 	{
 		bucket_iter(state->env->env, &print_env, NULL);
 		return (0);
