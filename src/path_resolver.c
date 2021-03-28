@@ -40,7 +40,10 @@ char	*env_path_lookup(t_env *env, char *exec)
 
 	path = bucket_get_value(env->env, "PATH");
 	if (!path)
+	{
+		errno = ENOENT;
 		return (NULL);
+	}
 	dirs = ft_split(path, ':');
 	ret = find_binary(dirs, exec);
 	freedirs(dirs);
