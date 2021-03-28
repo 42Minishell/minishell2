@@ -27,17 +27,17 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 
 	if (*exec == '/' || *exec == '.')
 		return (resolve_local(exec, &result->path));
-	presolve = env_path_lookup(env, exec);
-	if (presolve)
-	{
-		result->path = presolve;
-		return (EXTERNAL_BINARY);
-	}
 	builtin = find_builtin_func(exec);
 	if (builtin)
 	{
 		result->builtin = builtin;
 		return (BUILTIN);
+	}
+	presolve = env_path_lookup(env, exec);
+	if (presolve)
+	{
+		result->path = presolve;
+		return (EXTERNAL_BINARY);
 	}
 	return (NOTFOUND);
 }
