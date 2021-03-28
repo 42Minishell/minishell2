@@ -15,7 +15,7 @@ int	builtin_unset(int argc, char **argv, t_state *state)
 	}
 	while (i < argc)
 	{
-		bucket_del(state->env->env, argv[i - 1]);
+		bucket_del(state->env->env, argv[i]);
 		i++;
 	}
 	env_update_envp(state->env);
