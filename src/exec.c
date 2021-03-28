@@ -8,7 +8,7 @@ static int	token_len(t_token *head)
 	int	len;
 
 	len = 0;
-	while (head)
+	while (head && head->token)
 	{
 		head = head->next;
 		len++;
@@ -32,6 +32,16 @@ static char	**populate_argv(t_token *head)
 		i++;
 	}
 	return (argv);
+}
+
+void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
+{
+	char	**argv;
+
+	argv = populate_argv(args);
+	result->builtin(token_len(args), argv, state);
+	free(argv);
+	tokenizer_list_free(args);
 }
 
 void	exec(t_state *state, char *path, t_token *args)

@@ -4,8 +4,9 @@
 
 static void	process_input(t_state *state, char *input)
 {
-	t_token	*tokens;
-	char	*exec_path;
+	t_token					*tokens;
+	t_resolve_result		result;
+	t_resolve_result_type	result_type;
 
 	tokens = tokenizer(input, state->env->env);
 	if (!tokens || !tokens->token)
@@ -13,28 +14,20 @@ static void	process_input(t_state *state, char *input)
 		tokenizer_list_free(tokens);
 		return ;
 	}
-	exec_path = path_resolve(state->env, tokens->token);
-	if (!exec_path)
+	result_type = path_resolve(state->env, tokens->token, &result);
+	if (result_type == NOTFOUND)
 	{
 		if (errno != 0)
 			printf("Error: %s\n", strerror(errno));
 	}
+	else if (result_type == BUILTIN)
+		exec_builtin(state, &result, tokens);
 	else
 	{
-		exec(state, exec_path, tokens);
+		exec(state, result.path, tokens);
 		tokenizer_list_free(tokens);
-		free(exec_path);
+		free(result.path);
 	}
-}
-
-static void	exec_builtin(t_state *state, t_resolve_result *result, char *input)
-{
-	char	**argv;
-
-	argv = ft_calloc(1, sizeof(char *));
-	argv[0] = input;
-	result->builtin(1, argv, state);
-	free(argv);
 }
 
 static void	loop(t_state *state)
