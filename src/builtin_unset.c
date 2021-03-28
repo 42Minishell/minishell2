@@ -5,7 +5,7 @@
 
 int	builtin_unset(int argc, char **argv, t_state *state)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (argc < 2)

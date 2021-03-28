@@ -11,7 +11,7 @@ static int	check_opt(char *str)
 
 int	builtin_echo(int argc, char **argv, t_state *state)
 {
-	int i;
+	int	i;
 	int	print_newline;
 
 	(void)state;

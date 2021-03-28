@@ -21,7 +21,7 @@ static void	add_env(char *argv, t_env *env)
 	while (*split)
 	{
 		split++;
-		free(*(split-1));
+		free(*(split - 1));
 	}
 	free(sfree);
 }
@@ -35,7 +35,7 @@ static void	*print_env(char *key, char *value, void *data)
 
 int	builtin_export(int argc, char **argv, t_state *state)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (argc < 2)
