@@ -13,9 +13,10 @@ static t_function_lookup	*get_table(void)
 {
 	t_function_lookup	*lookuptable;
 
-	lookuptable = ft_calloc(3, sizeof(t_function_lookup));
+	lookuptable = ft_calloc(4, sizeof(t_function_lookup));
 	set_table(lookuptable, "unset", &builtin_unset);
 	set_table(lookuptable + 1, "export", &builtin_export);
+	set_table(lookuptable + 2, "echo", &builtin_echo);
 	return (lookuptable);
 }
 
