@@ -7,8 +7,9 @@ static int	token_len(t_token *head)
 {
 	int	len;
 
-	len = 0;
-	while (head)
+	len = 1;
+	head = head->next;
+	while (head && head->type != executable)
 	{
 		head = head->next;
 		len++;

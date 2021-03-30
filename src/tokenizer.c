@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   tokenizer_new.c                                    :+:    :+:            */
+/*   tokenizer.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/03 14:36:01 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/03/05 16:51:59 by zilisabethp   ########   odam.nl         */
+/*   Updated: 2021/03/30 16:05:14 by zilisabethp   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ t_token	*tokenizer(char *in, t_bucket *env)
 		ft_error("t_l head malloc went wrong", 27);
 	get_token_list(&token_l, in);
 	free(in);
+	token_l->type = executable;
 	return (token_l);
 }

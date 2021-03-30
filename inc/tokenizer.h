@@ -6,7 +6,7 @@
 /*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/03/05 17:08:57 by zilisabethp   ########   odam.nl         */
+/*   Updated: 2021/03/30 16:04:01 by zilisabethp   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define TOKENIZER_H
 # include <stdbool.h>
 # include "hashtable.h"
+
+typedef enum e_tokens
+{
+	non_special = 0,
+	executable
+}	t_tokens;
 
 /**
  * @struct t_token
@@ -24,16 +30,13 @@
  * @var t_token::next
  * Pointer to next token
  */
+
 typedef struct s_token
 {
 	char				*token;
+	t_tokens			type;
 	struct s_token		*next;
 }	t_token;
-
-typedef enum e_tokens
-{
-	non_special = 0
-}	t_tokens;
 
 /**
  * Tokenizer, parses the input string into tokens.
