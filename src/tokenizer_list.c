@@ -16,7 +16,7 @@ int	find_next_token(char *in)
 		return (i);
 }
 
-int	find_end_token(char *in)
+int	find_end_token(char *in, int *next_is_exec)
 {
 	int		i;
 	char	c;
@@ -30,6 +30,11 @@ int	find_end_token(char *in)
 	}
 	while (in[i] && in[i] != '\n')
 	{
+		if (in[i] == ';' || in[i] == '|')
+		{
+			*next_is_exec = 1;
+			return (i + 1);
+		}
 		if (in[i] == c && c != non_special && (i != 0 && in[i - 1] != '\\'))
 		{
 			i++;
@@ -55,24 +60,32 @@ t_token	*new_token(void)
 	return (new);
 }
 
-void	get_token_list(t_token **token_l, char *in)
+void	get_token_list(t_token **token_l, char *in, int next_is_exec)
 {
 	t_token	*current;
 	int		i;
 	int		j;
 
 	current = *token_l;
+	if (next_is_exec)
+	{
+		current->type = executable;
+		next_is_exec = 0;
+	}
 	i = find_next_token(in);
 	if (i < 0)
 		return ;
-	j = find_end_token(in + i);
+	j = find_end_token(in + i, &next_is_exec);
 	if (j < 0)
 		return ;
-	current->token = strip_token(ft_substr(in, i, j));
-	if (current->token == NULL)
-		ft_error ("substr error in get_TL", 23);
-	current->next = new_token();
-	current = current->next;
+	if (!next_is_exec)
+	{
+		current->token = strip_token(ft_substr(in, i, j));
+		if (current->token == NULL)
+			ft_error ("substr error in get_TL", 23);
+		current->next = new_token();
+		current = current->next;
+	}
 	in = in + j + i;
-	get_token_list(&current, in);
+	get_token_list(&current, in, next_is_exec);
 }

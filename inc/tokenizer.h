@@ -6,7 +6,7 @@
 /*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/03/30 16:04:01 by zilisabethp   ########   odam.nl         */
+/*   Updated: 2021/03/30 16:49:27 by zilisabethp   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void		tokenizer_list_free(t_token *head);
  */
 
 int			find_next_token(char *in);
-int			find_end_token(char *in);
+// int			find_end_token(char *in);
 t_token		*new_token(void);
-void		get_token_list(t_token **token_l, char *in);
+void		get_token_list(t_token **token_l, char *in, int next_is_exec);
 int			env_length(char *in);
 char		*strip_token(char *token);
 int			iswhitespace(char c);
