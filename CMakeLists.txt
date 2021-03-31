@@ -36,7 +36,8 @@ list(
   src/builtin_cd.c
   src/builtin_exit.c)
 
-list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c)
+list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
+     test/test_hashtable.c)
 
 add_executable(minishell2 ${minishell_SOURCES} src/minishell.c)
 target_include_directories(minishell2 PUBLIC inc/)
