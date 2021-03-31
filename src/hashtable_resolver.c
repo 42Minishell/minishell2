@@ -20,7 +20,11 @@ static t_bucket	*bucket_get_overflow(t_bucket *bucket, char *key, int create)
 	while (bucket)
 	{
 		if (strcmp(bucket->key, key) == 0)
+		{
+			if (create)
+				free(key);
 			return (bucket);
+		}
 		if (!bucket->next && create)
 		{
 			bucket->next = calloc(1, sizeof(t_bucket));
