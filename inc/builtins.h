@@ -45,5 +45,7 @@ int		builtin_export(int argc, char **argv, t_state *state);
 int		builtin_echo(int argc, char **argv, t_state *state);
 // Pwd
 int		builtin_pwd(int argc, char **argv, t_state *state);
+// cd
+int		builtin_cd(int argc, char **argv, t_state *state);
 
 #endif
