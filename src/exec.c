@@ -9,7 +9,7 @@ static int	token_len(t_token *head)
 
 	len = 1;
 	head = head->next;
-	while (head && head->type != executable)
+	while (head && head->type != executable && head->token)
 	{
 		head = head->next;
 		len++;
@@ -42,7 +42,6 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 	argv = populate_argv(args);
 	result->builtin(token_len(args), argv, state);
 	free(argv);
-	tokenizer_list_free(args);
 }
 
 void	exec(t_state *state, char *path, t_token *args)

@@ -4,10 +4,11 @@
 
 static void	jump_to_next_exec(t_token **head)
 {
-	t_token *current;
+	t_token	*current;
 
 	current = *head;
-	while (current->type != executable && current->next)
+	current = current->next;
+	while (current && current->type != executable && current->next)
 		current = current->next;
 	*head = current;
 }
@@ -36,12 +37,14 @@ static void	process_input(t_state *state, char *input)
 			break ;
 		}
 		else if (result_type == BUILTIN)
+		{
 			exec_builtin(state, &result, tokens);
+			jump_to_next_exec(&tokens);
+		}
 		else
 		{
 			exec(state, result.path, tokens);
 			free(result.path);
-			tokens = tokens->next;
 			jump_to_next_exec(&tokens);
 		}
 	}
