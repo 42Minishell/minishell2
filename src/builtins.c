@@ -13,13 +13,14 @@ static t_function_lookup	*get_table(void)
 {
 	t_function_lookup	*lookuptable;
 
-	lookuptable = ft_calloc(7, sizeof(t_function_lookup));
+	lookuptable = ft_calloc(8, sizeof(t_function_lookup));
 	set_table(lookuptable, "unset", &builtin_unset);
 	set_table(lookuptable + 1, "export", &builtin_export);
 	set_table(lookuptable + 2, "echo", &builtin_echo);
 	set_table(lookuptable + 3, "env", &builtin_export);
 	set_table(lookuptable + 4, "pwd", &builtin_pwd);
 	set_table(lookuptable + 5, "cd", &builtin_cd);
+	set_table(lookuptable + 6, "exit", &builtin_exit);
 	return (lookuptable);
 }
 

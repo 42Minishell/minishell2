@@ -43,9 +43,11 @@ int		builtin_unset(int argc, char **argv, t_state *state);
 int		builtin_export(int argc, char **argv, t_state *state);
 /// Echo
 int		builtin_echo(int argc, char **argv, t_state *state);
-// Pwd
+/// Pwd
 int		builtin_pwd(int argc, char **argv, t_state *state);
-// cd
+/// cd
 int		builtin_cd(int argc, char **argv, t_state *state);
+/// Exit
+int		builtin_exit(int argc, char **argv, t_state *state);
 
 #endif
