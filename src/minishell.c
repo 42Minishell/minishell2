@@ -14,9 +14,10 @@ static void	jump_to_next_exec(t_token **head)
 
 static void	process_input(t_state *state, char *input)
 {
-	t_token	*tokens;
-	t_token	*tokens_orig;
-	char	*exec_path;
+	t_token					*tokens;
+	t_token					*tokens_orig;
+	t_resolve_result		result;
+	t_resolve_result_type	result_type;
 
 	tokens = tokenizer(input, state->env->env);
 	tokens_orig = tokens;
@@ -27,17 +28,19 @@ static void	process_input(t_state *state, char *input)
 	}
 	while (tokens && tokens->type == executable)
 	{
-		exec_path = path_resolve(state->env, tokens->token);
-		if (!exec_path)
+		result_type = path_resolve(state->env, tokens->token, &result);
+		if (result_type == NOTFOUND)
 		{
 			if (errno != 0)
 				printf("Error: %s\n", strerror(errno));
 			break ;
 		}
+		else if (result_type == BUILTIN)
+			exec_builtin(state, &result, tokens);
 		else
 		{
-			exec(state, exec_path, tokens);
-			free(exec_path);
+			exec(state, result.path, tokens);
+			free(result.path);
 			tokens = tokens->next;
 			jump_to_next_exec(&tokens);
 		}
