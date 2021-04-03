@@ -3,7 +3,7 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
-int	find_next_token(char *in)
+static int	find_next_token(char *in)
 {
 	int		i;
 
@@ -16,7 +16,7 @@ int	find_next_token(char *in)
 		return (i);
 }
 
-int	find_end_token(char *in, int *next_is_exec)
+static int	find_end_token(char *in, int *next_is_exec)
 {
 	int		i;
 	char	c;
@@ -50,7 +50,7 @@ int	find_end_token(char *in, int *next_is_exec)
 	return (i);
 }
 
-t_token	*new_token(void)
+static t_token	*new_token(void)
 {
 	t_token	*new;
 

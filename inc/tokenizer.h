@@ -59,14 +59,10 @@ void		tokenizer_list_free(t_token *head);
  * Internal functions, undocumented for now :)
  */
 
-int			find_next_token(char *in);
-// int			find_end_token(char *in);
-t_token		*new_token(void);
 void		get_token_list(t_token **token_l, char *in, int next_is_exec);
 int			env_length(char *in);
 char		*strip_token(char *token);
 int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
-void		res_env(char **input, t_bucket *env);
 #endif
