@@ -27,6 +27,8 @@ t_bucket	*bucket_new_table(void)
 void	bucket_add(t_bucket *table, char *key, char *val)
 {
 	table = bucket_get(table, strdup(key), 1);
+	if (table->value)
+		free(table->value);
 	table->value = strdup(val);
 }
 
