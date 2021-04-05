@@ -59,6 +59,9 @@ void	exec(t_state *state, char *path, t_token *args)
 	while (waitpid(child, &status, 0))
 	{
 		if (WIFEXITED(status) || WIFSIGNALED(status))
+		{
+			state->ret = WEXITSTATUS(status);
 			break ;
+		}
 	}
 }
