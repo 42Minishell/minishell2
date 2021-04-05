@@ -52,7 +52,7 @@ int	env_length(char *in)
 	int		i;
 
 	i = 0;
-	while (in[i] && !iswhitespace(in[i]) && in[i] != '\n')
+	while (in[i] && !iswhitespace(in[i]) && in[i] != '\n' && in[i] != '\"')
 		i++;
 	return (i);
 }
