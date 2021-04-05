@@ -8,10 +8,10 @@ add_compile_options(-g -Wall -Wextra -Werror)
 
 add_subdirectory(libft)
 
-add_executable(
-  minishell2
+list(
+  APPEND
+  minishell_SOURCES
   inc/minishell.h
-  src/minishell.c
   inc/hashtable.h
   src/hashtable.c
   src/hashtable_resolver.c
@@ -35,5 +35,15 @@ add_executable(
   src/builtin_pwd.c
   src/builtin_cd.c
   src/builtin_exit.c)
+
+list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
+     test/test_hashtable.c test/test_tokenizer.c)
+
+add_executable(minishell2 ${minishell_SOURCES} src/minishell.c)
 target_include_directories(minishell2 PUBLIC inc/)
 target_link_libraries(minishell2 libft)
+
+add_executable(minishell2_test ${minishell_SOURCES} ${test_SOURCES}
+                               test/test_entry.c)
+target_include_directories(minishell2_test PUBLIC inc/)
+target_link_libraries(minishell2_test libft)
