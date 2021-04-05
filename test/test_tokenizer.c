@@ -19,7 +19,7 @@ static void	split_test(t_state *state)
 {
 	t_token	*tokens;
 
-	tokens = tokenizer(ft_strdup("arg1 \"arg2 $A arg2\" arg3"), state->env->env);
+	tokens = tokenizer(ft_strdup("arg1 \"arg2 $A arg2\" arg3"), state);
 	uassert((token_len(tokens) == 3), "split_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "arg1", 4) == 0),
 		"split_test: arg1 mismatch");
@@ -28,7 +28,7 @@ static void	split_test(t_state *state)
 	uassert((ft_strncmp(tokens->next->next->token, "arg3", 4) == 0),
 		"split_test: arg3 mismatch");
 	tokenizer_list_free(tokens);
-	tokens = tokenizer(ft_strdup("arg1 \'arg2 $A arg2\' arg3"), state->env->env);
+	tokens = tokenizer(ft_strdup("arg1 \'arg2 $A arg2\' arg3"), state);
 	uassert((token_len(tokens) == 3), "split_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "arg1", 4) == 0),
 		"split_test: arg1 mismatch");
@@ -43,17 +43,17 @@ static void	env_test(t_state *state)
 {
 	t_token	*tokens;
 
-	tokens = tokenizer(ft_strdup("$SHELL"), state->env->env);
+	tokens = tokenizer(ft_strdup("$SHELL"), state);
 	uassert((token_len(tokens) == 1), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "test", 5) == 0),
 		"env_test: basis subsitition fail");
 	tokenizer_list_free(tokens);
-	tokens = tokenizer(ft_strdup("\'$SHELL\'"), state->env->env);
+	tokens = tokenizer(ft_strdup("\'$SHELL\'"), state);
 	uassert((token_len(tokens) == 1), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "$SHELL", 7) == 0),
 		"env_test: literal fail");
 	tokenizer_list_free(tokens);
-	tokens = tokenizer(ft_strdup("\'$SHELL\' \"$SHELL\" $SHELL"), state->env->env);
+	tokens = tokenizer(ft_strdup("\'$SHELL\' \"$SHELL\" $SHELL"), state);
 	uassert((token_len(tokens) == 3), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "$SHELL", 7) == 0),
 		"env_test: literal fail");
