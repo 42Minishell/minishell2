@@ -46,21 +46,21 @@ static void	env_test(t_state *state)
 	tokens = tokenizer(ft_strdup("$SHELL"), state->env->env);
 	uassert((token_len(tokens) == 1), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "test", 5) == 0),
-		"split_test: basis subsitition fail");
+		"env_test: basis subsitition fail");
 	tokenizer_list_free(tokens);
 	tokens = tokenizer(ft_strdup("\'$SHELL\'"), state->env->env);
 	uassert((token_len(tokens) == 1), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "$SHELL", 7) == 0),
-		"split_test: literal fail");
+		"env_test: literal fail");
 	tokenizer_list_free(tokens);
 	tokens = tokenizer(ft_strdup("\'$SHELL\' \"$SHELL\" $SHELL"), state->env->env);
 	uassert((token_len(tokens) == 3), "env_test: invalid amount of tokens");
 	uassert((ft_strncmp(tokens->token, "$SHELL", 7) == 0),
-		"split_test: literal fail");
-	uassert((ft_strncmp(tokens->token, "test", 5) == 0),
-		"split_test: doublequote fail");
-	uassert((ft_strncmp(tokens->token, "test", 5) == 0),
-		"split_test: combo fail");
+		"env_test: literal fail");
+	uassert((ft_strncmp(tokens->next->token, "test", 5) == 0),
+		"env_test: doublequote fail");
+	uassert((ft_strncmp(tokens->next->next->token, "test", 5) == 0),
+		"env_test: combo fail");
 	tokenizer_list_free(tokens);
 }
 
