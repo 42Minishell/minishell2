@@ -15,6 +15,8 @@
 # include <stdbool.h>
 # include "hashtable.h"
 
+struct	s_state;
+
 typedef enum e_tokens
 {
 	non_special = 0,
@@ -47,7 +49,7 @@ typedef struct s_token
  * @param env Environment variables, bucket from t_env::env
  * @return Returns linked lists of token objects
  */
-t_token		*tokenizer(char *in, t_bucket *env);
+t_token		*tokenizer(char *in, struct s_state *state);
 
 /**
  * Frees the linked list of token objects
@@ -59,6 +61,7 @@ void		tokenizer_list_free(t_token *head);
  * Internal functions, undocumented for now :)
  */
 
+void		res_env(char **input, struct s_state *state);
 void		get_token_list(t_token **token_l, char *in, int next_is_exec);
 int			env_length(char *in);
 char		*strip_token(char *token);

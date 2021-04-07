@@ -38,9 +38,11 @@ static char	**populate_argv(t_token *head)
 void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 {
 	char	**argv;
+	int		ret;
 
 	argv = populate_argv(args);
-	result->builtin(token_len(args), argv, state);
+	ret = result->builtin(token_len(args), argv, state);
+	state->ret = ret;
 	free(argv);
 }
 
@@ -59,6 +61,9 @@ void	exec(t_state *state, char *path, t_token *args)
 	while (waitpid(child, &status, 0))
 	{
 		if (WIFEXITED(status) || WIFSIGNALED(status))
+		{
+			state->ret = WEXITSTATUS(status);
 			break ;
+		}
 	}
 }

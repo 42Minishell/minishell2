@@ -36,6 +36,8 @@ typedef struct s_state
 {
 	t_env		*env;
 	t_fdstream	*sin;
+
+	int			ret;
 }	t_state;
 
 /// Interface for builtin functions

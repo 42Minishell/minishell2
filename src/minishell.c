@@ -20,7 +20,7 @@ static void	process_input(t_state *state, char *input)
 	t_resolve_result		result;
 	t_resolve_result_type	result_type;
 
-	tokens = tokenizer(input, state->env->env);
+	tokens = tokenizer(input, state);
 	tokens_orig = tokens;
 	if (!tokens || !tokens->token)
 	{

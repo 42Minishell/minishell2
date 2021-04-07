@@ -28,6 +28,7 @@ list(
   src/tokenizer_list.c
   src/exec.c
   src/tokenizer_list_free.c
+  src/tokenizer_res_env.c
   src/builtins.c
   src/builtin_export.c
   src/builtin_unset.c

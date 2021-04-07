@@ -28,6 +28,7 @@ void	state_init(t_state *state, char **argv)
 	env_populate(state->env, *argv);
 	env_init_pwd(state->env);
 	state->sin = fd_openfd(0);
+	state->ret = 0;
 }
 
 void	state_free(t_state *state)
