@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.17)
 add_library(
   libft STATIC
   src/ft_put_fd.c
+  src/ternary.c
   src/fd/fd_control.c
   src/fd/fd_reader.c
   src/mem/ft_bzero.c
