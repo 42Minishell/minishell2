@@ -26,6 +26,7 @@ list(
   src/tokenizer.c
   src/tokenizer_utils.c
   src/tokenizer_list.c
+  src/tokenizer_type.c
   src/exec.c
   src/tokenizer_list_free.c
   src/tokenizer_res_env.c
