@@ -64,6 +64,15 @@ static void	env_test(t_state *state)
 	tokenizer_list_free(tokens);
 }
 
+static void	one_char_arg_test(t_state *state)
+{
+	t_token	*tokens;
+
+	tokens = tokenizer(ft_strdup("echo n"), state);
+	uassert((token_len(tokens) == 2), "one_char_arg_test failed");
+	tokenizer_list_free(tokens);
+}
+
 void	test_tokenizer(void)
 {
 	t_state	state;
@@ -72,5 +81,6 @@ void	test_tokenizer(void)
 	env_populate(state.env, "test");
 	split_test(&state);
 	env_test(&state);
+	one_char_arg_test(&state);
 	env_free(state.env);
 }

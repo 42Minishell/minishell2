@@ -4,6 +4,8 @@ int	tokenizer_identify(char *s, int *i, t_tokens *type)
 {
 	if (s[*i] == ';')
 		*type = executable;
+	else if (s[*i] == '>')
+		*type = redirect_to_overwrite;
 	else
 		return (0);
 	(*i)++;

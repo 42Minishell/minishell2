@@ -21,6 +21,8 @@ list(
   inc/config.h
   src/resolver.c
   src/init.c
+  inc/io.h
+  src/io.c
   src/path_resolver.c
   src/prompt.c
   src/tokenizer.c

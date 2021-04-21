@@ -77,12 +77,15 @@ void	get_token_list(t_token **token_l, char *in, t_tokens type)
 	j = find_end_token(in + i, &type);
 	if (j < 0)
 		return ;
-	current->token = strip_token(ft_substr(in, i,
-		ternary_i((type == non_special), j, j - 1)));
-	if (current->token == NULL)
-		ft_error ("substr error in get_TL", 23);
-	current->next = new_token();
-	current = current->next;
+	if (type == executable | type == non_special)
+	{
+		current->token = strip_token(ft_substr(in, i, \
+			ternary_i((type == non_special), j, j - 1)));
+		if (current->token == NULL)
+			ft_error ("substr error in get_TL", 23);
+		current->next = new_token();
+		current = current->next;
+	}
 	in = in + j + i;
 	get_token_list(&current, in, type);
 }

@@ -2,6 +2,7 @@
 
 #include <wait.h>
 #include "minishell.h"
+#include "io.h"
 
 static int	token_len(t_token *head)
 {
@@ -9,7 +10,7 @@ static int	token_len(t_token *head)
 
 	len = 1;
 	head = head->next;
-	while (head && head->type != executable && head->token)
+	while (head && head->type == non_special && head->token)
 	{
 		head = head->next;
 		len++;
@@ -48,13 +49,14 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 
 void	exec(t_state *state, char *path, t_token *args)
 {
-	pid_t	child;
-	char	**argv;
-	int		status;
+	pid_t			child;
+	char			**argv;
+	int				status;
 
 	child = fork();
 	if (!child)
 	{
+		io_setup(args);
 		argv = populate_argv(args);
 		execve(path, argv, state->env->envp);
 	}
