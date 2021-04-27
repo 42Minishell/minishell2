@@ -22,7 +22,8 @@ typedef enum e_tokens
 	non_special = 0,
 	executable,
 	redirect_to_overwrite,
-	redirect_to_append
+	redirect_to_append,
+	redirect_from_file
 }	t_tokens;
 
 /**

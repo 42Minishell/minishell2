@@ -13,6 +13,8 @@ int	tokenizer_identify(char *s, int *i, t_tokens *type)
 	}
 	else if (s[*i] == '>')
 		*type = redirect_to_overwrite;
+	else if (s[*i] == '<')
+		*type = redirect_from_file;
 	else
 		return (0);
 	(*i)++;
