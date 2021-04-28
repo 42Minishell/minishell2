@@ -56,7 +56,11 @@ void	exec(t_state *state, char *path, t_token *args)
 	child = fork();
 	if (!child)
 	{
-		io_setup(args);
+		if (!io_setup(args))
+		{
+			printf("Redirection failed: %s\n", strerror(errno));
+			exit(1);
+		}
 		argv = populate_argv(args);
 		execve(path, argv, state->env->envp);
 	}

@@ -44,19 +44,21 @@ static int	setup_redir_from_file(t_token *redir, t_token *prev)
 int	io_setup(t_token *head)
 {
 	t_token			*head_prev;
+	int				res;
 
+	res = 1;
 	head_prev = head;
 	head = head->next;
 	while (head && head->type != executable)
 	{
 		if (head->type == redirect_to_overwrite)
-			setup_redir_to_overwrite(head, head_prev);
+			res = setup_redir_to_overwrite(head, head_prev);
 		if (head->type == redirect_to_append)
-			setup_redir_to_append(head, head_prev);
+			res = setup_redir_to_append(head, head_prev);
 		if (head->type == redirect_from_file)
-			setup_redir_from_file(head, head_prev);
+			res = setup_redir_from_file(head, head_prev);
 		head_prev = head;
 		head = head->next;
 	}
-	return (1);
+	return (res);
 }
