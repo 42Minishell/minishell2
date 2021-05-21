@@ -58,6 +58,8 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 	free(argv);
 	dup2(stdin_copy, 0);
 	dup2(stdout_copy, 1);
+	close(stdin_copy);
+	close(stdout_copy);
 }
 
 void	exec(t_state *state, char *path, t_token *args)
