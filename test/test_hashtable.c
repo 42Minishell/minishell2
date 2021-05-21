@@ -17,7 +17,7 @@ static int	find_testdata(char *dst)
 	else if (stat("../test/dummy.txt", &statbuf) == 0)
 		ft_strlcpy(dst, "../test/dummy.txt", 255);
 	else if (stat("test/dummy.txt", &statbuf) == 0)
-	ft_strlcpy(dst, "test/dummy.txt", 255);
+		ft_strlcpy(dst, "test/dummy.txt", 255);
 	else
 		return (0);
 	return (1);

@@ -21,11 +21,14 @@ list(
   inc/config.h
   src/resolver.c
   src/init.c
+  inc/io.h
+  src/io.c
   src/path_resolver.c
   src/prompt.c
   src/tokenizer.c
   src/tokenizer_utils.c
   src/tokenizer_list.c
+  src/tokenizer_type.c
   src/exec.c
   src/tokenizer_list_free.c
   src/tokenizer_res_env.c

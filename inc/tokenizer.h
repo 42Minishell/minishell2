@@ -20,7 +20,10 @@ struct	s_state;
 typedef enum e_tokens
 {
 	non_special = 0,
-	executable
+	executable,
+	redirect_to_overwrite,
+	redirect_to_append,
+	redirect_from_file
 }	t_tokens;
 
 /**
@@ -62,10 +65,11 @@ void		tokenizer_list_free(t_token *head);
  */
 
 void		res_env(char **input, struct s_state *state);
-void		get_token_list(t_token **token_l, char *in, int next_is_exec);
+void		get_token_list(t_token **token_l, char *in, t_tokens type);
 int			env_length(char *in);
 char		*strip_token(char *token);
 int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
+int			tokenizer_identify(char *s, int *i, t_tokens *type);
 #endif
