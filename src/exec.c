@@ -40,11 +40,24 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 {
 	char	**argv;
 	int		ret;
+	int		stdout_copy;
+	int		stdin_copy;
 
+	stdout_copy = dup(1);
+	stdin_copy = dup(0);
+	if (!io_setup(args))
+	{
+		dup2(stdin_copy, 0);
+		dup2(stdout_copy, 1);
+		printf("Redirection failed: %s\n", strerror(errno));
+		return ;
+	}
 	argv = populate_argv(args);
 	ret = result->builtin(token_len(args), argv, state);
 	state->ret = ret;
 	free(argv);
+	dup2(stdin_copy, 0);
+	dup2(stdout_copy, 1);
 }
 
 void	exec(t_state *state, char *path, t_token *args)
