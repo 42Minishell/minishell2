@@ -1,6 +1,6 @@
 // Created by Tom Jans on 25-03-21.
 
-#include <wait.h>
+#include <sys/wait.h>
 #include "minishell.h"
 #include "io.h"
 

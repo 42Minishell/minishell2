@@ -46,8 +46,10 @@ list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
 add_executable(minishell2 ${minishell_SOURCES} src/minishell.c)
 target_include_directories(minishell2 PUBLIC inc/)
 target_link_libraries(minishell2 libft)
+target_link_libraries(minishell2 readline)
 
 add_executable(minishell2_test ${minishell_SOURCES} ${test_SOURCES}
                                test/test_entry.c)
 target_include_directories(minishell2_test PUBLIC inc/)
 target_link_libraries(minishell2_test libft)
+target_link_libraries(minishell2_test readline)

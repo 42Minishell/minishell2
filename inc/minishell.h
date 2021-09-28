@@ -15,6 +15,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/stat.h>
+#include <readline/readline.h>
 # include <errno.h>
 # include "config.h"
 # include "hashtable.h"
