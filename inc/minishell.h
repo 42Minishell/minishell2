@@ -108,5 +108,7 @@ void					exec_builtin(t_state *state, t_resolve_result *result, \
 t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result);
 
-void	setup_int_signals(void);
+void			setup_int_signals(void);
+void			setup_nonint_signals(void);
+extern pid_t	g_child_pid;
 #endif

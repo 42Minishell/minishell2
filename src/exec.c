@@ -64,12 +64,12 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 
 void	exec(t_state *state, char *path, t_token *args)
 {
-	pid_t			child;
 	char			**argv;
 	int				status;
 
-	child = fork();
-	if (!child)
+	g_child_pid = fork();
+	setup_nonint_signals();
+	if (!g_child_pid)
 	{
 		if (!io_setup(args))
 		{
@@ -79,12 +79,9 @@ void	exec(t_state *state, char *path, t_token *args)
 		argv = populate_argv(args);
 		execve(path, argv, state->env->envp);
 	}
-	while (waitpid(child, &status, 0))
-	{
-		if (WIFEXITED(status) || WIFSIGNALED(status))
-		{
-			state->ret = WEXITSTATUS(status);
-			break ;
-		}
-	}
+	while (waitpid(g_child_pid, &status, 0)
+		&& !(WIFEXITED(status) || WIFSIGNALED(status)))
+		(void)g_child_pid;
+	state->ret = WEXITSTATUS(status);
+	setup_int_signals();
 }

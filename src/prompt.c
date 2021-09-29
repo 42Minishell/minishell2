@@ -7,7 +7,6 @@ char	*prompt(t_state *state)
 	char	*input;
 
 	(void)state;
-	setup_int_signals();
 	input = readline("MS > ");
 	if (!input)
 	{

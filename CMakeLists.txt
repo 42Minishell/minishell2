@@ -39,7 +39,8 @@ list(
   src/builtin_pwd.c
   src/builtin_cd.c
   src/builtin_exit.c
-  src/signals_interactive.c)
+  src/signals_interactive.c
+  src/signals_noninteractive.c)
 
 list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)

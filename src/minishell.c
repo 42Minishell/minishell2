@@ -2,6 +2,8 @@
 
 #include "minishell.h"
 
+pid_t	g_child_pid;
+
 static void	jump_to_next_exec(t_token **head)
 {
 	t_token	*current;
@@ -71,6 +73,7 @@ int	main(int argc, char **argv)
 
 	setbuf(stdout, NULL);
 	(void)argc;
+	setup_int_signals();
 	state_init(&state, argv);
 	loop(&state);
 	state_free(&state);
