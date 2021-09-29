@@ -40,7 +40,7 @@ void	env_free(t_env *env);
  */
 void	env_update_envp(t_env *env);
 /// Initialize environment variables with hardcoded presets
-void	env_populate(t_env *env, char *shell);
+void	env_populate(t_env *env, char *shell, char **envp);
 /// Get current directory and save it in the PWD environment variable
 void	env_init_pwd(t_env *env);
 

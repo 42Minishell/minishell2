@@ -50,4 +50,6 @@ int		builtin_cd(int argc, char **argv, t_state *state);
 /// Exit
 int		builtin_exit(int argc, char **argv, t_state *state);
 
+void	add_env(char *argv, t_env *env);
+
 #endif

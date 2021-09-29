@@ -3,7 +3,7 @@
 #include "minishell.h"
 #include "builtins.h"
 
-static void	add_env(char *argv, t_env *env)
+void	add_env(char *argv, t_env *env)
 {
 	char	**split;
 	void	*sfree;

@@ -1,15 +1,16 @@
 // Created by Tom Jans on 01-03-21.
 
 #include "minishell.h"
+#include "builtins.h"
 
-void	env_populate(t_env *env, char *shell)
+void	env_populate(t_env *env, char *shell, char **envp)
 {
-	if (POPULATE_ENV)
+	while (*envp)
 	{
-		bucket_add(env->env, "PATH", "/usr/local/bin:/usr/bin:/bin");
-		bucket_add(env->env, "TERM", "xterm-color");
-		bucket_add(env->env, "SHELL", shell);
+		add_env(*envp, env);
+		envp++;
 	}
+	bucket_add(env->env, "SHELL", shell);
 	env_update_envp(env);
 }
 
@@ -22,10 +23,10 @@ void	env_init_pwd(t_env *env)
 	env_update_envp(env);
 }
 
-void	state_init(t_state *state, char **argv)
+void	state_init(t_state *state, char **argv, char **envp)
 {
 	state->env = env_init();
-	env_populate(state->env, *argv);
+	env_populate(state->env, *argv, envp);
 	env_init_pwd(state->env);
 	state->sin = fd_openfd(0);
 	state->ret = 0;

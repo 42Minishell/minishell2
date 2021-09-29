@@ -67,7 +67,7 @@ typedef union u_resolve_result
 }	t_resolve_result;
 
 /// Allocate and initialize a state object
-void					state_init(t_state *state, char **argv);
+void					state_init(t_state *state, char **argv, char **envp);
 /// Free the state object and members
 void					state_free(t_state *state);
 

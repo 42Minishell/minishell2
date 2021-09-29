@@ -67,14 +67,14 @@ static void	loop(t_state *state)
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	t_state	state;
 
 	setbuf(stdout, NULL);
 	(void)argc;
 	setup_int_signals();
-	state_init(&state, argv);
+	state_init(&state, argv, envp);
 	loop(&state);
 	state_free(&state);
 	return (0);
