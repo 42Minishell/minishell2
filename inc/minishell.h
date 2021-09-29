@@ -15,7 +15,8 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/stat.h>
-#include <readline/readline.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <errno.h>
 # include "config.h"
 # include "hashtable.h"
@@ -106,4 +107,6 @@ void					exec_builtin(t_state *state, t_resolve_result *result, \
  */
 t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result);
+
+void	setup_int_signals(void);
 #endif

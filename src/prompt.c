@@ -7,7 +7,14 @@ char	*prompt(t_state *state)
 	char	*input;
 
 	(void)state;
+	setup_int_signals();
 	input = readline("MS > ");
-	add_history(input);
+	if (!input)
+	{
+		printf("\n");
+		exit(0);
+	}
+	if (*input)
+		add_history(input);
 	return (input);
 }
