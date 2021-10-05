@@ -23,7 +23,8 @@ typedef enum e_tokens
 	executable,
 	redirect_to_overwrite,
 	redirect_to_append,
-	redirect_from_file
+	redirect_from_file,
+	redirect_to_pipe
 }	t_tokens;
 
 /**

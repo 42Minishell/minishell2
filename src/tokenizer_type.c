@@ -15,6 +15,8 @@ int	tokenizer_identify(char *s, int *i, t_tokens *type)
 		*type = redirect_to_overwrite;
 	else if (s[*i] == '<')
 		*type = redirect_from_file;
+	else if (s[*i] == '|')
+		*type = redirect_to_pipe;
 	else
 		return (0);
 	(*i)++;
