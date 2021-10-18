@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+  #+#    #+#             */
-/*   Updated: 2021/10/18 18:27:32 by tjans            ###   ########.fr       */
+/*   Updated: 2021/10/18 18:48:04 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "hashtable.h"
 
 struct	s_state;
+struct	s_env;
 
 
 //todo rename
@@ -28,6 +29,9 @@ typedef enum e_tokens
 	redirect_from_file,
 	redirect_to_pipe
 }	t_tokens;
+
+typedef int				(*t_builtin_function) \
+	(int argc, char **argv, struct s_state *state);
 
 /**
  * @brief Type of result written by path_resolve()
@@ -66,7 +70,7 @@ typedef struct s_token
 	struct s_token		*next;
 
 	t_resolve_result_type	result_type;
-	t_resolve_result		*result;
+	t_resolve_result		result;
 }	t_token;
 
 /**
@@ -98,5 +102,5 @@ int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
 int			tokenizer_identify(char *s, int *i, t_tokens *type);
-int			path_resolve_token_list(t_env *env, t_token *tokens);
+int			path_resolve_token_list(struct s_env *env, t_token *tokens);
 #endif

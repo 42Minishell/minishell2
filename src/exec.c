@@ -68,11 +68,22 @@ static int is_there_a_pipe_somewhere_maybe(t_token *head)
 {
 	while (head)
 	{
-		if (head->type == redirect_to_pipe)
-			return (1);
 		head = head->next;
+		if (head && head->type == redirect_to_pipe)
+			return (1);
 	}
 	return (0);
+}
+
+static void	jump_to_next_pipe(t_token **head)
+{
+	t_token	*current;
+
+	current = *head;
+	current = current->next;
+	while (current && current->type != redirect_to_pipe && current->next)
+		current = current->next;
+	*head = current;
 }
 
 /**
@@ -83,23 +94,24 @@ static int is_there_a_pipe_somewhere_maybe(t_token *head)
  * 4. in child transform into exec token; continue normal logic
  * 5. in parent continue with parent exec token
  */
-void	exec(t_state *state, t_token *args, int pipe_fd)
+void	exec(t_state *state, t_token *cur_token, int pipe_fd)
 {
 	char			**argv;
 	int				filedes[2];
-	int				should_pipe = is_there_a_pipe_somewhere_maybe(args);
-	pid_t			child;
+	int				should_pipe = is_there_a_pipe_somewhere_maybe(cur_token);
+	int status;
 
 	if (pipe(filedes))
 	{
 		printf("kaputt.\n");
 		exit(1);
 	}
+	if (pipe_fd != -1)
+		dup2(pipe_fd, 0);
 	g_child_pid = fork();
-	setup_nonint_signals();
 	if (!g_child_pid)
 	{
-		if (!io_setup(args))
+		if (!io_setup(cur_token))
 		{
 			printf("Redirection failed: %s\n", strerror(errno));
 			exit(1);
@@ -107,10 +119,10 @@ void	exec(t_state *state, t_token *args, int pipe_fd)
 		if (should_pipe)
 		{
 			dup2(filedes[1], 1);
-			child = fork();
+			jump_to_next_pipe(&cur_token);
+			exec(state, cur_token, filedes[0]);
 		}
-		argv = populate_argv(args);
-		execve(path, argv, state->env->envp);
+		argv = populate_argv(cur_token);
+		execve(cur_token->result.path, argv, state->env->envp);
 	}
-	setup_int_signals();
 }

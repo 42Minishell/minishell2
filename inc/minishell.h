@@ -43,8 +43,7 @@ typedef struct s_state
 }	t_state;
 
 /// Interface for builtin functions
-typedef int				(*t_builtin_function) \
-	(int argc, char **argv, t_state *state);
+
 
 /// Allocate and initialize a state object
 void					state_init(t_state *state, char **argv, char **envp);

@@ -47,7 +47,10 @@ static void	process_input(t_state *state, char *input)
 		return ;
 	}
 	path_resolve_token_list(state->env, tokens);
+	setup_nonint_signals();
 	process_input_loop(state, tokens);
+	wait_for_child(state);
+	setup_int_signals();
 	tokenizer_list_free(tokens);
 }
 
