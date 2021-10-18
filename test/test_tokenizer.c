@@ -68,8 +68,7 @@ static void	one_char_arg_test(t_state *state)
 {
 	t_token	*tokens;
 
-	tokens = tokenizer(ft_strdup("echo n"), state);
-	uassert((token_len(tokens) == 2), "one_char_arg_test failed");
+	tokens = tokenizer(ft_strdup("echo n"), state);f	uassert((token_len(tokens) == 2), "one_char_arg_test failed");
 	tokenizer_list_free(tokens);
 }
 

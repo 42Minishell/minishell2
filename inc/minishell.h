@@ -46,26 +46,6 @@ typedef struct s_state
 typedef int				(*t_builtin_function) \
 	(int argc, char **argv, t_state *state);
 
-/**
- * @brief Type of result written by path_resolve()
- */
-typedef enum e_resolve_result_type
-{
-	NOTFOUND,
-	EXTERNAL_BINARY,
-	BUILTIN
-}	t_resolve_result_type;
-
-/**
- * @brief union containing the result of path_resolve()
- */
-
-typedef union u_resolve_result
-{
-	char				*path;
-	t_builtin_function	builtin;
-}	t_resolve_result;
-
 /// Allocate and initialize a state object
 void					state_init(t_state *state, char **argv, char **envp);
 /// Free the state object and members
@@ -84,7 +64,7 @@ char					*prompt(t_state *state);
  * @param path Absolute path to binary
  * @param args Arguments for the binary, in token form
  */
-void					exec(t_state *state, char *path, t_token *args);
+void					exec(t_state *state, t_token *args, int pipe_fd);
 
 void					exec_builtin(t_state *state, t_resolve_result *result, \
 					  t_token *args);
@@ -111,4 +91,6 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 void			setup_int_signals(void);
 void			setup_nonint_signals(void);
 extern pid_t	g_child_pid;
+int	pipe_setup_parent(t_state *state, char *path, t_token *args);
+int pipe_setup_child(t_state *state, char *path, t_token *args);
 #endif

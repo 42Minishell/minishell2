@@ -36,6 +36,8 @@ static char	**populate_argv(t_token *head)
 	return (argv);
 }
 
+//TODO: MAKE BUILTINS FORK AND BEHAVE LIKE NOT BUUILT INS
+
 void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 {
 	char	**argv;
@@ -62,11 +64,37 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 	close(stdout_copy);
 }
 
-void	exec(t_state *state, char *path, t_token *args)
+static int is_there_a_pipe_somewhere_maybe(t_token *head)
+{
+	while (head)
+	{
+		if (head->type == redirect_to_pipe)
+			return (1);
+		head = head->next;
+	}
+	return (0);
+}
+
+/**
+ * @brief TOFIX:
+ * 1. check pipe
+ * 2. if pipe dup io
+ * 3. fork, open pipe
+ * 4. in child transform into exec token; continue normal logic
+ * 5. in parent continue with parent exec token
+ */
+void	exec(t_state *state, t_token *args, int pipe_fd)
 {
 	char			**argv;
-	int				status;
+	int				filedes[2];
+	int				should_pipe = is_there_a_pipe_somewhere_maybe(args);
+	pid_t			child;
 
+	if (pipe(filedes))
+	{
+		printf("kaputt.\n");
+		exit(1);
+	}
 	g_child_pid = fork();
 	setup_nonint_signals();
 	if (!g_child_pid)
@@ -76,12 +104,13 @@ void	exec(t_state *state, char *path, t_token *args)
 			printf("Redirection failed: %s\n", strerror(errno));
 			exit(1);
 		}
+		if (should_pipe)
+		{
+			dup2(filedes[1], 1);
+			child = fork();
+		}
 		argv = populate_argv(args);
 		execve(path, argv, state->env->envp);
 	}
-	while (waitpid(g_child_pid, &status, 0)
-		&& !(WIFEXITED(status) || WIFSIGNALED(status)))
-		(void)g_child_pid;
-	state->ret = WEXITSTATUS(status);
 	setup_int_signals();
 }

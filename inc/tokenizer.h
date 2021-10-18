@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizer.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/03/05 17:05:42 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/03/30 16:49:27 by zilisabethp   ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/05 17:05:42 by zilisabethp   #+  #+#    #+#             */
+/*   Updated: 2021/10/18 18:27:32 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 struct	s_state;
 
+
+//todo rename
 typedef enum e_tokens
 {
 	non_special = 0,
@@ -26,6 +28,26 @@ typedef enum e_tokens
 	redirect_from_file,
 	redirect_to_pipe
 }	t_tokens;
+
+/**
+ * @brief Type of result written by path_resolve()
+ */
+typedef enum e_resolve_result_type
+{
+	NOTFOUND,
+	EXTERNAL_BINARY,
+	BUILTIN
+}	t_resolve_result_type;
+
+/**
+ * @brief union containing the result of path_resolve()
+ */
+
+typedef union u_resolve_result
+{
+	char				*path;
+	t_builtin_function	builtin;
+}	t_resolve_result;
 
 /**
  * @struct t_token
@@ -42,6 +64,9 @@ typedef struct s_token
 	char				*token;
 	t_tokens			type;
 	struct s_token		*next;
+
+	t_resolve_result_type	result_type;
+	t_resolve_result		*result;
 }	t_token;
 
 /**
@@ -73,4 +98,5 @@ int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
 int			tokenizer_identify(char *s, int *i, t_tokens *type);
+int			path_resolve_token_list(t_env *env, t_token *tokens);
 #endif

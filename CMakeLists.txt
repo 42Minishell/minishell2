@@ -4,7 +4,7 @@ project(minishell2 C)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_BUILD_TYPE Debug)
-add_compile_options(-g -Wall -Wextra -Werror)
+add_compile_options(-g -Wall -Wextra)
 
 add_subdirectory(libft)
 
@@ -40,7 +40,8 @@ list(
   src/builtin_cd.c
   src/builtin_exit.c
   src/signals_interactive.c
-  src/signals_noninteractive.c)
+  src/signals_noninteractive.c
+  src/pipe.c)
 
 list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)

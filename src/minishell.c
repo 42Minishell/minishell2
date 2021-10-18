@@ -15,42 +15,40 @@ static void	jump_to_next_exec(t_token **head)
 	*head = current;
 }
 
+static void	wait_for_child(t_state *state)
+{
+	int	status;
+
+	while (waitpid(g_child_pid, &status, 0)
+		&& !(WIFEXITED(status) || WIFSIGNALED(status)))
+		(void)status;
+	state->ret = WEXITSTATUS(status);
+}
+
+// FIXME: FIXME
+
+static int process_input_loop(t_state *state, t_token *tokens)
+{
+	if (tokens->type != executable)
+		return (0);
+	exec(state, tokens, -1);
+	jump_to_next_exec(&tokens);
+	return (process_input_loop(state, tokens));
+}
+
 static void	process_input(t_state *state, char *input)
 {
 	t_token					*tokens;
-	t_token					*tokens_orig;
-	t_resolve_result		result;
-	t_resolve_result_type	result_type;
 
 	tokens = tokenizer(input, state);
-	tokens_orig = tokens;
 	if (!tokens || !tokens->token)
 	{
 		tokenizer_list_free(tokens);
 		return ;
 	}
-	while (tokens && tokens->type == executable)
-	{
-		result_type = path_resolve(state->env, tokens->token, &result);
-		if (result_type == NOTFOUND)
-		{
-			if (errno != 0)
-				printf("Error: %s\n", strerror(errno));
-			break ;
-		}
-		else if (result_type == BUILTIN)
-		{
-			exec_builtin(state, &result, tokens);
-			jump_to_next_exec(&tokens);
-		}
-		else
-		{
-			exec(state, result.path, tokens);
-			free(result.path);
-			jump_to_next_exec(&tokens);
-		}
-	}
-	tokenizer_list_free(tokens_orig);
+	path_resolve_token_list(state->env, tokens);
+	process_input_loop(state, tokens);
+	tokenizer_list_free(tokens);
 }
 
 static void	loop(t_state *state)

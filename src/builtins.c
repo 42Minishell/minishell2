@@ -9,6 +9,8 @@ static void	set_table(t_function_lookup *entry, \
 	entry->func_ptr = func_ptr;
 }
 
+//FIXME: MAKE IT A LOOKUP TABLE GLOBAL THING PROPER BLA
+
 static t_function_lookup	*get_table(t_function_lookup *lookuptable)
 {
 	set_table(lookuptable, "unset", &builtin_unset);
@@ -31,7 +33,7 @@ void	*find_builtin_func(char *exec)
 	i = 0;
 	e_len = ft_strlen(exec);
 	get_table(table);
-	while (table[i].exec)
+	while (table[i].func_ptr)
 	{
 		if (ft_strncmp(exec, table[i].exec, e_len + 1) == 0)
 			return (table[i].func_ptr);
