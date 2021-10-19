@@ -75,15 +75,15 @@ static int is_there_a_pipe_somewhere_maybe(t_token *head)
 	return (0);
 }
 
-static void	jump_to_next_pipe(t_token **head)
+static t_token	*get_next_pipe_token(t_token *head)
 {
-	t_token	*current;
-
-	current = *head;
-	current = current->next;
-	while (current && current->type != redirect_to_pipe && current->next)
-		current = current->next;
-	*head = current;
+	while (head)
+	{
+		if (head->type == redirect_to_pipe)
+			return (head);
+		head = head->next;
+	}
+	return (NULL);
 }
 
 /**
@@ -94,20 +94,14 @@ static void	jump_to_next_pipe(t_token **head)
  * 4. in child transform into exec token; continue normal logic
  * 5. in parent continue with parent exec token
  */
-void	exec(t_state *state, t_token *cur_token, int pipe_fd)
+void	exec(t_state *state, t_token *cur_token)
 {
 	char			**argv;
-	int				filedes[2];
-	int				should_pipe = is_there_a_pipe_somewhere_maybe(cur_token);
-	int status;
+	t_token			*pipe;
 
-	if (pipe(filedes))
-	{
-		printf("kaputt.\n");
-		exit(1);
-	}
-	if (pipe_fd != -1)
-		dup2(pipe_fd, 0);
+	pipe = get_next_pipe_token(cur_token->next);
+	if (pipe)
+		exec(state, pipe);
 	g_child_pid = fork();
 	if (!g_child_pid)
 	{
@@ -116,13 +110,18 @@ void	exec(t_state *state, t_token *cur_token, int pipe_fd)
 			printf("Redirection failed: %s\n", strerror(errno));
 			exit(1);
 		}
-		if (should_pipe)
+		if (pipe) // Logic left end of pipe, master
 		{
-			dup2(filedes[1], 1);
-			jump_to_next_pipe(&cur_token);
-			exec(state, cur_token, filedes[0]);
+			dup2(pipe->pipe_fd[1], 1);
+			close(pipe->pipe_fd[0]);
+		}
+		if (cur_token->type == redirect_to_pipe) // right end of pipe, child
+		{
+			dup2(cur_token->pipe_fd[0], 0);
+			close(pipe->pipe_fd[1]);
 		}
 		argv = populate_argv(cur_token);
 		execve(cur_token->result.path, argv, state->env->envp);
 	}
 }
+//somewhere cleanup open pipes

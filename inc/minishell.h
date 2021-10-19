@@ -63,7 +63,7 @@ char					*prompt(t_state *state);
  * @param path Absolute path to binary
  * @param args Arguments for the binary, in token form
  */
-void					exec(t_state *state, t_token *args, int pipe_fd);
+void					exec(t_state *state, t_token *args);
 
 void					exec_builtin(t_state *state, t_resolve_result *result, \
 					  t_token *args);
@@ -90,6 +90,5 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 void			setup_int_signals(void);
 void			setup_nonint_signals(void);
 extern pid_t	g_child_pid;
-int	pipe_setup_parent(t_state *state, char *path, t_token *args);
-int pipe_setup_child(t_state *state, char *path, t_token *args);
+int	pipes_init(t_token *token);
 #endif
