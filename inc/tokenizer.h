@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+  #+#    #+#             */
-/*   Updated: 2021/10/18 18:48:04 by tjans            ###   ########.fr       */
+/*   Updated: 2021/10/19 14:34:04 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ typedef union u_resolve_result
 
 typedef struct s_token
 {
-	char				*token;
-	t_tokens			type;
-	struct s_token		*next;
+	char					*token;
+	t_tokens				type;
+	struct s_token			*next;
 
 	t_resolve_result_type	result_type;
 	t_resolve_result		result;
+
+	int						pipe_fd[2];
 }	t_token;
 
 /**
