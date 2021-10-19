@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+  #+#    #+#             */
-/*   Updated: 2021/10/19 14:34:04 by tjans            ###   ########.fr       */
+/*   Updated: 2021/10/19 16:46:45 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_token
 	t_resolve_result		result;
 
 	int						pipe_fd[2];
+	pid_t					pid;
 }	t_token;
 
 /**

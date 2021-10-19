@@ -15,15 +15,69 @@ static void	jump_to_next_exec(t_token **head)
 	*head = current;
 }
 
-static void	wait_for_child(t_state *state)
+static int	count_exec(t_token *head)
 {
-	int	status;
+	int i;
 
-	while (waitpid(g_child_pid, &status, 0)
-		&& !(WIFEXITED(status) || WIFSIGNALED(status)))
-		(void)status;
-	state->ret = WEXITSTATUS(status);
+	i = 0;
+	while (head)
+	{
+		if (head->type == executable || head->type == redirect_to_pipe)
+			i++;
+		head = head->next;
+	}
+	return (i);
 }
+
+static void wait_for_children(t_state *state, t_token *head)
+{
+	int		died;
+	t_token	*token;
+	int		status;
+	int		total;
+
+	died = 0;
+	total = count_exec(head);
+	while (died < total)
+	{
+		token = head;
+		while (token)
+		{
+			if (token->type == executable || token->type == redirect_to_pipe)
+			{
+				waitpid(token->pid, &status, 0);
+				if (WIFEXITED(status) || WIFSIGNALED(status))
+				{
+					if (token->next->type == redirect_to_pipe)
+					{
+						printf("closed %d: %d %d\n", token->pid, token->next->pipe_fd[0], token->next->pipe_fd[1]);
+						close(token->next->pipe_fd[0]);
+						close(token->next->pipe_fd[1]);
+					}
+					died++;
+					token->type = non_special;
+				}
+			}
+			token = token->next;
+		}
+	}
+}
+
+// static void	wait_for_children(t_state *state, t_token *token)
+// {
+// 	int	status;
+
+// 	while (token->next)
+// 		token = token->next;
+// 	if (token->type == executable || token->type == redirect_to_pipe)
+// 	{
+// 		while (waitpid(token->pid, &status, 0)
+// 			&& !(WIFEXITED(status) || WIFSIGNALED(status)))
+// 			(void)status;
+// 		state->ret = WEXITSTATUS(status);
+// 		pipes_destroy(token);
+// 	}
+// }
 
 static void	jump_to_next_pipe(t_token **head)
 {
@@ -61,8 +115,7 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	process_input_loop(state, tokens);
-	wait_for_child(state);
-	pipes_destroy(tokens);
+	wait_for_children(state, tokens);
 	tokenizer_list_free(tokens);
 	setup_int_signals();
 }
