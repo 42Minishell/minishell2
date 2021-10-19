@@ -62,8 +62,9 @@ static void	process_input(t_state *state, char *input)
 	setup_nonint_signals();
 	process_input_loop(state, tokens);
 	wait_for_child(state);
-	setup_int_signals();
+	pipes_destroy(tokens);
 	tokenizer_list_free(tokens);
+	setup_int_signals();
 }
 
 static void	loop(t_state *state)

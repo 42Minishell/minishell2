@@ -91,4 +91,5 @@ void			setup_int_signals(void);
 void			setup_nonint_signals(void);
 extern pid_t	g_child_pid;
 int	pipes_init(t_token *token);
+int pipes_destroy(t_token *token);
 #endif

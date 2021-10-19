@@ -118,7 +118,7 @@ void	exec(t_state *state, t_token *cur_token)
 		if (cur_token->type == redirect_to_pipe) // right end of pipe, child
 		{
 			dup2(cur_token->pipe_fd[0], 0);
-			close(pipe->pipe_fd[1]);
+			close(cur_token->pipe_fd[1]);
 		}
 		argv = populate_argv(cur_token);
 		execve(cur_token->result.path, argv, state->env->envp);
