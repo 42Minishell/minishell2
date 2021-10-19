@@ -1,4 +1,5 @@
 #include <termios.h>
+#include <sys/signal.h>
 #include "minishell.h"
 
 static void	handle_backslash(int signal)

@@ -7,7 +7,7 @@
       "request": "attach",
       "program": "${command:cmake.launchTargetPath}",
       "processId": "${command:pickProcess}",
-      "MIMode": "lldb"
+      "MIMode": "gdb"
     },
     {
       "name": "(lldb) Launch",
@@ -24,7 +24,7 @@
         }
       ],
       "externalConsole": false,
-      "MIMode": "lldb"
+      "MIMode": "gdb"
     }
   ]
 }

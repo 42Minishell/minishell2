@@ -47,9 +47,8 @@ list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)
 
 add_executable(minishell2 ${minishell_SOURCES} src/minishell.c)
-target_include_directories(minishell2 PUBLIC inc/ "/Users/tjans/.brew/opt/readline/include")
-target_link_libraries(minishell2 libft termcap)
-target_link_libraries(minishell2 "/Users/tjans/.brew/opt/readline/lib/libreadline.a")
+target_include_directories(minishell2 PUBLIC inc/ )
+target_link_libraries(minishell2 libft readline)
 
 # add_executable(minishell2_test ${minishell_SOURCES} ${test_SOURCES}
 #                                test/test_entry.c)

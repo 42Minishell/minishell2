@@ -63,7 +63,7 @@ char					*prompt(t_state *state);
  * @param path Absolute path to binary
  * @param args Arguments for the binary, in token form
  */
-void					exec(t_state *state, t_token *args, int pipe_fd);
+void					exec(t_state *state, t_token *args, int pipe_fd[2]);
 
 void					exec_builtin(t_state *state, t_resolve_result *result, \
 					  t_token *args);

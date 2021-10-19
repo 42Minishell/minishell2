@@ -29,9 +29,12 @@ static void	wait_for_child(t_state *state)
 
 static int process_input_loop(t_state *state, t_token *tokens)
 {
+	int pipe[2];
+
+	pipe[0] = -1;
 	if (tokens->type != executable)
 		return (0);
-	exec(state, tokens, -1);
+	exec(state, tokens, pipe);
 	jump_to_next_exec(&tokens);
 	return (process_input_loop(state, tokens));
 }

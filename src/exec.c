@@ -94,7 +94,7 @@ static void	jump_to_next_pipe(t_token **head)
  * 4. in child transform into exec token; continue normal logic
  * 5. in parent continue with parent exec token
  */
-void	exec(t_state *state, t_token *cur_token, int pipe_fd)
+void	exec(t_state *state, t_token *cur_token, int pipe_fd[2])
 {
 	char			**argv;
 	int				filedes[2];
@@ -106,8 +106,12 @@ void	exec(t_state *state, t_token *cur_token, int pipe_fd)
 		printf("kaputt.\n");
 		exit(1);
 	}
-	if (pipe_fd != -1)
-		dup2(pipe_fd, 0);
+	if (pipe_fd[0] != -1)
+	{
+		dup2(pipe_fd[0], 0);
+		close(pipe_fd[1]);
+		jump_to_next_pipe(&cur_token);
+	}
 	g_child_pid = fork();
 	if (!g_child_pid)
 	{
@@ -119,8 +123,8 @@ void	exec(t_state *state, t_token *cur_token, int pipe_fd)
 		if (should_pipe)
 		{
 			dup2(filedes[1], 1);
-			jump_to_next_pipe(&cur_token);
-			exec(state, cur_token, filedes[0]);
+			exec(state, cur_token, filedes);
+			close(filedes[0]);
 		}
 		argv = populate_argv(cur_token);
 		execve(cur_token->result.path, argv, state->env->envp);
