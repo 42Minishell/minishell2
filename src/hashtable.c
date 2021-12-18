@@ -1,6 +1,7 @@
 // Created by Tom Jans on 27-02-21.
 
 #include "hashtable.h"
+#include "minishell.h"
 
 static void	bucket_overflow_free(t_bucket *bucket)
 {
@@ -20,7 +21,7 @@ t_bucket	*bucket_new_table(void)
 {
 	t_bucket	*ptr;
 
-	ptr = calloc(HASHTABLE_SIZE, sizeof(t_bucket));
+	ptr = ft_calloc(HASHTABLE_SIZE, sizeof(t_bucket));
 	return (ptr);
 }
 
@@ -29,7 +30,9 @@ void	bucket_add(t_bucket *table, char *key, char *val)
 	table = bucket_get(table, strdup(key), 1);
 	if (table->value)
 		free(table->value);
-	table->value = strdup(val);
+	table->value = ft_strdup(val);
+	if (table->value == NULL)
+		ft_error("MEMORY ERROR STRDUP", 20);
 }
 
 void	bucket_del(t_bucket *table, char *key)

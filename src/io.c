@@ -15,7 +15,8 @@ static int	setup_redir_to_overwrite(t_token *redir, t_token *prev)
 		return (0);
 	prev->next = redir->next;
 	free(redir);
-	dup2(fd, 1);
+	if (dup2(fd, 1) == -1)
+		return (0);
 	return (1);
 }
 
@@ -28,7 +29,8 @@ static int	setup_redir_to_append(t_token *redir, t_token *prev)
 		return (0);
 	prev->next = redir->next;
 	free(redir);
-	dup2(fd, 1);
+	if (dup2(fd, 1) == -1)
+		return(0);
 	return (1);
 }
 
@@ -41,7 +43,8 @@ static int	setup_redir_from_file(t_token *redir, t_token *prev)
 		return (0);
 	prev->next = redir->next;
 	free(redir);
-	dup2(fd, 0);
+	if (dup2(fd, 0) == -1)
+		return(0);
 	return (1);
 }
 

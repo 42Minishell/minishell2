@@ -12,7 +12,7 @@ void	bucket_iter(t_bucket *table, t_bucket_iterator f, void *data)
 		bucket = table + i;
 		while (bucket)
 		{
-			if (bucket->key && strcmp(bucket->key, "") != 0)
+			if (bucket->key && ft_strncmp(bucket->key, "", ft_strlen(bucket->key)) != 0)
 				data = f(bucket->key, bucket->value, data);
 			bucket = bucket->next;
 		}

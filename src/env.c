@@ -1,7 +1,7 @@
 // Created by Tom Jans on 28-02-21.
 
 #include "env.h"
-
+#include "minishell.h"
 static void	env_free_envp(t_env *env)
 {
 	char	**envp;
@@ -24,9 +24,9 @@ static void	*env_iterator_envp(char *key, char *val, void *data)
 	klen = strlen(key);
 	vlen = strlen(val);
 	str = malloc(klen + vlen + 2 * sizeof(char));
-	strncpy(str, key, klen);
-	strncpy(str + klen, "=", 1);
-	strncpy(str + klen + 1, val, vlen + 1);
+	ft_strlcpy(str, key, klen);
+	ft_strlcpy(str + klen, "=", 1);
+	ft_strlcpy(str + klen + 1, val, vlen + 1);
 	*(char **)data = str;
 	return (data + sizeof(char *));
 }
@@ -35,7 +35,9 @@ t_env	*env_init(void)
 {
 	t_env	*env;
 
-	env = calloc(1, sizeof(t_env));
+	env = ft_calloc(1, sizeof(t_env));
+	if (env == NULL)
+		ft_error("malloc error", 13);
 	env->env = bucket_new_table();
 	env_update_envp(env);
 	return (env);
