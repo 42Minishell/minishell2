@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:22:43 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 27-02-21.
 
 #include "minishell.h"
@@ -17,7 +29,7 @@ static void	jump_to_next_exec(t_token **head)
 
 static int	count_exec(t_token *head)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (head)
@@ -29,7 +41,7 @@ static int	count_exec(t_token *head)
 	return (i);
 }
 
-static void wait_for_children(t_state *state, t_token *head)
+static void	wait_for_children(t_state *state, t_token *head)
 {
 	int		died;
 	t_token	*token;
@@ -50,9 +62,12 @@ static void wait_for_children(t_state *state, t_token *head)
 				{
 					if (token->next->type == redirect_to_pipe)
 					{
-						printf("closed %d: %d %d\n", token->pid, token->next->pipe_fd[0], token->next->pipe_fd[1]);
-						close(token->next->pipe_fd[0]);
-						close(token->next->pipe_fd[1]);
+						printf("closed %d: %d %d\n", token->pid, \
+								token->next->pipe_fd[0], \
+								token->next->pipe_fd[1]);
+						if (close(token->next->pipe_fd[0]) == -1 \
+							|| close(token->next->pipe_fd[1]) == -1)
+							ft_error("closing fd went wrong", 22);
 					}
 					died++;
 					token->type = non_special;
@@ -62,22 +77,6 @@ static void wait_for_children(t_state *state, t_token *head)
 		}
 	}
 }
-
-// static void	wait_for_children(t_state *state, t_token *token)
-// {
-// 	int	status;
-
-// 	while (token->next)
-// 		token = token->next;
-// 	if (token->type == executable || token->type == redirect_to_pipe)
-// 	{
-// 		while (waitpid(token->pid, &status, 0)
-// 			&& !(WIFEXITED(status) || WIFSIGNALED(status)))
-// 			(void)status;
-// 		state->ret = WEXITSTATUS(status);
-// 		pipes_destroy(token);
-// 	}
-// }
 
 static void	jump_to_next_pipe(t_token **head)
 {
@@ -90,11 +89,9 @@ static void	jump_to_next_pipe(t_token **head)
 	*head = current;
 }
 
-// FIXME: FIXME
-
-static int process_input_loop(t_state *state, t_token *tokens)
+static int	process_input_loop(t_state *state, t_token *tokens)
 {
-	int pipe[2];
+	int	pipe[2];
 
 	pipe[0] = -1;
 	if (tokens->type != executable || tokens->result_type == NOTFOUND)

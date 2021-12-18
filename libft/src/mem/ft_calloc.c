@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   calloc.c                                           :+:    :+:            */
+/*   ft_calloc.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 15:49:41 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/07 16:14:19 by tjans         ########   odam.nl         */
+/*   Updated: 2021/12/18 17:25:16 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	*ft_calloc(size_t count, size_t size)
 	if (!ptr)
 		return (NULL);
 	ft_bzero(ptr, bytes);
-	return ((void*)ptr);
+	return ((void *)ptr);
 }

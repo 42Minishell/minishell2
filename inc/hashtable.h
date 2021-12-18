@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   hashtable.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:27:45 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:28:34 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 27-02-21.
 
 /**
@@ -60,7 +72,7 @@ typedef struct s_bucket {
  * @return
  * New pointer to pass as data to the next iteration
  */
-typedef void *(*t_bucket_iterator)(char *key, char *val, void *data);
+typedef void	*(*t_bucket_iterator)(char *key, char *val, void *data);
 
 /// Generate new hash table with the amount of elements as defined in
 /// HASHTABLE_SIZE

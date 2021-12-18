@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   tokenizer_type.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:14:13 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:14:14 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenizer.h"
 
 int	tokenizer_identify(char *s, int *i, t_tokens *type)

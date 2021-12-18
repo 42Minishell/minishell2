@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   io.c                                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zinobias <zinobias@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:11:08 by zinobias      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:19:49 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <unistd.h>
 #include "io.h"
 
 //TODO: Refactor
 // TODO: PROTECT SYSTEM CALLS DUP
-
 
 static int	setup_redir_to_overwrite(t_token *redir, t_token *prev)
 {
@@ -30,7 +41,7 @@ static int	setup_redir_to_append(t_token *redir, t_token *prev)
 	prev->next = redir->next;
 	free(redir);
 	if (dup2(fd, 1) == -1)
-		return(0);
+		return (0);
 	return (1);
 }
 
@@ -44,7 +55,7 @@ static int	setup_redir_from_file(t_token *redir, t_token *prev)
 	prev->next = redir->next;
 	free(redir);
 	if (dup2(fd, 0) == -1)
-		return(0);
+		return (0);
 	return (1);
 }
 

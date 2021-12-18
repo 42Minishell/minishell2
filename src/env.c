@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   env.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:12:24 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:15:43 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 28-02-21.
 
 #include "env.h"
 #include "minishell.h"
+
 static void	env_free_envp(t_env *env)
 {
 	char	**envp;

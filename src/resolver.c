@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   resolver.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:14:00 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:15:25 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 01-03-21.
 
 #include <errno.h>
@@ -49,7 +61,8 @@ int	path_resolve_token_list(t_env *env, t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->type == executable || tokens->type == redirect_to_pipe)
-			tokens->result_type = path_resolve(env, tokens->token, &tokens->result);
+			tokens->result_type = \
+				path_resolve(env, tokens->token, &tokens->result);
 		tokens = tokens->next;
 	}
 }

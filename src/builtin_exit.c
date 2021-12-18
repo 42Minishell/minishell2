@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   builtin_exit.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:13:35 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:13:36 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 
 int	builtin_exit(int argc, char **argv, t_state *state)

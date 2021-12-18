@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   signals_interactive.c                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:14:02 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:14:04 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <termios.h>
 #include <sys/signal.h>
 #include "minishell.h"

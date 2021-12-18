@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   pipe.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:13:56 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:15:12 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "io.h"
 #include "tokenizer.h"
@@ -16,7 +28,7 @@ int	pipes_init(t_token *token)
 	return (0);
 }
 
-int pipes_destroy(t_token *token)
+int	pipes_destroy(t_token *token)
 {
 	while (token)
 	{

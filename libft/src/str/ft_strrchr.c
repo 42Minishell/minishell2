@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   strrchr.c                                          :+:    :+:            */
+/*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 12:29:50 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/22 20:05:54 by tjans         ########   odam.nl         */
+/*   Updated: 2021/12/18 17:26:02 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ char	*ft_strrchr(const char *s, int c)
 		len--;
 	if (s[len] != c)
 		return (NULL);
-	return ((char*)s + len);
+	return ((char *)s + len);
 }

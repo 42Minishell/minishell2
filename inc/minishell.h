@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:32:19 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 27-02-21.
 
 /**
@@ -44,7 +56,6 @@ typedef struct s_state
 
 /// Interface for builtin functions
 
-
 /// Allocate and initialize a state object
 void					state_init(t_state *state, char **argv, char **envp);
 /// Free the state object and members
@@ -66,7 +77,7 @@ char					*prompt(t_state *state);
 void					exec(t_state *state, t_token *args);
 
 void					exec_builtin(t_state *state, t_resolve_result *result, \
-					  t_token *args);
+							t_token *args);
 
 /**
  * Resolves path to binary.
@@ -87,9 +98,9 @@ void					exec_builtin(t_state *state, t_resolve_result *result, \
 t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result);
 
-void			setup_int_signals(void);
-void			setup_nonint_signals(void);
+void					setup_int_signals(void);
+void					setup_nonint_signals(void);
 extern pid_t	g_child_pid;
-int	pipes_init(t_token *token);
-int pipes_destroy(t_token *token);
+int						pipes_init(t_token *token);
+int						pipes_destroy(t_token *token);
 #endif

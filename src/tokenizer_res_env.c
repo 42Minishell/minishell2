@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   tokenizer_res_env.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:14:11 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:14:35 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	get_ret(char **in, int i, struct s_state *state)
@@ -29,13 +41,13 @@ static int	replace_env(char **in, int i, struct s_state *state)
 	if (ret)
 	{
 		*in = easyjoin(ft_substr(*in, 0, i), ft_strdup(ret), \
-				 ft_strdup(*in + i + env_len + 1));
+				ft_strdup(*in + i + env_len + 1));
 		i += ft_strlen(ret);
 	}
 	else
 	{
 		*in = easyjoin(ft_substr(*in, 0, i - 1),
-				 ft_strdup(*in + i + env_len + 1), NULL);
+				ft_strdup(*in + i + env_len + 1), NULL);
 	}
 	return (i);
 }

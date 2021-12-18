@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   exec.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:18:38 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 // Created by Tom Jans on 25-03-21.
 
 #include <sys/wait.h>
@@ -49,7 +61,7 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 
 	stdout_copy = dup(1);
 	stdin_copy = dup(0);
-	if (stdout_copy == -1|| stdin_copy == -1)
+	if (stdout_copy == -1 || stdin_copy == -1)
 		ft_error("fd dup went wrong", 18);
 	if (!io_setup(args))
 	{
@@ -68,7 +80,7 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
 		ft_error("closing file went wrong", 24);
 }
 
-static int is_there_a_pipe_somewhere_maybe(t_token *head)
+static int	is_there_a_pipe_somewhere_maybe(t_token *head)
 {
 	while (head)
 	{
@@ -98,6 +110,7 @@ static t_token	*get_next_pipe_token(t_token *head)
  * 4. in child transform into exec token; continue normal logic
  * 5. in parent continue with parent exec token
  */
+
 void	exec(t_state *state, t_token *cur_token)
 {
 	char			**argv;
@@ -122,14 +135,16 @@ void	exec(t_state *state, t_token *cur_token)
 			printf("Redirection failed: %s\n", strerror(errno));
 			exit(1);
 		}
-		if (pipe) // Logic left end of pipe, master
+		if (pipe)
 		{
-			if (dup2(pipe->pipe_fd[1], 1) == -1 || close(pipe->pipe_fd[0]) == -1)
+			if (dup2(pipe->pipe_fd[1], 1) == -1 \
+				|| close(pipe->pipe_fd[0]) == -1)
 				ft_error("exec error", 11);
 		}
-		if (cur_token->type == redirect_to_pipe) // right end of pipe, child
+		if (cur_token->type == redirect_to_pipe)
 		{
-			if (dup2(cur_token->pipe_fd[0], 0) == -1 || close(cur_token->pipe_fd[1]) == -1)
+			if (dup2(cur_token->pipe_fd[0], 0) == -1 \
+				|| close(cur_token->pipe_fd[1]) == -1)
 				ft_error("exec error", 11);
 		}	
 		argv = populate_argv(cur_token);
@@ -140,7 +155,8 @@ void	exec(t_state *state, t_token *cur_token)
 		printf("%d : %s\n", g_child_pid, cur_token->result.path);
 		if (pipe)
 		{
-			printf("%d pipe %d and %d\n", pipe->pid, pipe->pipe_fd[0], pipe->pipe_fd[1]);
+			printf("%d pipe %d and %d\n", pipe->pid, \
+					pipe->pipe_fd[0], pipe->pipe_fd[1]);
 		}
 	}
 }

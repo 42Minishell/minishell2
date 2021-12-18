@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/05 17:05:42 by zilisabethp   #+  #+#    #+#             */
-/*   Updated: 2021/10/19 16:46:45 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/03/05 17:05:42 by zilisabethp   #+#    #+#                 */
+/*   Updated: 2021/12/18 17:34:25 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 struct	s_state;
 struct	s_env;
 
-
 //todo rename
 typedef enum e_tokens
 {
@@ -28,10 +27,9 @@ typedef enum e_tokens
 	redirect_to_append,
 	redirect_from_file,
 	redirect_to_pipe
-}	t_tokens;
+}			t_tokens;
 
-typedef int				(*t_builtin_function) \
-	(int argc, char **argv, struct s_state *state);
+typedef int	(*t_builtin_function)(int argc, char **argv, struct s_state *state);
 
 /**
  * @brief Type of result written by path_resolve()

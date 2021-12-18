@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   memchr.c                                           :+:    :+:            */
+/*   ft_memchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 22:17:16 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/07 16:17:55 by tjans         ########   odam.nl         */
+/*   Updated: 2021/12/18 17:25:30 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	while (n)
 	{
 		if (*str == cc)
-			return ((void*)str);
+			return ((void *)str);
 		str++;
 		n--;
 	}

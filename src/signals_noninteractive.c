@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   signals_noninteractive.c                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:14:05 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:15:00 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <signal.h>
 #include "minishell.h"
 
@@ -7,7 +19,7 @@ static void	handle_ctrlc(int signal)
 	kill(g_child_pid, SIGINT);
 }
 
-static void handle_backslash(int signal)
+static void	handle_backslash(int signal)
 {
 	(void)signal;
 	kill(g_child_pid, SIGTERM);

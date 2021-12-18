@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   strnstr.c                                          :+:    :+:            */
+/*   ft_strnstr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 12:40:14 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/07 16:15:58 by tjans         ########   odam.nl         */
+/*   Updated: 2021/12/18 17:26:19 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 
 	haystack_pos = 0;
 	if (!*needle)
-		return ((char*)haystack);
+		return ((char *)haystack);
 	while (haystack[haystack_pos] && haystack_pos < len)
 	{
 		needle_pos = 0;
@@ -28,7 +28,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 		{
 			needle_pos++;
 			if (!needle[needle_pos])
-				return ((char*)haystack + haystack_pos);
+				return ((char *)haystack + haystack_pos);
 		}
 		haystack_pos++;
 	}
