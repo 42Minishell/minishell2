@@ -97,7 +97,7 @@ static int process_input_loop(t_state *state, t_token *tokens)
 	int pipe[2];
 
 	pipe[0] = -1;
-	if (tokens->type != executable)
+	if (tokens->type != executable || tokens->result_type == NOTFOUND)
 		return (0);
 	exec(state, tokens);
 	jump_to_next_exec(&tokens);
