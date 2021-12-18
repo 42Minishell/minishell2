@@ -102,6 +102,11 @@ void	exec(t_state *state, t_token *cur_token)
 	pipe = get_next_pipe_token(cur_token->next);
 	if (pipe)
 		exec(state, pipe);
+	if (cur_token->result_type == BUILTIN)
+	{
+		exec_builtin(state, &cur_token->result, cur_token);
+		return ;
+	}
 	cur_token->pid = fork();
 	g_child_pid = cur_token->pid;
 	if (!g_child_pid)
