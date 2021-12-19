@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:18:38 by zgargasc      ########   odam.nl         */
+/*   Updated: 2021/12/19 12:33:03 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,41 @@ static t_token	*get_next_pipe_token(t_token *head)
  * 5. in parent continue with parent exec token
  */
 
+void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
+{
+	char **argv;
+
+	if (!io_setup(cur_token))
+	{
+		printf("Redirection failed: %s\n", strerror(errno));
+		exit(1);
+	}
+	if (pipe)
+	{
+		if (dup2(pipe->pipe_fd[1], 1) == -1 \
+			|| close(pipe->pipe_fd[0]) == -1)
+			ft_error("exec error", 11);
+	}
+	if (cur_token->type == redirect_to_pipe)
+	{
+		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
+			|| close(cur_token->pipe_fd[1]) == -1)
+			ft_error("exec error", 11);
+	}	
+	argv = populate_argv(cur_token);
+	execve(cur_token->result.path, argv, state->env->envp);
+}
+
+void	io_setup_parent(t_state *state, t_token *cur_token, t_token *pipe)
+{
+	printf("%d : %s\n", g_child_pid, cur_token->result.path);
+	if (pipe)
+		printf("%d pipe %d and %d\n", pipe->pid, \
+				pipe->pipe_fd[0], pipe->pipe_fd[1]);
+}
+
 void	exec(t_state *state, t_token *cur_token)
 {
-	char			**argv;
 	t_token			*pipe;
 
 	pipe = get_next_pipe_token(cur_token->next);
@@ -129,34 +161,7 @@ void	exec(t_state *state, t_token *cur_token)
 		ft_error("fork went wrong", 16);
 	g_child_pid = cur_token->pid;
 	if (!g_child_pid)
-	{
-		if (!io_setup(cur_token))
-		{
-			printf("Redirection failed: %s\n", strerror(errno));
-			exit(1);
-		}
-		if (pipe)
-		{
-			if (dup2(pipe->pipe_fd[1], 1) == -1 \
-				|| close(pipe->pipe_fd[0]) == -1)
-				ft_error("exec error", 11);
-		}
-		if (cur_token->type == redirect_to_pipe)
-		{
-			if (dup2(cur_token->pipe_fd[0], 0) == -1 \
-				|| close(cur_token->pipe_fd[1]) == -1)
-				ft_error("exec error", 11);
-		}	
-		argv = populate_argv(cur_token);
-		execve(cur_token->result.path, argv, state->env->envp);
-	}
+		io_setup_child(state, cur_token, pipe);
 	else
-	{
-		printf("%d : %s\n", g_child_pid, cur_token->result.path);
-		if (pipe)
-		{
-			printf("%d pipe %d and %d\n", pipe->pid, \
-					pipe->pipe_fd[0], pipe->pipe_fd[1]);
-		}
-	}
+		io_setup_parent(state, cur_token, pipe);
 }
