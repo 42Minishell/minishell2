@@ -26,6 +26,8 @@ list(
   src/path_resolver.c
   src/prompt.c
   src/tokenizer.c
+  src/tokenizer_copy.c
+  src/tokenizer_len.c
   src/tokenizer_utils.c
   src/tokenizer_list.c
   src/tokenizer_type.c

@@ -105,4 +105,7 @@ void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
 t_tokens	tokenizer_identify(char *s);
 int			path_resolve_token_list(struct s_env *env, t_token *tokens);
+size_t		get_whitespace_length(char *s);
+size_t		get_token_length(char *s);
+size_t		copy_str_to_token(char *dst, char *src, size_t len, t_tokens *type);
 #endif
