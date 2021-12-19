@@ -129,5 +129,7 @@ t_token *get_token_list(char *in)
 		cur = clean_empty_token(cur, cur->next);
 	}
 	cur->next = ft_calloc(1, sizeof(t_token));
+	if (!cur->next)
+		ft_error("calloc err", 11);
 	return (head);
 }
