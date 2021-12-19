@@ -134,6 +134,12 @@ t_token *get_token_list(char *in)
 
 	next_type = executable;
 	head = get_next_token(&in, &next_type);
+	if (!head)
+	{
+		head = ft_calloc(1, sizeof(t_token));
+		if (!head)
+			ft_error("calloc err", 11);
+	}
 	cur = head;
 	while (cur && *in)
 	{
