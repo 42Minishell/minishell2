@@ -97,12 +97,12 @@ void		tokenizer_list_free(t_token *head);
  */
 
 void		res_env(char **input, struct s_state *state);
-void		get_token_list(t_token **token_l, char *in, t_tokens type);
+t_token		*get_token_list(char *in);
 int			env_length(char *in);
 char		*strip_token(char *token);
 int			iswhitespace(char c);
 void		ft_error(char *msg, int bytes);
 char		*easyjoin(char *s1, char *s2, char *s3);
-int			tokenizer_identify(char *s, int *i, t_tokens *type);
+t_tokens	tokenizer_identify(char *s);
 int			path_resolve_token_list(struct s_env *env, t_token *tokens);
 #endif

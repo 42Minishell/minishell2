@@ -12,25 +12,20 @@
 
 #include "tokenizer.h"
 
-int	tokenizer_identify(char *s, int *i, t_tokens *type)
+t_tokens	tokenizer_identify(char *s)
 {
-	if (!s[*i])
-		return (0);
-	if (s[*i] == ';')
-		*type = executable;
-	else if (s[*i] == '>' && s[*i + 1] == '>')
+	if (!*s)
+		return (non_special);
+	if (*s == '>')
 	{
-		*type = redirect_to_append;
-		(*i)++;
+		if (*(s + 1) == '>')
+			return (redirect_to_append);
+		else
+			return (redirect_to_overwrite);
 	}
-	else if (s[*i] == '>')
-		*type = redirect_to_overwrite;
-	else if (s[*i] == '<')
-		*type = redirect_from_file;
-	else if (s[*i] == '|')
-		*type = redirect_to_pipe;
-	else
-		return (0);
-	(*i)++;
-	return (1);
+	if (*s == '<')
+		return (redirect_from_file);
+	if (*s == '|')
+		return (redirect_to_pipe);
+	return (non_special);
 }
