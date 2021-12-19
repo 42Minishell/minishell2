@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:22:43 by zgargasc      ########   odam.nl         */
+/*   Updated: 2021/12/19 12:40:39 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ static int	count_exec(t_token *head)
 	return (i);
 }
 
+void	save_close_pipes(t_token *token)
+{
+	if (token->next->type == redirect_to_pipe)
+	{
+		printf("closed %d: %d %d\n", token->pid, \
+			token->next->pipe_fd[0], \
+			token->next->pipe_fd[1]);
+		if (close(token->next->pipe_fd[0]) == -1 \
+			|| close(token->next->pipe_fd[1]) == -1)
+			ft_error("closing fd went wrong", 22);
+	}
+}
+
 static void	wait_for_children(t_state *state, t_token *head)
 {
 	int		died;
@@ -60,15 +73,7 @@ static void	wait_for_children(t_state *state, t_token *head)
 				waitpid(token->pid, &status, 0);
 				if (WIFEXITED(status) || WIFSIGNALED(status))
 				{
-					if (token->next->type == redirect_to_pipe)
-					{
-						printf("closed %d: %d %d\n", token->pid, \
-								token->next->pipe_fd[0], \
-								token->next->pipe_fd[1]);
-						if (close(token->next->pipe_fd[0]) == -1 \
-							|| close(token->next->pipe_fd[1]) == -1)
-							ft_error("closing fd went wrong", 22);
-					}
+					save_close_pipes(token);
 					died++;
 					token->type = non_special;
 				}

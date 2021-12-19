@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/19 12:33:03 by zgargasc      ########   odam.nl         */
+/*   Updated: 2021/12/19 12:35:52 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ static t_token	*get_next_pipe_token(t_token *head)
 
 void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 {
-	char **argv;
+	char	**argv;
 
 	if (!io_setup(cur_token))
 	{
