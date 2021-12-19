@@ -98,7 +98,7 @@ void		tokenizer_list_free(t_token *head);
  */
 
 void		res_env(char **input, struct s_state *state);
-void		get_token_list(t_token **token_l, char *in, t_tokens type);
+t_token		*get_token_list(char *in);
 int			env_length(char *in);
 char		*strip_token(char *token);
 int			iswhitespace(char c);

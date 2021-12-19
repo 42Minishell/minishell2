@@ -28,10 +28,7 @@ t_token	*tokenizer(char *in, t_state *state)
 	t_token	*token_l;
 
 	res_env(&in, state);
-	token_l = ft_calloc(1, sizeof(t_token));
-	if (!token_l)
-		ft_error("t_l head malloc went wrong", 27);
-	get_token_list(&token_l, in, 1);
+	token_l = get_token_list(in);
 	free(in);
 	return (token_l);
 }

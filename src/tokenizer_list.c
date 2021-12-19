@@ -1,91 +1,116 @@
-// Created by Tom Jans on 16-03-21.
-
 #include "minishell.h"
 #include "tokenizer.h"
 
-static int	find_next_token(char *in)
+size_t get_whitespace_length(char *s)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
-	while (iswhitespace(in[i]) == true && in[i] != '\n' && in[i])
+	while (iswhitespace(s[i]) && s[i] != '\n' && s[i])
 		i++;
-	if (in[i] == '\n' || !in[i])
-		return (-1);
-	else
-		return (i);
+	return (i);
 }
 
-static int	find_end_token(char *in, t_tokens *type)
+size_t	get_token_length(char *s)
 {
-	int		i;
-	char	c;
+	size_t	len;
+	char	literal;
 
-	i = 0;
-	c = 0;
-	if (in[i] == '\'' || in[i] == '\"')
+	len = 0;
+	literal = 0;
+	while (s[len] && s[len] != '\n')
 	{
-		c = in[i];
-		i++;
-	}
-	while (in[i] && in[i] != '\n')
-	{
-		if (tokenizer_identify(in, &i, type))
-			return (i);
-		if (in[i] == c && c && (i != 0 && in[i - 1] != '\\'))
+		if ((s[len] == '\'' || s[len] == '\"') && !literal)
+			literal = s[len];
+		else if ((s[len] == '\'' || s[len] == '\"') && literal == s[len])
 		{
-			i++;
-			break ;
+			literal = 0;
+			if (!iswhitespace(s[len + 1]))
+			{
+				len++;
+				continue ;
+			}
 		}
-		if (!c && iswhitespace(in[i]) == true && (i != 0 && in[i - 1] != '\\'))
-			break ;
-		i++;
+		len++;
+		if (!s[len] || iswhitespace(s[len]))
+			return (len);
 	}
-	return (ternary_i((i == 0), -1, i));
 }
 
-static t_token	*new_token(void)
+size_t	copy_str_to_token(char *dst, char *src, size_t len)
 {
-	t_token	*new;
+	size_t	dst_pos;
+	size_t	src_pos;
+	char	literal;
 
-	new = ft_calloc(1, sizeof(t_token));
-	if (!new)
+	dst_pos = 0;
+	src_pos = 0;
+	literal = 0;
+	while (src_pos < len && src[src_pos] && !(!literal && iswhitespace(src[src_pos])))
+	{
+		if (src[src_pos] == '\'' || src[src_pos] == '\"')
+		{
+			if (literal == src[src_pos])
+			{
+				literal = 0;
+				if (iswhitespace(src[src_pos + 1]))
+					return (src_pos + 1);
+			}
+			else if (!literal)
+				literal = src[src_pos];
+			src_pos++;
+		}
+		dst[dst_pos] = src[src_pos];
+		dst_pos++;
+		src_pos++;
+	}
+	return (src_pos + 1);
+}
+
+size_t	get_next_token_str(char *in, char **dst)
+{
+	size_t start;
+	size_t end;
+
+	start = get_whitespace_length(in);
+	end = get_token_length(in);
+	*dst = ft_calloc(1, (end - start) * sizeof(char));
+	if (!*dst)
+		ft_error("calloc null", 12);
+	return (copy_str_to_token(*dst, in + start, end - start));
+}
+
+t_token	*get_next_token(char **in)
+{
+	t_token	*token;
+	size_t	token_len;
+	size_t	in_len;
+
+	in_len = ft_strlen(*in);
+	if (!**in || *in == '\n')
+		return (NULL);
+	token = ft_calloc(1, sizeof(t_token));
+	if (!token)
 		ft_error("calloc in new_token error", 26);
-	return (new);
+	token_len = get_next_token_str(*in, &token->token);
+	if (token_len < in_len)
+		*in += token_len;
+	else
+		*in += in_len;
+	return (token);
 }
 
-static void	handle_special_token(t_token *current, t_tokens *type)
+t_token *get_token_list(char *in)
 {
-	if (*type != non_special)
-	{
-		current->type = *type;
-		*type = non_special;
-	}
-}
+	t_token *head;
+	t_token	*cur;
 
-void	get_token_list(t_token **token_l, char *in, t_tokens type)
-{
-	t_token	*current;
-	int		i;
-	int		j;
-
-	current = *token_l;
-	handle_special_token(current, &type);
-	i = find_next_token(in);
-	if (i < 0)
-		return ;
-	j = find_end_token(in + i, &type);
-	if (j < 0)
-		return ;
-	if (type == executable | type == non_special)
+	head = get_next_token(&in);
+	cur = head;
+	while (cur && *in)
 	{
-		current->token = strip_token(ft_substr(in, i, \
-			ternary_i((type == non_special), j, j - 1)));
-		if (current->token == NULL)
-			ft_error ("substr error in get_TL", 23);
-		current->next = new_token();
-		current = current->next;
+		cur->next = get_next_token(&in);
+		cur = cur->next;
 	}
-	in = in + j + i;
-	get_token_list(&current, in, type);
+	return (head);
 }
