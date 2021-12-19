@@ -43,7 +43,9 @@ static int	count_exec(t_token *head)
 
 void	save_close_pipes(t_token *token)
 {
-	if (token->next->type == redirect_to_pipe)
+	while (token->next && token->next->type != redirect_to_pipe)
+		token = token->next;
+	if (token->next && token->next->type == redirect_to_pipe)
 	{
 		printf("closed %d: %d %d\n", token->pid, \
 			token->next->pipe_fd[0], \
@@ -70,8 +72,9 @@ static void	wait_for_children(t_state *state, t_token *head)
 		{
 			if (token->type == executable || token->type == redirect_to_pipe)
 			{
-				waitpid(token->pid, &status, 0);
-				if (WIFEXITED(status) || WIFSIGNALED(status))
+				if (token->result_type != BUILTIN)
+					waitpid(token->pid, &status, 0);
+				if (WIFEXITED(status) || WIFSIGNALED(status) || token->result_type == BUILTIN)
 				{
 					save_close_pipes(token);
 					died++;
