@@ -56,8 +56,6 @@ t_resolve_result_type	path_resolve(t_env *env, char *exec,
 
 int	path_resolve_token_list(t_env *env, t_token *tokens)
 {
-	t_resolve_result_type	type;
-
 	while (tokens)
 	{
 		if (tokens->type == executable || tokens->type == redirect_to_pipe)
@@ -65,4 +63,5 @@ int	path_resolve_token_list(t_env *env, t_token *tokens)
 				path_resolve(env, tokens->token, &tokens->result);
 		tokens = tokens->next;
 	}
+	return (0);
 }

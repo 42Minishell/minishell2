@@ -3,7 +3,6 @@ INC_DIR := inc
 OUT_DIR := out
 OBJ_DIR := obj
 
-TARGET := $(shell uname -s)
 NAME := libft.a
 VPATH := $(SRC_DIR)
 

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 // Created by Tom Jans on 28-02-21.
+#include "libft.h"
 #include "hashtable.h"
 
 void	bucket_iter(t_bucket *table, t_bucket_iterator f, void *data)

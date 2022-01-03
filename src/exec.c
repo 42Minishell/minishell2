@@ -50,18 +50,6 @@ static char	**populate_argv(t_token *head)
 	return (argv);
 }
 
-
-static int	is_there_a_pipe_somewhere_maybe(t_token *head)
-{
-	while (head)
-	{
-		head = head->next;
-		if (head && head->type == redirect_to_pipe)
-			return (1);
-	}
-	return (0);
-}
-
 static t_token	*get_next_pipe_token(t_token *head)
 {
 	while (head)
@@ -107,16 +95,6 @@ void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 	execve(cur_token->result.path, argv, state->env->envp);
 }
 
-void	io_setup_parent(t_state *state, t_token *cur_token, t_token *pipe)
-{
-	printf("%d : %s\n", g_child_pid, cur_token->result.path);
-	if (pipe)
-		printf("%d pipe %d and %d\n", pipe->pid, \
-				pipe->pipe_fd[0], pipe->pipe_fd[1]);
-}
-
-//TODO: 
-
 void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_token *pipe)
 {
 	char	**argv;
@@ -152,6 +130,4 @@ void	exec(t_state *state, t_token *cur_token)
 	g_child_pid = cur_token->pid;
 	if (!g_child_pid)
 		io_setup_child(state, cur_token, pipe);
-	else
-		io_setup_parent(state, cur_token, pipe);
 }

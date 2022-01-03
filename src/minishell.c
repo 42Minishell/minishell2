@@ -12,6 +12,7 @@
 
 // Created by Tom Jans on 27-02-21.
 
+#include <sys/wait.h>
 #include "minishell.h"
 
 pid_t	g_child_pid;
@@ -65,7 +66,7 @@ void	save_close_pipes(t_token *token)
 	}
 }
 
-static void	wait_for_children(t_state *state, t_token *head)
+static void	wait_for_children(t_token *head)
 {
 	int		died;
 	t_token	*token;
@@ -95,22 +96,8 @@ static void	wait_for_children(t_state *state, t_token *head)
 	}
 }
 
-static void	jump_to_next_pipe(t_token **head)
-{
-	t_token	*current;
-
-	current = *head;
-	current = current->next;
-	while (current && current->type != redirect_to_pipe && current->next)
-		current = current->next;
-	*head = current;
-}
-
 static int	process_input_loop(t_state *state, t_token *tokens)
 {
-	int	pipe[2];
-
-	pipe[0] = -1;
 	if (tokens->type != executable || tokens->result_type == NOTFOUND)
 		return (0);
 	exec(state, tokens);
@@ -132,7 +119,7 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	process_input_loop(state, tokens);
-	wait_for_children(state, tokens);
+	wait_for_children(tokens);
 	tokenizer_list_free(tokens);
 	setup_int_signals();
 }
