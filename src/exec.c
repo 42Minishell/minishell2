@@ -50,35 +50,6 @@ static char	**populate_argv(t_token *head)
 	return (argv);
 }
 
-//TODO: MAKE BUILTINS FORK AND BEHAVE LIKE NOT BUUILT INS
-
-void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args)
-{
-	char	**argv;
-	int		ret;
-	int		stdout_copy;
-	int		stdin_copy;
-
-	stdout_copy = dup(1);
-	stdin_copy = dup(0);
-	if (stdout_copy == -1 || stdin_copy == -1)
-		ft_error("fd dup went wrong", 18);
-	if (!io_setup(args))
-	{
-		if (dup2(stdin_copy, 0) == -1 || dup2(stdout_copy, 1) == -1)
-			ft_error("DUP restoration error", 10);
-		printf("Redirection failed: %s\n", strerror(errno));
-		return ;
-	}
-	argv = populate_argv(args);
-	ret = result->builtin(token_len(args), argv, state);
-	state->ret = ret;
-	free(argv);
-	if (dup2(stdin_copy, 0) == -1 || dup2(stdout_copy, 1) == -1)
-		ft_error("dup went wrong", 15);
-	if (close(stdin_copy) == -1 || close(stdout_copy) == -1)
-		ft_error("closing file went wrong", 24);
-}
 
 static int	is_there_a_pipe_somewhere_maybe(t_token *head)
 {
@@ -144,6 +115,24 @@ void	io_setup_parent(t_state *state, t_token *cur_token, t_token *pipe)
 				pipe->pipe_fd[0], pipe->pipe_fd[1]);
 }
 
+//TODO: 
+
+void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_token *pipe)
+{
+	char	**argv;
+	int		ret;
+
+	args->pipe_fd[1] = dup(1);
+	args->pipe_fd[0] = dup(0);
+	if (args->pipe_fd[1] == -1 || args->pipe_fd[0] == -1)
+		ft_error("fd dup went wrong", 18);
+	io_setup_child(state, args, pipe);
+	argv = populate_argv(args);
+	ret = result->builtin(token_len(args), argv, state);
+	state->ret = ret;
+	free(argv);
+}
+
 void	exec(t_state *state, t_token *cur_token)
 {
 	t_token			*pipe;
@@ -153,7 +142,8 @@ void	exec(t_state *state, t_token *cur_token)
 		exec(state, pipe);
 	if (cur_token->result_type == BUILTIN)
 	{
-		exec_builtin(state, &cur_token->result, cur_token);
+		exec_builtin(state, &cur_token->result, cur_token, pipe);
+		cur_token->pid = -1;
 		return ;
 	}
 	cur_token->pid = fork();

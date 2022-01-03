@@ -50,9 +50,18 @@ void	save_close_pipes(t_token *token)
 		printf("closed %d: %d %d\n", token->pid, \
 			token->next->pipe_fd[0], \
 			token->next->pipe_fd[1]);
-		if (close(token->next->pipe_fd[0]) == -1 \
-			|| close(token->next->pipe_fd[1]) == -1)
+		if (close(token->next->pipe_fd[1]) == -1)
 			ft_error("closing fd went wrong", 22);
+		if (token->result_type == BUILTIN)
+		{
+			dup2(token->pipe_fd[0], 0);
+			dup2(token->pipe_fd[1], 1);
+		}
+		else
+		{
+			if (close(token->next->pipe_fd[0]) == -1)
+				ft_error("closing fd went wrong", 22);
+		}
 	}
 }
 
@@ -74,7 +83,7 @@ static void	wait_for_children(t_state *state, t_token *head)
 			{
 				if (token->result_type != BUILTIN)
 					waitpid(token->pid, &status, 0);
-				if (WIFEXITED(status) || WIFSIGNALED(status) || token->result_type == BUILTIN)
+				if (WIFEXITED(status) || WIFSIGNALED(status) || (token->result_type == BUILTIN && token->pid == -1))
 				{
 					save_close_pipes(token);
 					died++;
