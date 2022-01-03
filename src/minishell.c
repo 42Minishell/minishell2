@@ -45,7 +45,7 @@ void	save_close_pipes(t_token *token)
 {
 	while (token->next && token->next->type != redirect_to_pipe)
 		token = token->next;
-	if (token->next && token->next->type == redirect_to_pipe)
+	if (token->next && token->next->type == redirect_to_pipe && token->next->result_type != BUILTIN)
 	{
 		printf("closed %d: %d %d\n", token->pid, \
 			token->next->pipe_fd[0], \

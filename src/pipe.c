@@ -18,7 +18,7 @@ int	pipes_init(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == redirect_to_pipe)
+		if (token->type == redirect_to_pipe && token->result_type != BUILTIN)
 		{
 			if (pipe(token->pipe_fd))
 				return (1);
@@ -32,7 +32,7 @@ int	pipes_destroy(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == redirect_to_pipe)
+		if (token->type == redirect_to_pipe && token->result_type != BUILTIN)
 		{
 			close(token->pipe_fd[0]);
 			close(token->pipe_fd[1]);
