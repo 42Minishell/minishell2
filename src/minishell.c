@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/19 12:40:39 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/01/05 15:01:06 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	save_close_pipes(t_token *token)
 {
 	while (token->next && token->next->type != redirect_to_pipe)
 		token = token->next;
-	if (token->next && token->next->type == redirect_to_pipe && token->next->result_type != BUILTIN)
+	if (token->next && token->next->type == redirect_to_pipe \
+		&& token->next->result_type != BUILTIN)
 	{
 		printf("closed %d: %d %d\n", token->pid, \
 			token->next->pipe_fd[0], \
@@ -84,7 +85,8 @@ static void	wait_for_children(t_token *head)
 			{
 				if (token->result_type != BUILTIN)
 					waitpid(token->pid, &status, 0);
-				if (WIFEXITED(status) || WIFSIGNALED(status) || (token->result_type == BUILTIN && token->pid == -1))
+				if (WIFEXITED(status) || WIFSIGNALED(status) || \
+					(token->result_type == BUILTIN && token->pid == -1))
 				{
 					save_close_pipes(token);
 					died++;

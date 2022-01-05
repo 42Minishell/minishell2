@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/19 12:35:52 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/01/05 15:00:30 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 	else if (pipe)
 		if (dup2(pipe->pipe_fd[1], 1) == -1)
 			ft_error("exec error", 11);
-	if (cur_token->type == redirect_to_pipe && cur_token->result_type != BUILTIN)
+	if (cur_token->type == redirect_to_pipe && \
+			cur_token->result_type != BUILTIN)
 	{
 		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
 			|| close(cur_token->pipe_fd[1]) == -1)
@@ -98,7 +99,9 @@ void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 	execve(cur_token->result.path, argv, state->env->envp);
 }
 
-void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_token *pipe)
+void	exec_builtin(t_state *state, \
+		t_resolve_result *result, t_token *args, \
+			t_token *pipe)
 {
 	char	**argv;
 	int		ret;
