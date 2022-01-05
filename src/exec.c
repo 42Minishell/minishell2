@@ -70,10 +70,8 @@ static t_token	*get_next_pipe_token(t_token *head)
  * 5. in parent continue with parent exec token
  */
 
-void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
+void	io_setup_child(t_token *cur_token, t_token *pipe)
 {
-	char	**argv;
-
 	if (!io_setup(cur_token))
 	{
 		printf("Redirection failed: %s\n", strerror(errno));
@@ -93,9 +91,7 @@ void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
 			|| close(cur_token->pipe_fd[1]) == -1)
 			ft_error("exec error", 11);
-	}	
-	argv = populate_argv(cur_token);
-	execve(cur_token->result.path, argv, state->env->envp);
+	}
 }
 
 void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_token *pipe)
@@ -107,7 +103,7 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_tok
 	args->pipe_fd[0] = dup(0);
 	if (args->pipe_fd[1] == -1 || args->pipe_fd[0] == -1)
 		ft_error("fd dup went wrong", 18);
-	io_setup_child(state, args, pipe);
+	io_setup_child(args, pipe);
 	argv = populate_argv(args);
 	ret = result->builtin(token_len(args), argv, state);
 	state->ret = ret;
@@ -117,6 +113,7 @@ void	exec_builtin(t_state *state, t_resolve_result *result, t_token *args, t_tok
 void	exec(t_state *state, t_token *cur_token)
 {
 	t_token			*pipe;
+    char			**argv;
 
 	pipe = get_next_pipe_token(cur_token->next);
 	if (pipe)
@@ -132,5 +129,9 @@ void	exec(t_state *state, t_token *cur_token)
 		ft_error("fork went wrong", 16);
 	g_child_pid = cur_token->pid;
 	if (!g_child_pid)
-		io_setup_child(state, cur_token, pipe);
+    {
+        io_setup_child(cur_token, pipe);
+        argv = populate_argv(cur_token);
+        execve(cur_token->result.path, argv, state->env->envp);
+    }
 }

@@ -21,7 +21,11 @@ void	tokenizer_list_free(t_token *head)
 	while (head)
 	{
 		if (head->token)
-			free(head->token);
+        {
+            if (head->result_type == EXTERNAL_BINARY && head->result.path)
+                free(head->result.path);
+            free(head->token);
+        }
 		head_prev = head;
 		head = head->next;
 		free(head_prev);

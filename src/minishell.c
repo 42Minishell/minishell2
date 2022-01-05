@@ -75,6 +75,7 @@ static void	wait_for_children(t_token *head)
 
 	died = 0;
 	total = count_exec(head);
+    status = 0;
 	while (died < total)
 	{
 		token = head;
@@ -84,7 +85,7 @@ static void	wait_for_children(t_token *head)
 			{
 				if (token->result_type != BUILTIN)
 					waitpid(token->pid, &status, 0);
-				if (WIFEXITED(status) || WIFSIGNALED(status) || (token->result_type == BUILTIN && token->pid == -1))
+				if ((token->result_type == BUILTIN && token->pid == -1) || WIFEXITED(status) || WIFSIGNALED(status))
 				{
 					save_close_pipes(token);
 					died++;
