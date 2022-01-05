@@ -5,3 +5,4 @@
  - Error handling on invalid exec.
  - Additional tests.
  - Makefile. _DONE_
+ - Ssveclosepipes is a mess, refactor and bugfix. leaking fd for non builtins
