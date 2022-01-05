@@ -59,11 +59,11 @@ void	save_close_pipes(t_token *token)
 			dup2(token->pipe_fd[0], 0);
 			dup2(token->pipe_fd[1], 1);
 		}
-		else
-		{
-			if (close(token->next->pipe_fd[0]) == -1)
-				ft_error("closing fd went wrong", 22);
-		}
+		// else
+		// {
+		// 	if (close(token->next->pipe_fd[0]) == -1)
+		// 		ft_error("closing fd went wrong", 22);
+		// }
 	}
 }
 

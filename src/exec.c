@@ -95,6 +95,14 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 	}
 }
 
+void	exec_builtin_clean(t_token *builtin)
+{
+		dup2(builtin->pipe_fd[0], 0);
+		dup2(builtin->pipe_fd[1], 1);
+		close(builtin->pipe_fd[0]);
+		close(builtin->pipe_fd[1]);
+}
+
 void	exec_builtin(t_state *state, \
 		t_resolve_result *result, t_token *args, \
 			t_token *pipe)
@@ -111,6 +119,7 @@ void	exec_builtin(t_state *state, \
 	ret = result->builtin(token_len(args), argv, state);
 	state->ret = ret;
 	free(argv);
+	exec_builtin_clean(args);
 }
 
 void	exec(t_state *state, t_token *cur_token)

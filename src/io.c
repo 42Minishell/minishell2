@@ -67,7 +67,7 @@ int	io_setup(t_token *head)
 	res = 1;
 	head_prev = head;
 	head = head->next;
-	while (head && head->type != executable)
+	while (head && head->type != executable && head->type != redirect_to_pipe)
 	{
 		if (head->type == redirect_to_overwrite)
 			res = setup_redir_to_overwrite(head, head_prev);
