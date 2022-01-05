@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:14:09 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:14:10 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/01/05 14:59:43 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_token	*clean_empty_token(t_token *prev, t_token *token)
 	return (token);
 }
 
-t_token			*get_token_list(char *in)
+t_token	*get_token_list(char *in)
 {
 	t_token		*head;
 	t_token		*cur;
