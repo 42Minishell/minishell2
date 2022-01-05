@@ -38,10 +38,12 @@ $(NAME): $(addprefix $(OBJ_DIR)/,$(OBJS)) libft/libft.a
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
+	@$(MAKE) -C libft clean
 	@echo Build files cleaned.
 
 fclean: clean
 	@$(RM) $(NAME)
+	@$(MAKE) -C libft fclean
 	@echo $(NAME) removed.
 
 re: fclean all
@@ -57,4 +59,4 @@ $(OBJ_DIR):
 
 libft/libft.a:
 	@echo Compiling dependency $@
-	@make -C libft
+	@$(MAKE) -C libft
