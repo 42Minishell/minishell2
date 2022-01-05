@@ -85,6 +85,9 @@ void	io_setup_child(t_state *state, t_token *cur_token, t_token *pipe)
 			|| close(pipe->pipe_fd[0]) == -1)
 			ft_error("exec error", 11);
 	}
+	else if (pipe)
+		if (dup2(pipe->pipe_fd[1], 1) == -1)
+			ft_error("exec error", 11);
 	if (cur_token->type == redirect_to_pipe && cur_token->result_type != BUILTIN)
 	{
 		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
