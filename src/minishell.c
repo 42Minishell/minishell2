@@ -42,22 +42,6 @@ static int	count_exec(t_token *head)
 	return (i);
 }
 
-static t_token *find_pipe(t_token *token)
-{
-	t_token *next;
-
-	next = token->next;
-	while (next)
-	{
-		if (next->type == redirect_to_pipe)
-			return (next);
-		if (next->type == executable)
-			return (NULL);
-		next = next->next;
-	}
-	return (NULL);
-}
-
 void	save_close_pipes(t_token *token)
 {
 	t_token *pipe;

@@ -15,16 +15,35 @@
 #include "io.h"
 #include "tokenizer.h"
 
+t_token *find_pipe(t_token *token)
+{
+    t_token *next;
+
+    next = token->next;
+    while (next)
+    {
+        if (next->type == redirect_to_pipe)
+            return (next);
+        if (next->type == executable)
+            return (NULL);
+        next = next->next;
+    }
+    return (NULL);
+}
+
 int	pipes_init(t_token *token)
 {
+    t_token *next_pipe;
+
 	while (token)
 	{
+        next_pipe = find_pipe(token);
 		if (token->type == redirect_to_pipe && token->result_type != BUILTIN)
 		{
 			if (pipe(token->pipe_fd))
 				return (1);
 		}
-		else if (token->type == redirect_to_pipe)
+		else if (next_pipe && next_pipe->type == redirect_to_pipe)
 		{
 			token->pipe_fd[1] = open("/dev/null", O_WRONLY);
 			if (token->pipe_fd[1] < 0)
