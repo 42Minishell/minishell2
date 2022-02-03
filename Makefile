@@ -6,7 +6,7 @@ OBJ_DIR := obj
 NAME := minishell2
 VPATH := $(SRC_DIR)
 
-CFLAGS := -Wall -Wextra -Werror -I inc -I libft/inc
+CFLAGS := -Wall -Wextra -Werror -I inc -I libft/inc -g
 LDFLAGS := -lreadline
 ifeq ($(DEBUG), 1)
 	CFLAGS	:= $(CFLAGS) -g
