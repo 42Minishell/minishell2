@@ -99,7 +99,6 @@ static void	wait_for_children(t_token *head)
 				if (WIFEXITED(status) || WIFSIGNALED(status) || \
 					(token->result_type == BUILTIN && token->pid == -1))
 				{
-					fprintf(stderr, "End of %s\n", token->token);
 					save_close_pipes(token);
 					died++;
 					token->type = non_special;
