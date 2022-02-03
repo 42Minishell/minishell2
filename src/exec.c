@@ -77,18 +77,25 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 		printf("Redirection failed: %s\n", strerror(errno));
 		exit(1);
 	}
+    fprintf(stderr, "ISC: %s\n", cur_token->token);
+    if (pipe)
+        fprintf(stderr, "\t[pipe]: %s %d:%d\n", pipe->token, pipe->pipe_fd[0], pipe->pipe_fd[1]);
 	if (pipe && pipe->result_type != BUILTIN)
 	{
+        fprintf(stderr, "\t[dup2_p] %d, %d\n", pipe->pipe_fd[1], 1);
 		if (dup2(pipe->pipe_fd[1], 1) == -1 \
 			|| close(pipe->pipe_fd[0]) == -1)
 			ft_error("exec error (pipe and cur)", 25);
 	}
-	else if (pipe)
-		if (dup2(cur_token->pipe_fd[1], 1) == -1)
+	else if (pipe) {
+        fprintf(stderr, "\t[dup2] DEVNULL, stdout %d\n", cur_token->pipe_fd[1]);
+        if (dup2(cur_token->pipe_fd[1], 1) == -1)
             ft_error("exec error (devnull)", 20);
+    }
 	if (cur_token->type == redirect_to_pipe && \
 			cur_token->result_type != BUILTIN)
 	{
+        fprintf(stderr, "\t[dup2_r] %d, %d\n", cur_token->pipe_fd[0], 0);
 		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
 			|| close(cur_token->pipe_fd[1]) == -1)
 			ft_error("exec error (redir to)", 21);
