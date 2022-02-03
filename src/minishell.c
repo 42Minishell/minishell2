@@ -49,16 +49,14 @@ void	save_close_pipes(t_token *token)
 	pipe = find_pipe(token);
 	if (token->type == redirect_to_pipe || !pipe)
 		return ;
-	if (token->result_type == EXTERNAL_BINARY && pipe->result_type == EXTERNAL_BINARY)
+	if ((token->result_type == EXTERNAL_BINARY && pipe->result_type == EXTERNAL_BINARY) ||
+        (token->result_type == BUILTIN && pipe->result_type == EXTERNAL_BINARY))
 	{
 		close(pipe->pipe_fd[0]);
 		close(pipe->pipe_fd[1]);
 	}
-	if (token->result_type == BUILTIN && pipe->result_type == EXTERNAL_BINARY)
-	{
-		close(pipe->pipe_fd[0]);
-		close(pipe->pipe_fd[1]);
-	}
+	if (token->result_type == EXTERNAL_BINARY && pipe->result_type == BUILTIN)
+		close(token->pipe_fd[1]);
 }
 
 static void	wait_for_children(t_token *head)
