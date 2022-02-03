@@ -43,7 +43,7 @@ int	pipes_init(t_token *token)
 			if (pipe(token->pipe_fd))
 				return (1);
 		}
-		else if (next_pipe && next_pipe->type == redirect_to_pipe)
+		else if (next_pipe && next_pipe->type == redirect_to_pipe && next_pipe->result_type == BUILTIN)
 		{
 			token->pipe_fd[1] = open("/dev/null", O_WRONLY);
 			if (token->pipe_fd[1] < 0)
