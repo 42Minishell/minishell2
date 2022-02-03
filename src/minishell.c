@@ -42,28 +42,38 @@ static int	count_exec(t_token *head)
 	return (i);
 }
 
+static t_token *find_pipe(t_token *token)
+{
+	t_token *next;
+
+	next = token->next;
+	while (next)
+	{
+		if (next->type == redirect_to_pipe)
+			return (next);
+		if (next->type == executable)
+			return (NULL);
+		next = next->next;
+	}
+	return (NULL);
+}
+
 void	save_close_pipes(t_token *token)
 {
-	while (token->next && token->next->type != redirect_to_pipe)
-		token = token->next;
-	if (token->next && token->next->type == redirect_to_pipe \
-		&& token->next->result_type != BUILTIN)
+	t_token *pipe;
+
+	pipe = find_pipe(token);
+	if (token->type == redirect_to_pipe || !pipe)
+		return ;
+	if (token->result_type == EXTERNAL_BINARY && pipe->result_type == EXTERNAL_BINARY)
 	{
-		printf("closed %d: %d %d\n", token->pid, \
-			token->next->pipe_fd[0], \
-			token->next->pipe_fd[1]);
-		if (close(token->next->pipe_fd[1]) == -1)
-			ft_error("closing fd went wrong", 22);
-		if (token->result_type == BUILTIN)
-		{
-			dup2(token->pipe_fd[0], 0);
-			dup2(token->pipe_fd[1], 1);
-		}
-		// else
-		// {
-		// 	if (close(token->next->pipe_fd[0]) == -1)
-		// 		ft_error("closing fd went wrong", 22);
-		// }
+		close(pipe->pipe_fd[0]);
+		close(pipe->pipe_fd[1]);
+	}
+	if (token->result_type == BUILTIN && pipe->result_type == EXTERNAL_BINARY)
+	{
+		close(pipe->pipe_fd[0]);
+		close(pipe->pipe_fd[1]);
 	}
 }
 

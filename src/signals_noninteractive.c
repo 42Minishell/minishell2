@@ -25,6 +25,12 @@ static void	handle_backslash(int signal)
 	kill(g_child_pid, SIGTERM);
 }
 
+static void handle_sigchld(int signal)
+{
+    (void)signal;
+//    fprintf(stderr, "SIGCHLD!!! %d\n", signal);
+}
+
 void	setup_nonint_signals(void)
 {
 	struct sigaction	act_sigint;
@@ -33,8 +39,8 @@ void	setup_nonint_signals(void)
 
 	act_sigint.sa_handler = handle_ctrlc;
 	act_sigint.sa_flags = 0;
-	act_sigchld.sa_handler = SIG_DFL;
-	act_sigchld.sa_flags = SA_NOCLDWAIT;
+	act_sigchld.sa_handler = handle_sigchld;
+	act_sigchld.sa_flags = 0;
 	act_sigquit.sa_handler = handle_backslash;
 	sigemptyset(&act_sigint.sa_mask);
 	sigemptyset(&act_sigquit.sa_mask);
