@@ -28,12 +28,6 @@ static void	jump_to_next_exec(t_token **head)
 	*head = current;
 }
 
-static void	wait_for_children(t_token *head)
-{
-    (void)head;
-    while(wait(NULL) > 0);
-}
-
 static int	process_input_loop(t_state *state, t_token *tokens)
 {
 	if (tokens->type != executable || tokens->result_type == NOTFOUND)
@@ -58,7 +52,7 @@ static void	process_input(t_state *state, char *input)
 	setup_nonint_signals();
 	process_input_loop(state, tokens);
     pipes_destroy(tokens);
-    wait_for_children(tokens);
+    while(wait(&state->ret) > 0);
 	tokenizer_list_free(tokens);
 	setup_int_signals();
 }

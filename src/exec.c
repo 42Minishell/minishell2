@@ -60,15 +60,6 @@ static t_token	*get_next_pipe_token(t_token *head)
 	return (NULL);
 }
 
-/**
- * @brief TOFIX:
- * 1. check pipe
- * 2. if pipe dup io
- * 3. fork, open pipe
- * 4. in child transform into exec token; continue normal logic
- * 5. in parent continue with parent exec token
- */
-
 void	io_setup_child(t_token *cur_token, t_token *pipe)
 {
 	if (!io_setup(cur_token))
