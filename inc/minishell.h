@@ -76,8 +76,8 @@ char					*prompt(t_state *state);
  */
 void					exec(t_state *state, t_token *args);
 
-void					exec_builtin(t_state *state, t_resolve_result *result, \
-							t_token *args, t_token *pipe);
+void					exec_builtin(t_state *state, t_token *token, \
+							t_token *pipe);
 
 /**
  * Resolves path to binary.

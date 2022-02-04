@@ -99,23 +99,22 @@ void	exec_builtin_clean(t_token *builtin)
 		close(builtin->pipe_fd[1]);
 }
 
-void	exec_builtin(t_state *state, \
-		t_resolve_result *result, t_token *args, \
+void	exec_builtin(t_state *state, t_token *token, \
 			t_token *pipe)
 {
 	char	**argv;
 	int		ret;
 
-	args->pipe_fd[1] = dup(1);
-	args->pipe_fd[0] = dup(0);
-	if (args->pipe_fd[1] == -1 || args->pipe_fd[0] == -1)
+	token->pipe_fd[1] = dup(1);
+	token->pipe_fd[0] = dup(0);
+	if (token->pipe_fd[1] == -1 || token->pipe_fd[0] == -1)
 		ft_error("fd dup went wrong", 18);
-	io_setup_child(args, pipe);
-	argv = populate_argv(args);
-	ret = result->builtin(token_len(args), argv, state);
+	io_setup_child(token, pipe);
+	argv = populate_argv(token);
+	ret = token->result.builtin(token_len(token), argv, state);
 	state->ret = ret;
 	free(argv);
-	exec_builtin_clean(args);
+	exec_builtin_clean(token);
 }
 
 void	exec(t_state *state, t_token *cur_token)
@@ -128,7 +127,7 @@ void	exec(t_state *state, t_token *cur_token)
 	{
         if (pipe)
             exec(state, pipe);
-		exec_builtin(state, &cur_token->result, cur_token, pipe);
+		exec_builtin(state, cur_token, pipe);
 		cur_token->pid = -1;
 		return ;
 	}
