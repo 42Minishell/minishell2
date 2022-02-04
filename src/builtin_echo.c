@@ -27,8 +27,9 @@ int	builtin_echo(int argc, char **argv, t_state *state, int ipc[2])
 	int	print_newline;
 
 	(void)state;
+	(void)ipc;
 	if (argc < 2)
-		return (0);
+		exit(0);
 	print_newline = check_opt(argv[1]);
 	i = 2 - print_newline;
 	while (i < argc)
@@ -40,5 +41,5 @@ int	builtin_echo(int argc, char **argv, t_state *state, int ipc[2])
 	}
 	if (print_newline)
 		printf("\n");
-	return (0);
+	exit(0);
 }

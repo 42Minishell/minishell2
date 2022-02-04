@@ -15,6 +15,29 @@
 #include "minishell.h"
 #include "builtins.h"
 
+static void	add_env(char *argv, t_env *env)
+{
+	char	**split;
+	void	*sfree;
+	char	*key;
+	char	*value;
+
+	split = ft_split(argv, '=');
+	if (split[1])
+	{
+		key = split[0];
+		value = split[1];
+		bucket_add(env->env, key, value);
+	}
+	sfree = split;
+	while (*split)
+	{
+		split++;
+		free(*(split - 1));
+	}
+	free(sfree);
+}
+
 void	env_populate(t_env *env, char *shell, char **envp)
 {
 	while (*envp)

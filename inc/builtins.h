@@ -62,6 +62,4 @@ int		builtin_cd(int argc, char **argv, t_state *state, int ipc[2]);
 /// Exit
 int		builtin_exit(int argc, char **argv, t_state *state, int ipc[2]);
 
-void	add_env(char *argv, t_env *env);
-
 #endif

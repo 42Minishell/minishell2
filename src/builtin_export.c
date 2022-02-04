@@ -14,8 +14,9 @@
 
 #include "minishell.h"
 #include "builtins.h"
+#include "ipc.h"
 
-void	add_env(char *argv, t_env *env)
+static void	add_env(char *argv, t_env *env, int ipc[2])
 {
 	char	**split;
 	void	*sfree;
@@ -27,7 +28,7 @@ void	add_env(char *argv, t_env *env)
 	{
 		key = split[0];
 		value = split[1];
-		bucket_add(env->env, key, value);
+		send_ipc(ipc[1], ENV_ADD, key, value);
 	}
 	sfree = split;
 	while (*split)
@@ -53,13 +54,13 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 	if (ft_strncmp("env", *argv, 4) == 0 || argc < 2)
 	{
 		bucket_iter(state->env->env, &print_env, NULL);
-		return (0);
+		exit(0);
 	}
 	while (i < argc)
 	{
-		add_env(argv[i], state->env);
+		add_env(argv[i], state->env, ipc);
 		i++;
 	}
-	env_update_envp(state->env);
-	return (0);
+	send_ipc_int(ipc[1], END_IPC, 0);
+	exit(0);
 }
