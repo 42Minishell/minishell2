@@ -18,7 +18,7 @@ static int	prterror(char *err, char *bin)
 	return (1);
 }
 
-int	builtin_cd(int argc, char **argv, t_state *state)
+int	builtin_cd(int argc, char **argv, t_state *state, int ipc[2])
 {
 	char	*path;
 	char	cwd[255];

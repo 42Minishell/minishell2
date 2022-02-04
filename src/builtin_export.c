@@ -45,7 +45,7 @@ static void	*print_env(char *key, char *value, void *data)
 	return (NULL);
 }
 
-int	builtin_export(int argc, char **argv, t_state *state)
+int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	i;
 

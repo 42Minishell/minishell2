@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include "builtins.h"
 
-int	builtin_unset(int argc, char **argv, t_state *state)
+int	builtin_unset(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	i;
 

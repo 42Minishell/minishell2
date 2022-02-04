@@ -14,7 +14,7 @@
 
 #include "builtins.h"
 
-int	builtin_pwd(int argc, char **argv, t_state *state)
+int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 {
 	char	*pwd;
 

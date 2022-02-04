@@ -12,7 +12,7 @@
 
 #include "builtins.h"
 
-int	builtin_exit(int argc, char **argv, t_state *state)
+int	builtin_exit(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	exit_no;
 

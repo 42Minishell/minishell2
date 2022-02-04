@@ -50,17 +50,17 @@ typedef struct s_function_lookup
 void	*find_builtin_func(char *exec);
 
 /// Unset environment variable
-int		builtin_unset(int argc, char **argv, t_state *state);
+int		builtin_unset(int argc, char **argv, t_state *state, int ipc[2]);
 /// Set environment variable
-int		builtin_export(int argc, char **argv, t_state *state);
+int		builtin_export(int argc, char **argv, t_state *state, int ipc[2]);
 /// Echo
-int		builtin_echo(int argc, char **argv, t_state *state);
+int		builtin_echo(int argc, char **argv, t_state *state, int ipc[2]);
 /// Pwd
-int		builtin_pwd(int argc, char **argv, t_state *state);
+int		builtin_pwd(int argc, char **argv, t_state *state, int ipc[2]);
 /// cd
-int		builtin_cd(int argc, char **argv, t_state *state);
+int		builtin_cd(int argc, char **argv, t_state *state, int ipc[2]);
 /// Exit
-int		builtin_exit(int argc, char **argv, t_state *state);
+int		builtin_exit(int argc, char **argv, t_state *state, int ipc[2]);
 
 void	add_env(char *argv, t_env *env);
 
