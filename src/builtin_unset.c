@@ -14,8 +14,9 @@
 
 #include "minishell.h"
 #include "builtins.h"
+#include "ipc.h"
 
-int	builtin_unset(int argc, char **argv, t_state *state)
+int	builtin_unset(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	i;
 
@@ -27,9 +28,9 @@ int	builtin_unset(int argc, char **argv, t_state *state)
 	}
 	while (i < argc)
 	{
-		bucket_del(state->env->env, argv[i]);
+		send_ipc(ipc[1], ENV_DEL, argv[i], NULL);
 		i++;
 	}
-	env_update_envp(state->env);
-	return (0);
+	send_ipc_int(ipc[1], END_IPC, 0);
+	exit(0);
 }

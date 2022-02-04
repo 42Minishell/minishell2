@@ -11,14 +11,15 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "ipc.h"
 
-int	builtin_exit(int argc, char **argv, t_state *state)
+int	builtin_exit(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	exit_no;
 
 	(void)state;
 	if (argc < 2)
-		exit(0);
+		send_ipc_int(ipc[1], EXIT, 0);
 	exit_no = ft_atoi(argv[1]);
 	while (*argv[1])
 	{
@@ -29,5 +30,6 @@ int	builtin_exit(int argc, char **argv, t_state *state)
 		}
 		argv[1]++;
 	}
+	send_ipc_int(ipc[1], EXIT, exit_no);
 	exit(exit_no);
 }

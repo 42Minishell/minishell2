@@ -19,10 +19,10 @@ SRCS := builtin_cd.c builtin_echo.c builtin_exit.c builtin_export.c \
 		resolver.c signals_interactive.c signals_noninteractive.c \
 		tokenizer_copy.c tokenizer_len.c tokenizer_list_free.c \
 		tokenizer_list.c tokenizer_res_env.c tokenizer_type.c \
-		tokenizer_utils.c tokenizer.c
+		tokenizer_utils.c tokenizer.c ipc.c exec_builtin.c
 HDRS := inc/builtins.h inc/config.h inc/env.h inc/hashtable.h inc/io.h \
 		inc/minishell.h inc/tokenizer.h libft/inc/libft.h \
-		libft/inc/fd.h
+		libft/inc/fd.h inc/ipc.h
 OBJS := $(SRCS:.c=.o)
 
 $(OBJ_DIR)/%.o : %.c $(HDRS) | $(OBJ_DIR)

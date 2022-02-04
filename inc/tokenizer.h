@@ -30,7 +30,7 @@ typedef enum e_tokens
 }			t_tokens;
 
 typedef int (\
-		*t_builtin_function)(int argc, char **argv, struct s_state *state);
+		*t_builtin_function)(int argc, char **argv, struct s_state *state, int ipc[2]);
 
 /**
  * @brief Type of result written by path_resolve()
@@ -72,6 +72,7 @@ typedef struct s_token
 	t_resolve_result		result;
 
 	int						pipe_fd[2];
+	int 					ipc_fd[2];
 	pid_t					pid;
 }	t_token;
 

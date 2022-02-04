@@ -14,15 +14,16 @@
 
 #include "builtins.h"
 
-int	builtin_pwd(int argc, char **argv, t_state *state)
+int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 {
 	char	*pwd;
 
 	(void)argc;
 	(void)argv;
+	(void)ipc;
 	pwd = bucket_get_value(state->env->env, "PWD");
 	if (!pwd)
-		return (1);
+		exit(1);
 	printf("%s\n", pwd);
-	return (0);
+	exit(0);
 }
