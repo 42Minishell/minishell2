@@ -16,4 +16,5 @@ void	exec_builtin(t_state *state, t_token *token, char **argv)
 
 	argc = count_args(argv);
 	token->result.builtin(argc, argv, state, token->ipc_fd);
+	exit(0);
 }

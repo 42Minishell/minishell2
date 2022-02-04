@@ -43,15 +43,15 @@ void send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
 	t_builtin_message ipc_msg;
 
 	ipc_msg.type = type;
-	ipc_msg.key_len = ft_strlen(key);
+	ipc_msg.key_len = ft_strlen(key) + 1;
 	if (value)
-		ipc_msg.value_len = ft_strlen(value);
+		ipc_msg.value_len = ft_strlen(value) + 1;
 	else
 		ipc_msg.value_len = 0;
 	write(fd, &ipc_msg, sizeof(t_builtin_message));
-	write(fd, key, ft_strlen(key));
+	write(fd, key, ft_strlen(key) + 1);
 	if (value)
-		write(fd, value, ft_strlen(value));
+		write(fd, value, ft_strlen(value) + 1);
 }
 
 void send_ipc_int(int fd, t_builtin_message_type type, int value)
