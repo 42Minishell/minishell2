@@ -17,26 +17,6 @@
 
 pid_t	g_child_pid;
 
-static void	jump_to_next_exec(t_token **head)
-{
-	t_token	*current;
-
-	current = *head;
-	current = current->next;
-	while (current && current->type != executable && current->next)
-		current = current->next;
-	*head = current;
-}
-
-static int	process_input_loop(t_state *state, t_token *tokens)
-{
-	if (tokens->type != executable || tokens->result_type == NOTFOUND)
-		return (0);
-	exec(state, tokens);
-	jump_to_next_exec(&tokens);
-	return (process_input_loop(state, tokens));
-}
-
 static void	process_input(t_state *state, char *input)
 {
 	t_token					*tokens;
@@ -50,7 +30,7 @@ static void	process_input(t_state *state, char *input)
 	path_resolve_token_list(state->env, tokens);
 	pipes_init(tokens);
 	setup_nonint_signals();
-	process_input_loop(state, tokens);
+	exec(state, tokens);
     pipes_destroy(tokens);
     while(wait(&state->ret) > 0);
 	tokenizer_list_free(tokens);
