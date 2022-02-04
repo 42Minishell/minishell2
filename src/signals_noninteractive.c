@@ -28,7 +28,6 @@ static void	handle_backslash(int signal)
 static void handle_sigchld(int signal)
 {
     (void)signal;
-//    fprintf(stderr, "SIGCHLD!!! %d\n", signal);
 }
 
 void	setup_nonint_signals(void)

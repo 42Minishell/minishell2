@@ -12,7 +12,6 @@
 
 // Created by Tom Jans on 25-03-21.
 
-#include <sys/wait.h>
 #include "minishell.h"
 #include "io.h"
 
@@ -77,28 +76,27 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 		printf("Redirection failed: %s\n", strerror(errno));
 		exit(1);
 	}
-    fprintf(stderr, "ISC: %s\n", cur_token->token);
-    if (pipe)
-        fprintf(stderr, "\t[pipe]: %s %d:%d\n", pipe->token, pipe->pipe_fd[0], pipe->pipe_fd[1]);
 	if (pipe && pipe->result_type != BUILTIN)
 	{
-        fprintf(stderr, "\t[dup2_p] %d, %d\n", pipe->pipe_fd[1], 1);
-		if (dup2(pipe->pipe_fd[1], 1) == -1 \
-			|| close(pipe->pipe_fd[0]) == -1)
+		if (dup2(pipe->pipe_fd[1], 1) == -1)
 			ft_error("exec error (pipe and cur)", 25);
+        if (cur_token->result_type != BUILTIN)
+        {
+            close(pipe->pipe_fd[0]);
+            close(pipe->pipe_fd[1]);
+        }
 	}
 	else if (pipe) {
-        fprintf(stderr, "\t[dup2] DEVNULL, stdout %d\n", cur_token->pipe_fd[1]);
         if (dup2(cur_token->pipe_fd[1], 1) == -1)
             ft_error("exec error (devnull)", 20);
     }
 	if (cur_token->type == redirect_to_pipe && \
 			cur_token->result_type != BUILTIN)
 	{
-        fprintf(stderr, "\t[dup2_r] %d, %d\n", cur_token->pipe_fd[0], 0);
-		if (dup2(cur_token->pipe_fd[0], 0) == -1 \
-			|| close(cur_token->pipe_fd[1]) == -1)
+		if (dup2(cur_token->pipe_fd[0], 0) == -1)
 			ft_error("exec error (redir to)", 21);
+        close(cur_token->pipe_fd[0]);
+        close(cur_token->pipe_fd[1]);
 	}
 }
 
@@ -134,11 +132,11 @@ void	exec(t_state *state, t_token *cur_token)
 	t_token			*pipe;
     char			**argv;
 
-	pipe = get_next_pipe_token(cur_token->next);
-	if (pipe)
-		exec(state, pipe);
+    pipe = get_next_pipe_token(cur_token->next);
 	if (cur_token->result_type == BUILTIN)
 	{
+        if (pipe)
+            exec(state, pipe);
 		exec_builtin(state, &cur_token->result, cur_token, pipe);
 		cur_token->pid = -1;
 		return ;
@@ -153,4 +151,6 @@ void	exec(t_state *state, t_token *cur_token)
         argv = populate_argv(cur_token);
         execve(cur_token->result.path, argv, state->env->envp);
     }
+    if (cur_token->result_type != BUILTIN && pipe)
+        exec(state, pipe);
 }

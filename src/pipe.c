@@ -60,6 +60,7 @@ int	pipes_destroy(t_token *token)
 	{
 		if (token->type == redirect_to_pipe && token->result_type != BUILTIN)
 		{
+            fprintf(stderr, "Parent Close %d,%d\n", token->pipe_fd[0], token->pipe_fd[1]);
 			close(token->pipe_fd[0]);
 			close(token->pipe_fd[1]);
 		}
