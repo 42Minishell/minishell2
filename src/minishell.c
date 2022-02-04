@@ -28,67 +28,10 @@ static void	jump_to_next_exec(t_token **head)
 	*head = current;
 }
 
-static int	count_exec(t_token *head)
-{
-	int	i;
-
-	i = 0;
-	while (head)
-	{
-		if (head->type == executable || head->type == redirect_to_pipe)
-			i++;
-		head = head->next;
-	}
-	return (i);
-}
-
-void	save_close_pipes(t_token *token)
-{
-	t_token *pipe;
-
-	pipe = find_pipe(token);
-	if (token->type == redirect_to_pipe || !pipe)
-		return ;
-	if ((token->result_type == EXTERNAL_BINARY && pipe->result_type == EXTERNAL_BINARY) ||
-        (token->result_type == BUILTIN && pipe->result_type == EXTERNAL_BINARY))
-	{
-		close(pipe->pipe_fd[0]);
-		close(pipe->pipe_fd[1]);
-	}
-	if (token->result_type == EXTERNAL_BINARY && pipe->result_type == BUILTIN)
-		close(token->pipe_fd[1]);
-}
-
 static void	wait_for_children(t_token *head)
 {
-	int		died;
-	t_token	*token;
-	int		status;
-	int		total;
-
-	died = 0;
-	total = count_exec(head);
-    status = 0;
-	while (died < total)
-	{
-		token = head;
-		while (token)
-		{
-			if (token->type == executable || token->type == redirect_to_pipe)
-			{
-				if (token->result_type != BUILTIN)
-					waitpid(token->pid, &status, 0);
-				if (WIFEXITED(status) || WIFSIGNALED(status) || \
-					(token->result_type == BUILTIN && token->pid == -1))
-				{
-					save_close_pipes(token);
-					died++;
-					token->type = non_special;
-				}
-			}
-			token = token->next;
-		}
-	}
+    (void)head;
+    while(wait(NULL) > 0);
 }
 
 static int	process_input_loop(t_state *state, t_token *tokens)
@@ -114,7 +57,8 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	process_input_loop(state, tokens);
-	wait_for_children(tokens);
+    pipes_destroy(tokens);
+    wait_for_children(tokens);
 	tokenizer_list_free(tokens);
 	setup_int_signals();
 }
