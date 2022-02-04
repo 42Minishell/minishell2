@@ -22,12 +22,13 @@ int	receive_and_process_ipc(int fd, t_state *state)
 		recv_len = read(fd, &ipc_msg, sizeof(t_builtin_message));
 		if (recv_len != sizeof(t_builtin_message))
 			return 1;
-		if (ipc_msg.type == RET_STATUS)
+		if (ipc_msg.type == END_IPC)
 		{
-			state->ret = (int)ipc_msg.key_len;
 			env_update_envp(state->env);
 			return 0;
 		}
+		if (ipc_msg.type == EXIT)
+			exit((int)ipc_msg.key_len);
 		recv_len = read(fd, key, ipc_msg.key_len);
 		if (ipc_msg.value_len && recv_len)
 			read(fd, value, ipc_msg.value_len);

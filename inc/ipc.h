@@ -8,7 +8,8 @@ typedef enum e_builtin_message_type
 	ENV_ADD,
 	ENV_DEL,
 	CHDIR,
-	RET_STATUS
+	EXIT,
+	END_IPC
 }	t_builtin_message_type;
 
 typedef struct s_builtin_message
