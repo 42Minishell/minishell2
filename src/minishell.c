@@ -14,8 +14,23 @@
 
 #include <sys/wait.h>
 #include "minishell.h"
+#include "ipc.h"
 
 pid_t	g_child_pid;
+
+static void start_builtin_ipc(t_state *state, t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->result_type == BUILTIN)
+		{
+			receive_and_process_ipc(tokens->ipc_fd[0], state);
+			close(tokens->ipc_fd[0]);
+			close(tokens->ipc_fd[1]);
+		}
+		tokens = tokens->next;
+	}
+}
 
 static void	process_input(t_state *state, char *input)
 {
@@ -32,6 +47,7 @@ static void	process_input(t_state *state, char *input)
 	setup_nonint_signals();
 	exec(state, tokens);
     pipes_destroy(tokens);
+	start_builtin_ipc(state, tokens);
     while(wait(&state->ret) > 0);
 	tokenizer_list_free(tokens);
 	setup_int_signals();

@@ -53,3 +53,12 @@ void send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
 	if (value)
 		write(fd, value, ft_strlen(value));
 }
+
+void send_ipc_int(int fd, t_builtin_message_type type, int value)
+{
+	t_builtin_message ipc_msg;
+
+	ipc_msg.type = type;
+	ipc_msg.key_len = value;
+	write(fd, &ipc_msg, sizeof(t_builtin_message));
+}

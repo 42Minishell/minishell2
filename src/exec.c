@@ -67,54 +67,20 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 		printf("Redirection failed: %s\n", strerror(errno));
 		exit(1);
 	}
-	if (pipe && pipe->result_type != BUILTIN)
+	if (pipe)
 	{
 		if (dup2(pipe->pipe_fd[1], 1) == -1)
-			ft_error("exec error (pipe and cur)", 25);
-        if (cur_token->result_type != BUILTIN)
-        {
-            close(pipe->pipe_fd[0]);
-            close(pipe->pipe_fd[1]);
-        }
+			ft_error("exec error", 10);
+		close(pipe->pipe_fd[0]);
+		close(pipe->pipe_fd[1]);
 	}
-	else if (pipe) {
-        if (dup2(cur_token->pipe_fd[1], 1) == -1)
-            ft_error("exec error (devnull)", 20);
-    }
-	if (cur_token->type == redirect_to_pipe && \
-			cur_token->result_type != BUILTIN)
+	if (cur_token->type == redirect_to_pipe)
 	{
 		if (dup2(cur_token->pipe_fd[0], 0) == -1)
-			ft_error("exec error (redir to)", 21);
+			ft_error("exec error", 10);
         close(cur_token->pipe_fd[0]);
         close(cur_token->pipe_fd[1]);
 	}
-}
-
-void	exec_builtin_clean(t_token *builtin)
-{
-		dup2(builtin->pipe_fd[0], 0);
-		dup2(builtin->pipe_fd[1], 1);
-		close(builtin->pipe_fd[0]);
-		close(builtin->pipe_fd[1]);
-}
-
-void	exec_builtin(t_state *state, t_token *token, \
-			t_token *pipe)
-{
-	char	**argv;
-	int		ret;
-
-	token->pipe_fd[1] = dup(1);
-	token->pipe_fd[0] = dup(0);
-	if (token->pipe_fd[1] == -1 || token->pipe_fd[0] == -1)
-		ft_error("fd dup went wrong", 18);
-	io_setup_child(token, pipe);
-	argv = populate_argv(token);
-	ret = token->result.builtin(token_len(token), argv, state);
-	state->ret = ret;
-	free(argv);
-	exec_builtin_clean(token);
 }
 
 void	exec(t_state *state, t_token *cur_token)
@@ -123,14 +89,6 @@ void	exec(t_state *state, t_token *cur_token)
     char			**argv;
 
     pipe = get_next_pipe_token(cur_token->next);
-	if (cur_token->result_type == BUILTIN)
-	{
-        if (pipe)
-            exec(state, pipe);
-		exec_builtin(state, cur_token, pipe);
-		cur_token->pid = -1;
-		return ;
-	}
 	cur_token->pid = fork();
 	if (cur_token->pid == -1)
 		ft_error("fork went wrong", 16);
@@ -139,8 +97,11 @@ void	exec(t_state *state, t_token *cur_token)
     {
         io_setup_child(cur_token, pipe);
         argv = populate_argv(cur_token);
-        execve(cur_token->result.path, argv, state->env->envp);
+		if (cur_token->result_type == BUILTIN)
+			exec_builtin(state, cur_token, argv);
+		else
+        	execve(cur_token->result.path, argv, state->env->envp);
     }
-    if (cur_token->result_type != BUILTIN && pipe)
+    if (pipe)
         exec(state, pipe);
 }

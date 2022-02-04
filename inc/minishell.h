@@ -76,8 +76,7 @@ char					*prompt(t_state *state);
  */
 void					exec(t_state *state, t_token *args);
 
-void					exec_builtin(t_state *state, t_token *token, \
-							t_token *pipe);
+void					exec_builtin(t_state *state, t_token *token, char **argv);
 
 /**
  * Resolves path to binary.
@@ -103,5 +102,4 @@ void					setup_nonint_signals(void);
 extern pid_t	g_child_pid;
 int						pipes_init(t_token *token);
 int						pipes_destroy(t_token *token);
-t_token *find_pipe(t_token *token);
 #endif

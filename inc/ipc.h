@@ -21,4 +21,5 @@ typedef struct s_builtin_message
 
 int	receive_and_process_ipc(int fd, t_state *state);
 void send_ipc(int fd, t_builtin_message_type type, char *key, char *value);
+void send_ipc_int(int fd, t_builtin_message_type type, int value);
 #endif
