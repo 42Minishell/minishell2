@@ -37,8 +37,8 @@ static void	*env_iterator_envp(char *key, char *val, void *data)
 	klen = strlen(key);
 	vlen = strlen(val);
 	str = malloc(klen + vlen + 2 * sizeof(char));
-	ft_strlcpy(str, key, klen);
-	ft_strlcpy(str + klen, "=", 1);
+	ft_strlcpy(str, key, klen + vlen + 2);
+	ft_strlcpy(str + klen, "=", vlen + 2);
 	ft_strlcpy(str + klen + 1, val, vlen + 1);
 	*(char **)data = str;
 	return (data + sizeof(char *));
