@@ -14,9 +14,6 @@
 #include <unistd.h>
 #include "io.h"
 
-//TODO: Refactor
-// TODO: PROTECT SYSTEM CALLS DUP
-
 static int	setup_redir_to_overwrite(t_token *redir, t_token *prev)
 {
 	int	fd;
