@@ -59,8 +59,12 @@ int	path_resolve_token_list(t_env *env, t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->type == executable || tokens->type == redirect_to_pipe)
+		{
 			tokens->result_type = \
 				path_resolve(env, tokens->token, &tokens->result);
+			if (tokens->result_type == NOTFOUND)
+				return (1);
+		}
 		tokens = tokens->next;
 	}
 	return (0);

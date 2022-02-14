@@ -42,7 +42,8 @@ static void	process_input(t_state *state, char *input)
 		tokenizer_list_free(tokens);
 		return ;
 	}
-	path_resolve_token_list(state->env, tokens);
+	if (path_resolve_token_list(state->env, tokens))
+		return ((void)printf("Error: %s\n", strerror(errno)));
 	pipes_init(tokens);
 	setup_nonint_signals();
 	exec(state, tokens);
