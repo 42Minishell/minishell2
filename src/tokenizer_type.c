@@ -12,7 +12,7 @@
 
 #include "tokenizer.h"
 
-t_tokens	tokenizer_identify(char *s)
+t_token_type	tokenizer_identify(char *s)
 {
 	if (!*s)
 		return (non_special);

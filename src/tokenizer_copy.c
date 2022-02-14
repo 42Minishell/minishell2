@@ -38,7 +38,7 @@ static int
 		|| tokenizer_identify(src + src_pos + 1) != non_special);
 }
 
-size_t	copy_str_to_token(char *dst, char *src, size_t len, t_tokens *type)
+size_t	copy_str_to_token(char *dst, char *src, size_t len, t_token_type *type)
 {
 	size_t	dst_pos;
 	size_t	src_pos;

@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
-static size_t	get_next_token_str(char *in, char **dst, t_tokens *type)
+static size_t	get_next_token_str(char *in, char **dst, t_token_type *type)
 {
 	size_t	start;
 	size_t	end;
@@ -26,7 +26,7 @@ static size_t	get_next_token_str(char *in, char **dst, t_tokens *type)
 	return (copy_str_to_token(*dst, in + start, end - start, type));
 }
 
-static t_token	*get_next_token(char **in, t_tokens *type)
+static t_token	*get_next_token(char **in, t_token_type *type)
 {
 	t_token	*token;
 	size_t	token_len;
@@ -60,9 +60,9 @@ static t_token	*clean_empty_token(t_token *prev, t_token *token)
 
 t_token	*get_token_list(char *in)
 {
-	t_token		*head;
-	t_token		*cur;
-	t_tokens	next_type;
+	t_token			*head;
+	t_token			*cur;
+	t_token_type	next_type;
 
 	next_type = executable;
 	head = get_next_token(&in, &next_type);
