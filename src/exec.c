@@ -78,30 +78,30 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 	{
 		if (dup2(cur_token->pipe_fd[0], 0) == -1)
 			ft_error("exec error", 10);
-        close(cur_token->pipe_fd[0]);
-        close(cur_token->pipe_fd[1]);
+		close(cur_token->pipe_fd[0]);
+		close(cur_token->pipe_fd[1]);
 	}
 }
 
 void	exec(t_state *state, t_token *cur_token)
 {
 	t_token			*pipe;
-    char			**argv;
+	char			**argv;
 
-    pipe = get_next_pipe_token(cur_token->next);
+	pipe = get_next_pipe_token(cur_token->next);
 	cur_token->pid = fork();
 	if (cur_token->pid == -1)
 		ft_error("fork went wrong", 16);
 	g_child_pid = cur_token->pid;
 	if (!g_child_pid)
-    {
-        io_setup_child(cur_token, pipe);
-        argv = populate_argv(cur_token);
+	{
+		io_setup_child(cur_token, pipe);
+		argv = populate_argv(cur_token);
 		if (cur_token->result_type == BUILTIN)
 			exec_builtin(state, cur_token, argv);
 		else
-        	execve(cur_token->result.path, argv, state->env->envp);
-    }
-    if (pipe)
-        exec(state, pipe);
+			execve(cur_token->result.path, argv, state->env->envp);
+	}
+	if (pipe)
+		exec(state, pipe);
 }

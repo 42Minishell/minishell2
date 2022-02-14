@@ -16,7 +16,7 @@
 #include "builtins.h"
 #include "ipc.h"
 
-static void	add_env(char *argv, t_env *env, int ipc[2])
+static void	add_env(char *argv, int ipc[2])
 {
 	char	**split;
 	void	*sfree;
@@ -58,7 +58,7 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 	}
 	while (i < argc)
 	{
-		add_env(argv[i], state->env, ipc);
+		add_env(argv[i], ipc);
 		i++;
 	}
 	send_ipc_int(ipc[1], END_IPC, 0);

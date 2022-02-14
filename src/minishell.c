@@ -18,7 +18,7 @@
 
 pid_t	g_child_pid;
 
-static void start_builtin_ipc(t_state *state, t_token *tokens)
+static void	start_builtin_ipc(t_state *state, t_token *tokens)
 {
 	while (tokens)
 	{
@@ -46,9 +46,11 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	exec(state, tokens);
-    pipes_destroy(tokens);
+	pipes_destroy(tokens);
 	start_builtin_ipc(state, tokens);
-    while(wait(&state->ret) > 0);
+	while (wait(&state->ret) > 0)
+	{
+	}
 	tokenizer_list_free(tokens);
 	setup_int_signals();
 }
