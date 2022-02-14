@@ -25,9 +25,9 @@ static void	handle_backslash(int signal)
 	kill(g_child_pid, SIGTERM);
 }
 
-static void handle_sigchld(int signal)
+static void	handle_sigchld(int signal)
 {
-    (void)signal;
+	(void)signal;
 }
 
 void	setup_nonint_signals(void)

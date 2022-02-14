@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   builtin_export.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:13:36 by zgargasc      #+#    #+#                 */
+/*   Updated: 2021/12/18 17:13:37 by zgargasc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ipc.h"
 
-static void mutate_state(t_state *state, t_builtin_message *ipc_msg, char *key, char *value)
+static void	mutate_state(t_state *state, t_builtin_message *ipc_msg, char *key,
+						char *value)
 {
 	if (ipc_msg->type == ENV_ADD)
 		bucket_add(state->env->env, key, value);
@@ -13,19 +26,20 @@ static void mutate_state(t_state *state, t_builtin_message *ipc_msg, char *key, 
 
 int	receive_and_process_ipc(int fd, t_state *state)
 {
-	t_builtin_message ipc_msg;
-	ssize_t recv_len;
-	char key[255];
-	char value[255];
+	t_builtin_message	ipc_msg;
+	ssize_t				recv_len;
+	char				key[255];
+	char				value[255];
 
-	while (1) {
+	while (1)
+	{
 		recv_len = read(fd, &ipc_msg, sizeof(t_builtin_message));
 		if (recv_len != sizeof(t_builtin_message))
-			return 1;
+			return (1);
 		if (ipc_msg.type == END_IPC)
 		{
 			env_update_envp(state->env);
-			return 0;
+			return (0);
 		}
 		if (ipc_msg.type == EXIT)
 			exit((int)ipc_msg.key_len);
@@ -38,9 +52,9 @@ int	receive_and_process_ipc(int fd, t_state *state)
 	}
 }
 
-void send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
+void	send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
 {
-	t_builtin_message ipc_msg;
+	t_builtin_message	ipc_msg;
 
 	ipc_msg.type = type;
 	ipc_msg.key_len = ft_strlen(key) + 1;
@@ -54,9 +68,9 @@ void send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
 		write(fd, value, ft_strlen(value) + 1);
 }
 
-void send_ipc_int(int fd, t_builtin_message_type type, int value)
+void	send_ipc_int(int fd, t_builtin_message_type type, int value)
 {
-	t_builtin_message ipc_msg;
+	t_builtin_message	ipc_msg;
 
 	ipc_msg.type = type;
 	ipc_msg.key_len = value;
