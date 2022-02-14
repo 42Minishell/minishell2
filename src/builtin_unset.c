@@ -20,6 +20,7 @@ int	builtin_unset(int argc, char **argv, t_state *state, int ipc[2])
 {
 	int	i;
 
+	(void)state;
 	i = 1;
 	if (argc < 2)
 	{
