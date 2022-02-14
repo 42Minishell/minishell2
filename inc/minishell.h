@@ -54,8 +54,6 @@ typedef struct s_state
 	int			ret;
 }	t_state;
 
-/// Interface for builtin functions
-
 /// Allocate and initialize a state object
 void					state_init(t_state *state, char **argv, char **envp);
 /// Free the state object and members
