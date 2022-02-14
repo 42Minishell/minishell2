@@ -18,7 +18,7 @@ static int	setup_redir_to_overwrite(t_token *redir, t_token *prev)
 {
 	int	fd;
 
-	fd = open(redir->token, O_CREAT | O_WRONLY, 0666);
+	fd = open(redir->token, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (fd < 0)
 		return (0);
 	prev->next = redir->next;
