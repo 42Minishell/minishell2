@@ -52,6 +52,8 @@ typedef struct s_state
 	t_fdstream	*sin;
 
 	int			ret;
+
+	int			tokenizer_debug_mode;
 }	t_state;
 
 /// Allocate and initialize a state object
@@ -121,5 +123,8 @@ void					setup_nonint_signals(void);
  * @return Non-zero on failure, 0 on success
  */
 int						pipes_init(t_token *token);
+
+/// Reads command line arguments and sets debug flags
+void					parse_flags(int argc, char **argv, t_state *state);
 
 #endif
