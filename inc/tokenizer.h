@@ -93,6 +93,7 @@ typedef struct s_token
 	char					*token;
 	t_token_type			type;
 	struct s_token			*next;
+	struct s_token			*prev;
 
 	t_resolve_result_type	result_type;
 	t_resolve_result		result;

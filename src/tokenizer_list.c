@@ -76,6 +76,7 @@ t_token	*get_token_list(char *in)
 	while (cur && *in)
 	{
 		cur->next = get_next_token(&in, &next_type);
+		cur->next->prev = cur;
 		cur = clean_empty_token(cur, cur->next);
 	}
 	cur->next = ft_calloc(1, sizeof(t_token));
