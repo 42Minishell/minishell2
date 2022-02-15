@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ipc.h"
+#include "io.h"
 
 pid_t	g_child_pid;
 
@@ -34,7 +35,7 @@ static void	start_builtin_ipc(t_state *state, t_token *tokens)
 
 static void	process_input(t_state *state, char *input)
 {
-	t_token					*tokens;
+	t_token		*tokens;
 
 	tokens = tokenizer(input, state);
 	if (!tokens || !tokens->token)
@@ -44,6 +45,7 @@ static void	process_input(t_state *state, char *input)
 	}
 	if (path_resolve_token_list(state->env, tokens))
 		return ((void)printf("Error: %s\n", strerror(errno)));
+	tokens = replace_delims_with_pipes(tokens);
 	pipes_init(tokens);
 	setup_nonint_signals();
 	exec(state, tokens);
