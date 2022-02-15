@@ -43,12 +43,14 @@ list(
   src/builtin_exit.c
   src/signals_interactive.c
   src/signals_noninteractive.c
-  src/pipe.c)
+  src/pipe.c
+src/ipc.c
+inc/ipc.h)
 
 list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)
 
-add_executable(minishell2 ${minishell_SOURCES} src/minishell.c)
+add_executable(minishell2 ${minishell_SOURCES} src/minishell.c src/exec_builtin.c src/io_delim.c src/builtin_reader.c)
 target_include_directories(minishell2 PUBLIC inc/ )
 target_link_libraries(minishell2 libft readline)
 
