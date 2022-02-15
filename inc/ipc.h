@@ -63,6 +63,8 @@ typedef struct s_builtin_message
 }	t_builtin_message;
 
 /**
+ * @brief Read from IPC pipe and mutate state
+ *
  * This function reads from the IPC pipe and mutates the state object based
  * on commands from the child process. It stops reading once the pipe is closed
  * or when END_IPC is received. Blocks!
@@ -73,7 +75,7 @@ typedef struct s_builtin_message
 int		receive_and_process_ipc(int fd, t_state *state);
 
 /**
- * This function sends an IPC message over the specified pipe
+ * @brief This function sends an IPC message over the specified pipe
  *
  * It uses ft_strlen to check key and value size, value can be NULL
  * @param fd Pipe/FD to write to
@@ -84,7 +86,7 @@ int		receive_and_process_ipc(int fd, t_state *state);
 void	send_ipc(int fd, t_builtin_message_type type, char *key, char *value);
 
 /**
- * This function sends an IPC message over the specified pipe
+ * @brief This function sends an IPC message over the specified pipe
  *
  * This variation is for EXIT and END_IPC(value can be 0, is ignored)
  * @param fd Pipe/FD to write to

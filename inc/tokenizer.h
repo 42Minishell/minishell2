@@ -18,6 +18,9 @@
 struct	s_state;
 struct	s_env;
 
+/**
+ * @brief Type of the token, used for setting up redirections
+ */
 typedef enum e_token_type
 {
 	non_special = 0,
@@ -28,6 +31,9 @@ typedef enum e_token_type
 	redirect_to_pipe
 }			t_token_type;
 
+/**
+ * @brief Type for the builtin function
+ */
 typedef int (\
 		*t_builtin_function)\
 		(int argc, char **argv, struct s_state *state, int ipc[2]);
@@ -45,7 +51,6 @@ typedef enum e_resolve_result_type
 /**
  * @brief union containing the result of path_resolve()
  */
-
 typedef union u_resolve_result
 {
 	char				*path;
@@ -61,7 +66,6 @@ typedef union u_resolve_result
  * @var t_token::next
  * Pointer to next token
  */
-
 typedef struct s_token
 {
 	char					*token;
@@ -77,7 +81,7 @@ typedef struct s_token
 }	t_token;
 
 /**
- * Tokenizer, parses the input string into tokens.
+ * @brief Tokenizer, parses the input string into tokens.
  *
  * It splits the input up into separate arguments, and parses special directives
  * like environment variables.

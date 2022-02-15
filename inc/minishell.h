@@ -38,7 +38,7 @@
 
 /**
  * @struct t_state
- * Global state of the shell
+ * @brief Global state of the shell
  *
  * This keeps track of stuff like environment variables
  * @var t_state::env
@@ -74,11 +74,17 @@ char					*prompt(t_state *state);
  */
 void					exec(t_state *state, t_token *args);
 
+/**
+ * Executes a builtin
+ * @param state State object of current minishell instance
+ * @param token Token from the tokenizer, used to execute the function pointer
+ * @param argv Arguments, same as in exec
+ */
 void					exec_builtin(t_state *state, t_token *token, \
 	char **argv);
 
 /**
- * Resolves path to binary.
+ * @brief Resolves path to binary.
  *
  * Lookup happens in this order to allow overriding by end-user:
  * 1. Check if the input is an absolute or relative path
@@ -96,9 +102,36 @@ void					exec_builtin(t_state *state, t_token *token, \
 t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result);
 
+/// Setups interactive signals, for when no childs are being executed
 void					setup_int_signals(void);
+
+/// Setups non-interactive signals, to send signals to the child process
 void					setup_nonint_signals(void);
-extern pid_t	g_child_pid;
+
+/// Global variable to store the last pid in for the signal handlers
+extern pid_t			g_child_pid;
+
+/**
+ * @brief Initializes pipes and IPC
+ *
+ * This function iterates through the token list, searches all tokens with the
+ * type t_token_type::redirect_to_pipe and creates a pipe for them and stores
+ * the file descriptors in t_token::pipe_fd.
+ *
+ * If the function finds a builtin token it will open a pipe for IPC too and
+ * store the file descriptors in t_token::ipc_fd
+ * @param token Head of the token list
+ * @return Non-zero on failure, 0 on success
+ */
 int						pipes_init(t_token *token);
+
+/**
+ * @brief Closes the pipes
+ *
+ * This function iterates through the token list, searches all tokens with the
+ * type t_token_type::redirect_to_pipe and closes the pipe FD's for them
+ * @param token Head of token list
+ * @return Non-zero on failure, 0 on success
+ */
 int						pipes_destroy(t_token *token);
 #endif

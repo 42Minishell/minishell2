@@ -59,7 +59,7 @@ typedef struct s_bucket {
 
 /**
  * @typedef t_bucket_iterator
- * Interface for the bucket iterator
+ * @brief Interface for the bucket iterator
  *
  * This defines the interface of functions you can pass to bucket_iter(),
  * currently this is only used for generating envp in env_update_envp()
@@ -88,7 +88,7 @@ t_bucket	*bucket_new_table(void);
  */
 void		bucket_add(t_bucket *table, char *key, char *val);
 /**
- * Deletes key,value entry from the hashtable
+ * @brief Deletes key,value entry from the hashtable
  *
  * To keep the code simple bucket_del frees the strings and replaces the key
  * with an empty string, so we do not have to regenerate the overflow buckets.
@@ -123,7 +123,7 @@ t_bucket	*bucket_get(t_bucket *table, char *key, int create);
  */
 char		*bucket_get_value(t_bucket *table, char *key);
 /**
- * Iterate through all elements in the hash table
+ * @brief Iterate through all elements in the hash table
  *
  * The order is completely semi-random according to to the hash function
  * used, do not assume it is alphabetically or fifo ordered

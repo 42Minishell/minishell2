@@ -41,7 +41,7 @@ t_env	*env_init(void);
 void	env_free(t_env *env);
 
 /**
- * Clears and creates a new envp array at t_env::envp
+ * @brief Clears and creates a new envp array at t_env::envp
  *
  * This function refreshes the array of C strings containing environment
  * variables.
