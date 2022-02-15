@@ -58,6 +58,7 @@ t_token	*insert_pipe_token(t_token *delim, t_token *head)
 t_token	*replace_delims_with_pipes(t_token *head)
 {
 	t_token	*cur;
+	t_token	*new_next;
 
 	cur = head;
 	while (cur)
@@ -65,6 +66,12 @@ t_token	*replace_delims_with_pipes(t_token *head)
 		if (cur->type == read_until_delimiter)
 		{
 			head = insert_pipe_token(cur, head);
+			new_next = cur->next;
+			cur = cur->prev;
+			free(cur->next->token);
+			free(cur->next);
+			cur->next = new_next;
+			cur->next->prev = cur;
 		}
 		cur = cur->next;
 	}
