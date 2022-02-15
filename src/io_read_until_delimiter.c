@@ -20,7 +20,7 @@
 static t_token	*create_pipe_token(t_token *next, t_token *delim)
 {
 	t_token	*pipe;
-	t_token *pipe_arg;
+	t_token	*pipe_arg;
 
 	pipe = ft_calloc(1, sizeof(t_token));
 	pipe_arg = ft_calloc(1, sizeof(t_token));

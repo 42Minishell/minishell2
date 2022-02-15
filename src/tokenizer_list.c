@@ -40,6 +40,8 @@ static t_token	*get_next_token(char **in, t_token_type *type)
 		ft_error("calloc in new_token error", 26);
 	token->type = *type;
 	token_len = get_next_token_str(*in, &token->token, type);
+	if (**in == ' ')
+		token_len++;
 	if (token_len < in_len)
 		*in += token_len;
 	else
