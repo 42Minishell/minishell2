@@ -10,6 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file
+ * Functions for the tokenizer and data structures for tokens
+ */
+
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 # include <stdbool.h>
@@ -63,8 +68,20 @@ typedef union u_resolve_result
  *
  * @var t_token::token
  * String with contents of token
+ * @var t_token::type
+ * Type of the token
  * @var t_token::next
  * Pointer to next token
+ * @var t_token::result_type
+ * Type of the resolver result
+ * @var t_token::result
+ * Content of the resolver result
+ * @var t_token::pipe_fd
+ * File descriptors for the pipes if token contains a pipe
+ * @var t_token::ipc_fd
+ * File descriptors for IPC pipes, if the token is a builtin
+ * @var t_token::pid
+ * When executed the pid of the process contained in the token is stored here
  */
 typedef struct s_token
 {
