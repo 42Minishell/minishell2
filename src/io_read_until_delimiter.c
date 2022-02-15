@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
- * >INSERT POINT< [Binary] [Args] [read_until_delim]
- */
-
 #include "io.h"
 #include "builtins.h"
 
