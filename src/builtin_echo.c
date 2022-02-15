@@ -13,6 +13,7 @@
 // Created by Tom Jans on 28-03-21.
 
 #include "builtins.h"
+#include "ipc.h"
 
 static int	check_opt(char *str)
 {
@@ -27,7 +28,7 @@ int	builtin_echo(int argc, char **argv, t_state *state, int ipc[2])
 	int	print_newline;
 
 	(void)state;
-	(void)ipc;
+	send_ipc_int(ipc[1], END_IPC, 0);
 	if (argc < 2)
 		exit(0);
 	print_newline = check_opt(argv[1]);

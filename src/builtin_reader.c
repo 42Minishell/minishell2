@@ -12,6 +12,7 @@
 
 #include <unistd.h>
 #include "builtins.h"
+#include "ipc.h"
 
 int	builtin_reader(int argc, char **argv, t_state *state, int ipc[2])
 {
@@ -22,7 +23,7 @@ int	builtin_reader(int argc, char **argv, t_state *state, int ipc[2])
 
 	(void)argc;
 	(void)state;
-	(void)ipc;
+	send_ipc_int(ipc[1], END_IPC, 0);
 	nl = '\n';
 	stdin_fds = fd_openfd(STDIN_FILENO);
 	while (fd_readline(stdin_fds, &line) >= 0)

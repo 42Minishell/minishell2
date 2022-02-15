@@ -13,6 +13,7 @@
 // Created by Tom Jans on 28-03-21.
 
 #include "builtins.h"
+#include "ipc.h"
 
 int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 {
@@ -20,7 +21,7 @@ int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 
 	(void)argc;
 	(void)argv;
-	(void)ipc;
+	send_ipc_int(ipc[1], END_IPC, 0);
 	pwd = bucket_get_value(state->env->env, "PWD");
 	if (!pwd)
 		exit(1);
