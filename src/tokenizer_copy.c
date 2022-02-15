@@ -64,5 +64,5 @@ size_t	copy_str_to_token(char *dst, char *src, size_t len, t_token_type *type)
 		src_pos++;
 	}
 	*type = tokenizer_identify(src + src_pos);
-	return (src_pos + 1 + (*type == redirect_to_append));
+	return (src_pos + 1 + (*type >= redirect_to_append));
 }

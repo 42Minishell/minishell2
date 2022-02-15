@@ -24,7 +24,12 @@ t_token_type	tokenizer_identify(char *s)
 			return (redirect_to_overwrite);
 	}
 	if (*s == '<')
-		return (redirect_from_file);
+	{
+		if (*(s + 1) == '<')
+			return (read_until_delimiter);
+		else
+			return (redirect_from_file);
+	}
 	if (*s == '|')
 		return (redirect_to_pipe);
 	return (non_special);
