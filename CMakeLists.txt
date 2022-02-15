@@ -50,7 +50,7 @@ inc/ipc.h)
 list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)
 
-add_executable(minishell2 ${minishell_SOURCES} src/minishell.c src/exec_builtin.c src/builtin_reader.c src/io_read_until_delimiter.c src/debug_options.c)
+add_executable(minishell2 ${minishell_SOURCES} src/minishell.c src/exec_builtin.c src/builtin_reader.c src/io_read_until_delimiter.c src/debug_options.c src/debug_tokenizer.c)
 target_include_directories(minishell2 PUBLIC inc/ )
 target_link_libraries(minishell2 libft readline)
 
