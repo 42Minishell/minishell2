@@ -108,9 +108,6 @@ void					setup_int_signals(void);
 /// Setups non-interactive signals, to send signals to the child process
 void					setup_nonint_signals(void);
 
-/// Global variable to store the last pid in for the signal handlers
-extern pid_t			g_child_pid;
-
 /**
  * @brief Initializes pipes and IPC
  *
@@ -125,13 +122,4 @@ extern pid_t			g_child_pid;
  */
 int						pipes_init(t_token *token);
 
-/**
- * @brief Closes the pipes
- *
- * This function iterates through the token list, searches all tokens with the
- * type t_token_type::redirect_to_pipe and closes the pipe FD's for them
- * @param token Head of token list
- * @return Non-zero on failure, 0 on success
- */
-int						pipes_destroy(t_token *token);
 #endif

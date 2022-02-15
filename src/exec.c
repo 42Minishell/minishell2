@@ -92,8 +92,7 @@ void	exec(t_state *state, t_token *cur_token)
 	cur_token->pid = fork();
 	if (cur_token->pid == -1)
 		ft_error("fork went wrong", 16);
-	g_child_pid = cur_token->pid;
-	if (!g_child_pid)
+	if (!cur_token->pid)
 	{
 		io_setup_child(cur_token, pipe);
 		argv = populate_argv(cur_token);
@@ -102,13 +101,10 @@ void	exec(t_state *state, t_token *cur_token)
 		else
 			execve(cur_token->result.path, argv, state->env->envp);
 	}
-	else
+	else if (cur_token->type == redirect_to_pipe)
 	{
-		if (cur_token->type == redirect_to_pipe)
-		{
-			close(cur_token->pipe_fd[0]);
-			close(cur_token->pipe_fd[1]);
-		}
+		close(cur_token->pipe_fd[0]);
+		close(cur_token->pipe_fd[1]);
 	}
 	if (pipe)
 		exec(state, pipe);

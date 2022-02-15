@@ -16,8 +16,6 @@
 #include "minishell.h"
 #include "ipc.h"
 
-pid_t	g_child_pid;
-
 static void	start_builtin_ipc(t_state *state, t_token *tokens)
 {
 	while (tokens)
@@ -34,7 +32,7 @@ static void	start_builtin_ipc(t_state *state, t_token *tokens)
 
 static void	process_input(t_state *state, char *input)
 {
-	t_token					*tokens;
+	t_token	*tokens;
 
 	tokens = tokenizer(input, state);
 	if (!tokens || !tokens->token)

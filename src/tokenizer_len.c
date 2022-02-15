@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "tokenizer.h"
 
 size_t	get_whitespace_length(char *s)
