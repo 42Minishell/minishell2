@@ -47,7 +47,6 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	exec(state, tokens);
-	pipes_destroy(tokens);
 	start_builtin_ipc(state, tokens);
 	while (wait(&state->ret) > 0)
 	{
