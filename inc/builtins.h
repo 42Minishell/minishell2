@@ -61,5 +61,7 @@ int		builtin_pwd(int argc, char **argv, t_state *state, int ipc[2]);
 int		builtin_cd(int argc, char **argv, t_state *state, int ipc[2]);
 /// Exit
 int		builtin_exit(int argc, char **argv, t_state *state, int ipc[2]);
+/// Cat-like reader, reads until delimiter. Internal use only
+int		builtin_reader(int argc, char **argv, t_state *state, int ipc[2]);
 
 #endif

@@ -14,6 +14,7 @@
 # define IO_H
 # include "minishell.h"
 
-int	io_setup(t_token *list);
+int		io_setup(t_token *list);
+t_token	*replace_delims_with_pipes(t_token *head);
 
 #endif

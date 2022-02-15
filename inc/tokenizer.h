@@ -25,6 +25,10 @@ struct	s_env;
 
 /**
  * @brief Type of the token, used for setting up redirections
+ *
+ * @warning
+ * All the types after and including redirect_to_pipe assume the token for
+ * it is 2 characters, if it is only one insert it before redirect_to_pipe
  */
 typedef enum e_token_type
 {
@@ -33,7 +37,8 @@ typedef enum e_token_type
 	redirect_to_overwrite,
 	redirect_to_append,
 	redirect_from_file,
-	redirect_to_pipe
+	redirect_to_pipe,
+	read_until_delimiter
 }			t_token_type;
 
 /**
@@ -88,6 +93,7 @@ typedef struct s_token
 	char					*token;
 	t_token_type			type;
 	struct s_token			*next;
+	struct s_token			*prev;
 
 	t_resolve_result_type	result_type;
 	t_resolve_result		result;
