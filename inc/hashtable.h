@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:45 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:28:34 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:09:57 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,6 @@ char		*bucket_get_value(t_bucket *table, char *key);
  */
 void		bucket_iter(t_bucket *table, t_bucket_iterator f, void *data);
 
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
 #endif

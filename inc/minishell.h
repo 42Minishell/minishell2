@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:32:19 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:10:11 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,8 @@ void					setup_nonint_signals(void);
  * @return Non-zero on failure, 0 on success
  */
 int						pipes_init(t_token *token);
+
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
 
 #endif

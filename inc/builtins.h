@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:40 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:27:41 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:08:44 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int		builtin_cd(int argc, char **argv, t_state *state, int ipc[2]);
 int		builtin_exit(int argc, char **argv, t_state *state, int ipc[2]);
 /// Cat-like reader, reads until delimiter. Internal use only
 int		builtin_reader(int argc, char **argv, t_state *state, int ipc[2]);
-
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
 #endif

@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   listcreate.c                                       :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tjans <tjans@student.codam.nl>               +#+                     */
+/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/25 16:40:59 by tjans         #+#    #+#                 */
-/*   Updated: 2022/02/16 19:00:08 by zgargasc      ########   odam.nl         */
+/*   Created: 2022/02/16 19:11:30 by zgargasc      #+#    #+#                 */
+/*   Updated: 2022/02/16 19:20:34 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "str/list.h"
+#include "minishell.h"
+#include "tokenizer.h"
 
-t_strlist	*strlist_create(char *str)
+void	*ft_malloc(size_t size)
 {
-	t_strlist	*lst;
+	void	*new;
 
-	lst = ft_malloc(sizeof(t_strlist));
-	if (!lst || !str)
-		return (NULL);
-	lst->str = str;
-	lst->next = NULL;
-	return (lst);
+	new = malloc(size);
+	if (!new)
+		ft_error("Memory allocation went wrong", 29);
+	return (new);
 }

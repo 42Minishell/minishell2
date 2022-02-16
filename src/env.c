@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:24 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:15:43 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:17:43 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	*env_iterator_envp(char *key, char *val, void *data)
 
 	klen = strlen(key);
 	vlen = strlen(val);
-	str = malloc(klen + vlen + 2 * sizeof(char));
+	str = ft_malloc(klen + vlen + 2 * sizeof(char));
 	ft_strlcpy(str, key, klen + vlen + 2);
 	ft_strlcpy(str + klen, "=", vlen + 2);
 	ft_strlcpy(str + klen + 1, val, vlen + 1);
@@ -49,8 +49,6 @@ t_env	*env_init(void)
 	t_env	*env;
 
 	env = ft_calloc(1, sizeof(t_env));
-	if (env == NULL)
-		ft_error("malloc error", 13);
 	env->env = bucket_new_table();
 	env_update_envp(env);
 	return (env);

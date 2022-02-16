@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   split.c                                            :+:    :+:            */
+/*   ft_split.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 20:25:40 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/09 21:19:29 by tjans         ########   odam.nl         */
+/*   Updated: 2022/02/16 19:16:25 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ static char	*get_next_str(char const **s, char c)
 	while (str[ns_len] && str[ns_len] != c)
 		ns_len++;
 	ns_pos = 0;
-	newstr = malloc(sizeof(char) * ns_len + 1);
-	if (!newstr)
-		return (NULL);
+	newstr = ft_malloc(sizeof(char) * ns_len + 1);
 	while (ns_pos < ns_len)
 	{
 		newstr[ns_pos] = *str;
@@ -85,9 +83,7 @@ char	**ft_split(char const *s, char c)
 		s++;
 	arr_index = 0;
 	arr_size = calc_arr_size(s, c);
-	arr = malloc(sizeof(char *) * (arr_size + 1));
-	if (!arr)
-		return (NULL);
+	arr = ft_malloc(sizeof(char *) * (arr_size + 1));
 	while (arr_index < arr_size && *s)
 	{
 		arr[arr_index] = get_next_str(&s, c);

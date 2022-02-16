@@ -6,7 +6,7 @@
 /*   By: tjans <tjans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 16:53:53 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/25 17:28:05 by tjans         ########   odam.nl         */
+/*   Updated: 2022/02/16 19:16:56 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ char	*strlist_join(t_strlist *lst)
 	size_t	str_len;
 
 	str_len = strlist_len(lst) + 1;
-	str = malloc(sizeof(char) * str_len);
-	if (!str)
-		return (NULL);
+	str = ft_malloc(sizeof(char) * str_len);
 	ft_strlcpy(str, lst->str, str_len);
 	while (lst->next)
 	{

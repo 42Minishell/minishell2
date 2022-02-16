@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ipc.h                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/18 17:27:47 by zgargasc      #+  #+#    #+#             */
-/*   Updated: 2022/02/14 21:05:16 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ipc.h                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
+/*   Updated: 2022/02/16 19:10:06 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,8 @@ void	send_ipc(int fd, t_builtin_message_type type, char *key, char *value);
  * @param value Integral value
  */
 void	send_ipc_int(int fd, t_builtin_message_type type, int value);
+
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
+
 #endif

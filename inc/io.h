@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:48 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:27:48 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:10:01 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@
 
 int		io_setup(t_token *list);
 t_token	*replace_delims_with_pipes(t_token *head);
+
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   itoa.c                                             :+:    :+:            */
+/*   ft_itoa.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 21:04:19 by tjans         #+#    #+#                 */
-/*   Updated: 2019/11/03 20:03:22 by tjans         ########   odam.nl         */
+/*   Updated: 2022/02/16 19:16:12 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ char	*ft_itoa(int n)
 	int		i;
 	int		neg;
 
-	s = malloc(calc_strlen(n));
-	if (!s)
-		return (NULL);
+	s = ft_malloc(calc_strlen(n));
 	i = 0;
 	neg = (n < 0);
 	if (n == 0)

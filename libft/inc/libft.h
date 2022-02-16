@@ -6,7 +6,7 @@
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 15:36:12 by tjans         #+#    #+#                 */
-/*   Updated: 2020/01/07 17:01:37 by tjans         ########   odam.nl         */
+/*   Updated: 2022/02/16 19:21:18 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,9 @@ void			ft_putnbr_fd(int n, int fd);
 
 int				ternary_i(int condition, int ret_true, int ret_false);
 
+/*
+** Malloc with protection.
+ */
+
+void	*ft_malloc(size_t size);
 #endif

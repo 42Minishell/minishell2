@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:44 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:27:45 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/16 19:09:47 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	env_update_envp(t_env *env);
 void	env_populate(t_env *env, char *shell, char **envp);
 /// Get current directory and save it in the PWD environment variable
 void	env_init_pwd(t_env *env);
+
+/// Our protected malloc function.
+void	*ft_malloc(size_t size);
 
 /**
  * Check if binary is in PATH and returns the location if it is.
