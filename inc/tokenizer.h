@@ -129,4 +129,5 @@ char			*copy_str_until_special_char(char *in, size_t *chars_copied);
 t_token			*token_create_empty(t_token *next, t_token *prev);
 int				lexer_action_whitespace(t_token **dst, char **in);
 int				lexer_action_non_special(t_token **dst, char **in);
+int				lexer_action_redirection_right(t_token **dst, char **in);
 #endif

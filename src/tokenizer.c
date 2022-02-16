@@ -13,8 +13,9 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
-const static t_lexer_action_lookup	g_lexer_table[3] = {
+const static t_lexer_action_lookup	g_lexer_table[4] = {
 {' ', &lexer_action_whitespace},
+{'>', &lexer_action_redirection_right},
 {0, &lexer_action_non_special},
 {0, NULL}
 };
