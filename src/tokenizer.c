@@ -13,9 +13,10 @@
 #include "minishell.h"
 #include "tokenizer.h"
 
-const static t_lexer_action_lookup	g_lexer_table[4] = {
+const static t_lexer_action_lookup	g_lexer_table[5] = {
 {' ', &lexer_action_whitespace},
 {'>', &lexer_action_redirection_right},
+{'<', &lexer_action_redirection_left},
 {0, &lexer_action_non_special},
 {0, NULL}
 };
@@ -53,6 +54,7 @@ int	get_tokens_from_str(char *in, t_token **head)
 					*head = cur;
 				if (cur && cur->next)
 					cur = cur->next;
+				break ;
 			}
 			i++;
 		}
