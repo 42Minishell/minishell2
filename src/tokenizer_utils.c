@@ -10,49 +10,81 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "config.h"
 #include "tokenizer.h"
 #include "libft.h"
 
-t_token	*create_token(t_token **dst)
+static void	check_literal(char **c, t_literal_mode *mode)
 {
-	if (!*dst)
+	if (**c == '\'')
 	{
-		*dst = token_create_empty(NULL, NULL);
-		if (!*dst)
-			return (NULL);
+		if (*mode == SINGLEQUOTE)
+			*mode = DEFAULT;
+		if (*mode == DEFAULT)
+			*mode = SINGLEQUOTE;
+		if (*mode == DOUBLEQUOTE)
+			return ;
+		(*c)++;
+		check_literal(c, mode);
 	}
-	else
+	else if (**c == '"')
 	{
-		(*dst)->next = token_create_empty(NULL, *dst);
-		if (!(*dst)->next)
-			return (NULL);
+		if (*mode == DOUBLEQUOTE)
+			*mode = DEFAULT;
+		if (*mode == DEFAULT)
+			*mode = DOUBLEQUOTE;
+		if (*mode == SINGLEQUOTE)
+			return ;
+		(*c)++;
+		check_literal(c, mode);
 	}
-	if (!(*dst)->next)
-		return (*dst);
-	return ((*dst)->next);
 }
 
-static size_t	strlen_until_special_char(char *in)
+static	size_t copy_byte(char *in, char *dst, t_literal_mode mode)
 {
-	size_t	i;
-
-	i = 0;
-	while (in[i] && !is_special_character(in[i]))
-		i++;
-	return (i);
+	if(*in && (!is_special_character(*in) || mode))
+	{
+		*dst = *in;
+		return (1);
+	}
+	return (0);
 }
 
-char	*copy_str_until_special_char(char *in, size_t *chars_copied)
+void	reallocate_string(char **s, size_t *buf_size)
 {
-	size_t	len;
-	char	*s;
+	char	*new;
 
-	len = strlen_until_special_char(in);
-	s = malloc(len + 1 + sizeof(char));
+	new = malloc(*buf_size + TOK_ALLOC_BLK_SIZE);
+	ft_memcpy(new, *s, *buf_size);
+	*buf_size += TOK_ALLOC_BLK_SIZE;
+	free(*s);
+	*s = new;
+}
+
+char	*copy_str_until_special_char(char **in, struct s_state *state)
+{
+	size_t			pos;
+	size_t			buf_size;
+	size_t 			copy_ret;
+	char			*s;
+	t_literal_mode	literal_mode;
+
+	(void)state;
+	s = malloc(TOK_ALLOC_BLK_SIZE);
+	pos = 0;
+	literal_mode = DEFAULT;
 	if (!s)
 		return (NULL);
-	ft_strlcpy(s, in, len + 1);
-	if (chars_copied)
-		*chars_copied = len;
+	while (**in)
+	{
+		if (pos == buf_size - 1)
+			reallocate_string(&s, &buf_size);
+		check_literal(in, &literal_mode);
+		copy_ret = copy_byte(*in, s + pos, literal_mode);
+		if (!copy_ret)
+			break ;
+		pos += copy_ret;
+		(*in) += copy_ret;
+	}
 	return (s);
 }

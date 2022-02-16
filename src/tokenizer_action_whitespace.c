@@ -12,9 +12,11 @@
 
 #include "tokenizer.h"
 
-int	lexer_action_whitespace(t_token **dst, char **in)
+int	lexer_action_whitespace(t_token **dst, char **in, \
+	struct s_state *state)
 {
 	(void)dst;
+	(void)state;
 	while (**in && **in == ' ')
 		(*in)++;
 	return (0);

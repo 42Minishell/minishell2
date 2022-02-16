@@ -13,17 +13,16 @@
 #include "tokenizer.h"
 #include "libft.h"
 
-int	lexer_action_non_special(t_token **dst, char **in)
+int	lexer_action_non_special(t_token **dst, char **in, \
+	struct s_state *state)
 {
 	t_token	*token;
-	size_t	len;
 
 	token = create_token(dst);
 	if (!token)
 		return (1);
-	token->token = copy_str_until_special_char(*in, &len);
+	token->token = copy_str_until_special_char(in, state);
 	if (!token->token)
 		return (1);
-	*in += len;
 	return (0);
 }

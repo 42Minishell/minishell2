@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_action_pipe.c                            :+:      :+:    :+:   */
+/*   tokenizer_substitute_env.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 14:27:33 by tjans             #+#    #+#             */
-/*   Updated: 2022/02/16 14:27:34 by tjans            ###   ########.fr       */
+/*   Created: 2022/02/16 16:34:57 by tjans             #+#    #+#             */
+/*   Updated: 2022/02/16 16:35:00 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "config.h"
 #include "tokenizer.h"
+#include "libft.h"
 
-int	lexer_action_pipe(t_token **dst, char **in, \
+void	insert_env_into_string(char **in, char *s, size_t *posbuf[2], \
 	struct s_state *state)
 {
-	t_token	*token;
-
-	if (!*dst)
-		return (1);
-	token = create_token(dst);
-	if (!token)
-		return (1);
-	(*in)++;
-	lexer_action_whitespace(NULL, in, state);
-	if (!**in || is_special_character(**in))
-		return (1);
-	token->token = copy_str_until_special_char(in, state);
-	token->type = redirect_to_pipe;
-	return (0);
 }

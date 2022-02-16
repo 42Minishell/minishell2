@@ -36,7 +36,7 @@ int	is_special_character(char c)
 	return (0);
 }
 
-int	get_tokens_from_str(char *in, t_token **head)
+static int	get_tokens_from_str(char *in, t_token **head, t_state *state)
 {
 	int		i;
 	t_token	*cur;
@@ -49,7 +49,7 @@ int	get_tokens_from_str(char *in, t_token **head)
 		{
 			if (g_lexer_table[i].token == *in || !g_lexer_table[i].token)
 			{
-				if (g_lexer_table[i].action(&cur, &in))
+				if (g_lexer_table[i].action(&cur, &in, state))
 					return (1);
 				if (!*head && cur)
 					*head = cur;
@@ -69,7 +69,7 @@ t_token	*tokenizer(char *in, t_state *state)
 
 	(void)state;
 	head = NULL;
-	if (get_tokens_from_str(in, &head))
+	if (get_tokens_from_str(in, &head, state))
 		printf("Syntax error.\n");
 	free(in);
 	return (head);

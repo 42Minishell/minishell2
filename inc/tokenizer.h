@@ -105,13 +105,20 @@ typedef struct s_token
 
 typedef int (\
 		*t_lexer_action)\
-		(t_token **dst, char **in);
+		(t_token **dst, char **in, struct s_state *state);
 
 typedef struct s_lexer_state
 {
 	char			token;
 	t_lexer_action	action;
 }				t_lexer_action_lookup;
+
+typedef enum e_literal_mode
+{
+	DEFAULT,
+	DOUBLEQUOTE,
+	SINGLEQUOTE
+}				t_literal_mode;
 
 /**
  * @brief Tokenizer, parses the input string into tokens.
@@ -125,11 +132,19 @@ typedef struct s_lexer_state
 t_token			*tokenizer(char *in, struct s_state *state);
 int				is_special_character(char c);
 t_token			*create_token(t_token **dst);
-char			*copy_str_until_special_char(char *in, size_t *chars_copied);
+char			*copy_str_until_special_char(char **in, struct s_state *state);
 t_token			*token_create_empty(t_token *next, t_token *prev);
-int				lexer_action_whitespace(t_token **dst, char **in);
-int				lexer_action_non_special(t_token **dst, char **in);
-int				lexer_action_redirection_right(t_token **dst, char **in);
-int				lexer_action_redirection_left(t_token **dst, char **in);
-int				lexer_action_pipe(t_token **dst, char **in);
+void			reallocate_string(char **s, size_t *buf_size);
+void			insert_env_into_string(char **in, char *s, size_t *posbuf[2], \
+	struct s_state *state);
+int				lexer_action_whitespace(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_non_special(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_redirection_right(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_redirection_left(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_pipe(t_token **dst, char **in, \
+	struct s_state *state);
 #endif
