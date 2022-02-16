@@ -131,4 +131,5 @@ int				lexer_action_whitespace(t_token **dst, char **in);
 int				lexer_action_non_special(t_token **dst, char **in);
 int				lexer_action_redirection_right(t_token **dst, char **in);
 int				lexer_action_redirection_left(t_token **dst, char **in);
+int				lexer_action_pipe(t_token **dst, char **in);
 #endif
