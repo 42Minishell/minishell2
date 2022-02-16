@@ -103,6 +103,16 @@ typedef struct s_token
 	pid_t					pid;
 }	t_token;
 
+typedef int (\
+		*t_lexer_action)\
+		(t_token **dst, char **in);
+
+typedef struct s_lexer_state
+{
+	char			token;
+	t_lexer_action	action;
+}				t_lexer_action_lookup;
+
 /**
  * @brief Tokenizer, parses the input string into tokens.
  *
@@ -113,4 +123,8 @@ typedef struct s_token
  * @return Returns linked lists of token objects
  */
 t_token			*tokenizer(char *in, struct s_state *state);
+int				is_special_character(char c);
+t_token			*token_create_empty(t_token *next, t_token *prev);
+int				lexer_action_whitespace(t_token **dst, char **in);
+int				lexer_action_non_special(t_token **dst, char **in);
 #endif

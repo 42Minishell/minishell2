@@ -129,4 +129,6 @@ void					parse_flags(int argc, char **argv, t_state *state);
 /// Prints all tokens in chain
 void					print_tokens(t_token *tokens);
 
+void					ft_error(char *s, size_t len);
+
 #endif
