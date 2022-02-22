@@ -40,9 +40,9 @@ static void	check_literal(char **c, t_literal_mode *mode)
 	}
 }
 
-static	size_t copy_byte(char *in, char *dst, t_literal_mode mode)
+static size_t	copy_byte(char *in, char *dst, t_literal_mode mode)
 {
-	if(*in && (!is_special_character(*in) || mode))
+	if (*in && (!is_special_character(*in) || mode))
 	{
 		*dst = *in;
 		return (1);
@@ -63,27 +63,29 @@ void	reallocate_string(char **s, size_t *buf_size)
 
 char	*copy_str_until_special_char(char **in, struct s_state *state)
 {
-	size_t			pos;
-	size_t			buf_size;
-	size_t 			copy_ret;
+	size_t			posbuf[2];
+	size_t			copy_ret;
 	char			*s;
 	t_literal_mode	literal_mode;
 
-	(void)state;
 	s = malloc(TOK_ALLOC_BLK_SIZE);
-	pos = 0;
+	posbuf[POS] = 0;
+	posbuf[BUF] = TOK_ALLOC_BLK_SIZE;
 	literal_mode = DEFAULT;
 	if (!s)
 		return (NULL);
 	while (**in)
 	{
-		if (pos == buf_size - 1)
-			reallocate_string(&s, &buf_size);
+		if (posbuf[POS] == posbuf[BUF] - 1)
+			reallocate_string(&s, &posbuf[BUF]);
 		check_literal(in, &literal_mode);
-		copy_ret = copy_byte(*in, s + pos, literal_mode);
+		if (literal_mode != SINGLEQUOTE && \
+			insert_env_into_string(in, &s, posbuf, state))
+			continue ;
+		copy_ret = copy_byte(*in, s + posbuf[POS], literal_mode);
 		if (!copy_ret)
 			break ;
-		pos += copy_ret;
+		posbuf[POS] += copy_ret;
 		(*in) += copy_ret;
 	}
 	return (s);

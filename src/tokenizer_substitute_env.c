@@ -12,9 +12,52 @@
 
 #include "config.h"
 #include "tokenizer.h"
+#include "minishell.h"
 #include "libft.h"
 
-void	insert_env_into_string(char **in, char *s, size_t *posbuf[2], \
+static int	getkey(char *in, char *out)
+{
+	int	size;
+
+	size = 0;
+	while (*in && \
+			((*in >= '0' && *in <= '9') || \
+			(*in >= 'a' && *in <= 'z') || \
+			(*in >= 'A' && *in <= 'Z') || \
+			(*in == '_')))
+	{
+		out[size] = *in;
+		size++;
+		in++;
+	}
+	out[size] = 0;
+	return (size);
+}
+
+int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 	struct s_state *state)
 {
+	char	key[4096];
+	int		keylen;
+	char	*val;
+	size_t	vallen;
+
+	if (**in != '$' || !**in || *((*in) + 1) == ' ')
+		return (0);
+	keylen = getkey((*in) + 1, key);
+	if (keylen)
+	{
+		(*in) += keylen + 1;
+		val = bucket_get_value(state->env->env, key);
+		if (val)
+		{
+			vallen = ft_strlen(val);
+			while (posbuf[BUF] - posbuf[POS] < vallen)
+				reallocate_string(s, &posbuf[BUF]);
+			strlcpy((*s) + posbuf[POS], val, posbuf[BUF] - posbuf[POS]);
+			posbuf[POS] += vallen;
+		}
+		return (1);
+	}
+	return (0);
 }

@@ -20,6 +20,9 @@
 # include <stdbool.h>
 # include "hashtable.h"
 
+# define POS 0
+# define BUF 1
+
 struct	s_state;
 struct	s_env;
 
@@ -132,10 +135,11 @@ typedef enum e_literal_mode
 t_token			*tokenizer(char *in, struct s_state *state);
 int				is_special_character(char c);
 t_token			*create_token(t_token **dst);
+t_token			*free_token_list(t_token *head);
 char			*copy_str_until_special_char(char **in, struct s_state *state);
 t_token			*token_create_empty(t_token *next, t_token *prev);
 void			reallocate_string(char **s, size_t *buf_size);
-void			insert_env_into_string(char **in, char *s, size_t *posbuf[2], \
+int				insert_env_into_string(char **in, char **s, size_t *posbuf, \
 	struct s_state *state);
 int				lexer_action_whitespace(t_token **dst, char **in, \
 	struct s_state *state);

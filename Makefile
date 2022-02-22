@@ -21,7 +21,8 @@ SRCS := builtin_cd.c builtin_echo.c builtin_exit.c builtin_export.c \
 		io_read_until_delimiter.c debug_options.c debug_tokenizer.c \
 		tokenizer_list.c tokenizer_action_whitespace.c \
 		tokenizer_action_non_special.c ft_error.c tokenizer_utils.c \
-		tokenizer_action_redirections.c tokenizer_action_pipe.c
+		tokenizer_action_redirections.c tokenizer_action_pipe.c \
+		tokenizer_substitute_env.c
 HDRS := inc/builtins.h inc/config.h inc/env.h inc/hashtable.h inc/io.h \
 		inc/minishell.h inc/tokenizer.h libft/inc/libft.h \
 		libft/inc/fd.h inc/ipc.h
