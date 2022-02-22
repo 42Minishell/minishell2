@@ -104,6 +104,9 @@ void					exec_builtin(t_state *state, t_token *token, \
 t_resolve_result_type	path_resolve(t_env *env, char *exec,
 							t_resolve_result *result);
 
+/// Iterates path_resolve() for every token in list
+int						path_resolve_token_list(t_env *env, t_token *tokens);
+
 /// Setups interactive signals, for when no childs are being executed
 void					setup_int_signals(void);
 

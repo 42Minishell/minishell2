@@ -43,3 +43,22 @@ t_token	*create_token(t_token **dst)
 		return (*dst);
 	return ((*dst)->next);
 }
+
+t_token	*free_token_list(t_token *head)
+{
+	t_token	*head_prev;
+
+	while (head)
+	{
+		if (head->token)
+		{
+			if (head->result_type == EXTERNAL_BINARY && head->result.path)
+				free(head->result.path);
+			free(head->token);
+		}
+		head_prev = head;
+		head = head->next;
+		free(head_prev);
+	}
+	return (NULL);
+}

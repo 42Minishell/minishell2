@@ -38,11 +38,11 @@ static void	process_input(t_state *state, char *input)
 	tokens = tokenizer(input, state);
 	if (!tokens || !tokens->token)
 	{
-//		tokenizer_list_free(tokens);
+		free_token_list(tokens);
 		return ;
 	}
-//	if (path_resolve_token_list(state->env, tokens))
-//		return ((void)printf("Error: %s\n", strerror(errno)));
+	if (path_resolve_token_list(state->env, tokens))
+		return ((void)printf("Error: %s\n", strerror(errno)));
 	tokens = replace_delims_with_pipes(tokens);
 	pipes_init(tokens);
 	setup_nonint_signals();
@@ -56,7 +56,7 @@ static void	process_input(t_state *state, char *input)
 		{
 		}
 	}
-//	tokenizer_list_free(tokens);
+	free_token_list(tokens);
 	setup_int_signals();
 }
 
