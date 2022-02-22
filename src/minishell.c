@@ -38,7 +38,7 @@ static void	process_input(t_state *state, char *input)
 	tokens = tokenizer(input, state);
 	if (!tokens || !tokens->token)
 	{
-		tokenizer_list_free(tokens);
+		free_token_list(tokens);
 		return ;
 	}
 	if (path_resolve_token_list(state->env, tokens))
@@ -52,7 +52,7 @@ static void	process_input(t_state *state, char *input)
 	while (wait(&state->ret) > 0)
 	{
 	}
-	tokenizer_list_free(tokens);
+	free_token_list(tokens);
 	setup_int_signals();
 }
 

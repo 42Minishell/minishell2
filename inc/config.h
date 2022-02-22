@@ -19,4 +19,6 @@
 #  define POPULATE_ENV 1
 # endif
 
+# define TOK_ALLOC_BLK_SIZE 256
+
 #endif

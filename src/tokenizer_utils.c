@@ -1,58 +1,92 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizer_utils.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: zilisabethpangasch <zilisabethpangasch@      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/03/05 17:11:52 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2021/12/18 17:14:16 by zgargasc      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/16 13:53:49 by tjans             #+#    #+#             */
+/*   Updated: 2022/02/16 13:53:50 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "config.h"
+#include "tokenizer.h"
+#include "libft.h"
 
-char	*easyjoin(char *s1, char *s2, char *s3)
+static void	check_literal(char **c, t_literal_mode *mode)
 {
-	char	*dest;
-	char	*dest_triple;
-
-	dest = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	if (s3)
+	if (**c == '\'')
 	{
-		dest_triple = ft_strjoin(dest, s3);
-		free(s3);
-		free(dest);
-		return (dest_triple);
+		if (*mode == SINGLEQUOTE)
+			*mode = DEFAULT;
+		if (*mode == DEFAULT)
+			*mode = SINGLEQUOTE;
+		if (*mode == DOUBLEQUOTE)
+			return ;
+		(*c)++;
+		check_literal(c, mode);
 	}
-	return (dest);
+	else if (**c == '"')
+	{
+		if (*mode == DOUBLEQUOTE)
+			*mode = DEFAULT;
+		if (*mode == DEFAULT)
+			*mode = DOUBLEQUOTE;
+		if (*mode == SINGLEQUOTE)
+			return ;
+		(*c)++;
+		check_literal(c, mode);
+	}
 }
 
-void	ft_error(char *msg, int bytes)
+static size_t	copy_byte(char *in, char *dst, t_literal_mode mode)
 {
-	char	newline;
-
-	newline = '\n';
-	write(1, msg, bytes);
-	write(1, &newline, 1);
-	exit(1);
-}
-
-int	iswhitespace(char c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
+	if (*in && (!is_special_character(*in) || mode))
+	{
+		*dst = *in;
 		return (1);
+	}
 	return (0);
 }
 
-int	env_length(char *in)
+void	reallocate_string(char **s, size_t *buf_size)
 {
-	int		i;
+	char	*new;
 
-	i = 0;
-	while (in[i] && !iswhitespace(in[i]) && in[i] != '\n' && in[i] != '\"')
-		i++;
-	return (i);
+	new = malloc(*buf_size + TOK_ALLOC_BLK_SIZE);
+	ft_memcpy(new, *s, *buf_size);
+	*buf_size += TOK_ALLOC_BLK_SIZE;
+	free(*s);
+	*s = new;
+}
+
+char	*copy_str_until_special_char(char **in, struct s_state *state)
+{
+	size_t			posbuf[2];
+	size_t			copy_ret;
+	char			*s;
+	t_literal_mode	literal_mode;
+
+	s = malloc(TOK_ALLOC_BLK_SIZE);
+	posbuf[POS] = 0;
+	posbuf[BUF] = TOK_ALLOC_BLK_SIZE;
+	literal_mode = DEFAULT;
+	if (!s)
+		return (NULL);
+	while (**in)
+	{
+		if (posbuf[POS] == posbuf[BUF] - 1)
+			reallocate_string(&s, &posbuf[BUF]);
+		check_literal(in, &literal_mode);
+		if (literal_mode != SINGLEQUOTE && \
+			insert_env_into_string(in, &s, posbuf, state))
+			continue ;
+		copy_ret = copy_byte(*in, s + posbuf[POS], literal_mode);
+		if (!copy_ret)
+			break ;
+		posbuf[POS] += copy_ret;
+		(*in) += copy_ret;
+	}
+	return (s);
 }

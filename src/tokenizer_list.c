@@ -1,88 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenizer_list.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/18 17:14:09 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/01/05 14:59:43 by zgargasc      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenizer_list.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/16 11:32:54 by tjans             #+#    #+#             */
+/*   Updated: 2022/02/16 11:32:55 by tjans            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "tokenizer.h"
+#include "libft.h"
 
-static size_t	get_next_token_str(char *in, char **dst, t_token_type *type)
-{
-	size_t	start;
-	size_t	end;
-
-	start = get_whitespace_length(in);
-	end = get_token_length(in);
-	*dst = ft_calloc(1, (end - start + 1) * sizeof(char));
-	if (!*dst)
-		ft_error("calloc null", 12);
-	return (copy_str_to_token(*dst, in + start, end - start, type));
-}
-
-static t_token	*get_next_token(char **in, t_token_type *type)
+t_token	*token_create_empty(t_token *next, t_token *prev)
 {
 	t_token	*token;
-	size_t	token_len;
-	size_t	in_len;
 
-	in_len = ft_strlen(*in);
-	if (!**in || **in == '\n')
-		return (NULL);
 	token = ft_calloc(1, sizeof(t_token));
 	if (!token)
-		ft_error("calloc in new_token error", 26);
-	token->type = *type;
-	token_len = get_next_token_str(*in, &token->token, type);
-	if (**in == ' ')
-		token_len++;
-	if (token_len < in_len)
-		*in += token_len;
+		return (NULL);
+	token->next = next;
+	token->prev = prev;
+	return (token);
+}
+
+t_token	*create_token(t_token **dst)
+{
+	if (!*dst)
+	{
+		*dst = token_create_empty(NULL, NULL);
+		if (!*dst)
+			return (NULL);
+	}
 	else
-		*in += in_len;
-	return (token);
+	{
+		(*dst)->next = token_create_empty(NULL, *dst);
+		if (!(*dst)->next)
+			return (NULL);
+	}
+	if (!(*dst)->next)
+		return (*dst);
+	return ((*dst)->next);
 }
 
-static t_token	*clean_empty_token(t_token *prev, t_token *token)
+t_token	*free_token_list(t_token *head)
 {
-	if (ft_strlen(token->token) == 0)
-	{
-		free(token->token);
-		free(token);
-		return (prev);
-	}
-	return (token);
-}
+	t_token	*head_prev;
 
-t_token	*get_token_list(char *in)
-{
-	t_token			*head;
-	t_token			*cur;
-	t_token_type	next_type;
-
-	next_type = executable;
-	head = get_next_token(&in, &next_type);
-	if (!head)
+	while (head)
 	{
-		head = ft_calloc(1, sizeof(t_token));
-		if (!head)
-			ft_error("calloc err", 11);
+		if (head->token)
+		{
+			if (head->result_type == EXTERNAL_BINARY && head->result.path)
+				free(head->result.path);
+			free(head->token);
+		}
+		head_prev = head;
+		head = head->next;
+		free(head_prev);
 	}
-	cur = head;
-	while (cur && *in)
-	{
-		cur->next = get_next_token(&in, &next_type);
-		cur->next->prev = cur;
-		cur = clean_empty_token(cur, cur->next);
-	}
-	cur->next = ft_calloc(1, sizeof(t_token));
-	if (!cur->next)
-		ft_error("calloc err", 11);
-	return (head);
+	return (NULL);
 }
