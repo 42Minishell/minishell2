@@ -134,4 +134,6 @@ void					*ft_malloc(size_t size);
 pid_t					exit_status_child(pid_t new_status, _Bool get);
 void					wait_children(void);
 
+void					ft_error(char *s, size_t len);
+
 #endif
