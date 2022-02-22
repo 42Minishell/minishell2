@@ -52,14 +52,13 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 
 	i = 1;
 	if (ft_strncmp("env", *argv, 4) == 0 || argc < 2)
-	{
 		bucket_iter(state->env->env, &print_env, NULL);
-		exit(0);
-	}
-	while (i < argc)
+	else
 	{
-		add_env(argv[i], ipc);
-		i++;
+		while (i < argc) {
+			add_env(argv[i], ipc);
+			i++;
+		}
 	}
 	send_ipc_int(ipc[1], END_IPC, 0);
 	exit(0);
