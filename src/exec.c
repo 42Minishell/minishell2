@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 20:14:38 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 20:17:01 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	exec(t_state *state, t_token *cur_token)
 			exec_builtin(state, cur_token, argv);
 		else
 			execve(cur_token->result.path, argv, state->env->envp);
+		exit(1);
 	}
 	else if (cur_token->type == redirect_to_pipe)
 	{
@@ -108,6 +109,4 @@ void	exec(t_state *state, t_token *cur_token)
 	}
 	if (pipe)
 		exec(state, pipe);
-	if (!cur_token->pid)
-		exit(1);
 }
