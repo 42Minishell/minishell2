@@ -52,8 +52,6 @@ typedef struct s_state
 	t_fdstream	*sin;
 
 	int			ret;
-
-	int			tokenizer_debug_mode;
 }	t_state;
 
 /// Allocate and initialize a state object
