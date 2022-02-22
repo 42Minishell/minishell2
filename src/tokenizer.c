@@ -72,5 +72,6 @@ t_token	*tokenizer(char *in, t_state *state)
 	if (get_tokens_from_str(in, &head, state))
 		printf("Syntax error.\n");
 	free(in);
+	head->type = executable;
 	return (head);
 }
