@@ -26,14 +26,7 @@ list(
   src/path_resolver.c
   src/prompt.c
   src/tokenizer.c
-  src/tokenizer_copy.c
-  src/tokenizer_len.c
-  src/tokenizer_utils.c
-  src/tokenizer_list.c
-  src/tokenizer_type.c
   src/exec.c
-  src/tokenizer_list_free.c
-  src/tokenizer_res_env.c
   src/builtins.c
   src/builtin_export.c
   src/builtin_unset.c
@@ -50,12 +43,6 @@ inc/ipc.h)
 list(APPEND test_SOURCES test/test_env.c test/tests.h test/uassert.c
      test/test_hashtable.c test/test_tokenizer.c)
 
-add_executable(minishell2 ${minishell_SOURCES} src/minishell.c src/exec_builtin.c src/builtin_reader.c src/io_read_until_delimiter.c)
+add_executable(minishell2 ${minishell_SOURCES} src/minishell.c src/exec_builtin.c src/builtin_reader.c src/io_read_until_delimiter.c src/tokenizer_list.c src/tokenizer_action_whitespace.c src/tokenizer_action_non_special.c src/ft_error.c src/tokenizer_action_redirections.c src/tokenizer_utils.c src/tokenizer_action_pipe.c src/tokenizer_substitute_env.c)
 target_include_directories(minishell2 PUBLIC inc/ )
 target_link_libraries(minishell2 libft readline)
-
-# add_executable(minishell2_test ${minishell_SOURCES} ${test_SOURCES}
-#                                test/test_entry.c)
-# target_include_directories(minishell2_test PUBLIC inc/)
-# target_link_libraries(minishell2_test libft)
-# target_link_libraries(minishell2_test LIBREADLINE)

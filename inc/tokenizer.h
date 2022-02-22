@@ -20,6 +20,9 @@
 # include <stdbool.h>
 # include "hashtable.h"
 
+# define POS 0
+# define BUF 1
+
 struct	s_state;
 struct	s_env;
 
@@ -103,6 +106,23 @@ typedef struct s_token
 	pid_t					pid;
 }	t_token;
 
+typedef int (\
+		*t_lexer_action)\
+		(t_token **dst, char **in, struct s_state *state);
+
+typedef struct s_lexer_state
+{
+	char			token;
+	t_lexer_action	action;
+}				t_lexer_action_lookup;
+
+typedef enum e_literal_mode
+{
+	DEFAULT,
+	DOUBLEQUOTE,
+	SINGLEQUOTE
+}				t_literal_mode;
+
 /**
  * @brief Tokenizer, parses the input string into tokens.
  *
@@ -113,30 +133,24 @@ typedef struct s_token
  * @return Returns linked lists of token objects
  */
 t_token			*tokenizer(char *in, struct s_state *state);
-
-/**
- * Frees the linked list of token objects
- * @param head Pointer to the first object in the linked list.
- */
-void			tokenizer_list_free(t_token *head);
-
-/*
- * Internal functions, undocumented for now :)
- */
-
-void			res_env(char **input, struct s_state *state);
-t_token			*get_token_list(char *in);
-int				env_length(char *in);
-char			*strip_token(char *token);
-int				iswhitespace(char c);
-void			ft_error(char *msg, int bytes);
-char			*easyjoin(char *s1, char *s2, char *s3);
-t_token_type	tokenizer_identify(char *s);
-int				path_resolve_token_list(struct s_env *env, t_token *tokens);
-size_t			get_whitespace_length(char *s);
-size_t			get_token_length(char *s);
-size_t			copy_str_to_token(char *dst, char *src, size_t len, \
-	t_token_type *type);
+int				is_special_character(char c);
+t_token			*create_token(t_token **dst);
+t_token			*free_token_list(t_token *head);
+char			*copy_str_until_special_char(char **in, struct s_state *state);
+t_token			*token_create_empty(t_token *next, t_token *prev);
+void			reallocate_string(char **s, size_t *buf_size);
+int				insert_env_into_string(char **in, char **s, size_t *posbuf, \
+	struct s_state *state);
+int				lexer_action_whitespace(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_non_special(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_redirection_right(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_redirection_left(t_token **dst, char **in, \
+	struct s_state *state);
+int				lexer_action_pipe(t_token **dst, char **in, \
+	struct s_state *state);
 
 /// Our protected malloc function.
 void			*ft_malloc(size_t size);
