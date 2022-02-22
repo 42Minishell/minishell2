@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 18:09:00 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 18:14:47 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 20:47:20 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ pid_t	exit_status_child(pid_t new_status, _Bool get)
 	if (get == true)
 		return (status);
 	status = new_status;
+	if (WIFEXITED(status) == true || WIFSIGNALED(status) == true)
+		status = WEXITSTATUS(status);
 	return (__INT_MAX__);
 }
 
