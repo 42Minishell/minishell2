@@ -20,7 +20,7 @@ static void	check_literal(char **c, t_literal_mode *mode)
 	{
 		if (*mode == SINGLEQUOTE)
 			*mode = DEFAULT;
-		if (*mode == DEFAULT)
+		else if (*mode == DEFAULT)
 			*mode = SINGLEQUOTE;
 		if (*mode == DOUBLEQUOTE)
 			return ;
@@ -31,7 +31,7 @@ static void	check_literal(char **c, t_literal_mode *mode)
 	{
 		if (*mode == DOUBLEQUOTE)
 			*mode = DEFAULT;
-		if (*mode == DEFAULT)
+		else if (*mode == DEFAULT)
 			*mode = DOUBLEQUOTE;
 		if (*mode == SINGLEQUOTE)
 			return ;
