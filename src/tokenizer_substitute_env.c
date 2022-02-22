@@ -34,6 +34,21 @@ static int	getkey(char *in, char *out)
 	return (size);
 }
 
+static int	insert_exit_status_into_string(char **in, char **s, size_t *posbuf)
+{
+	char	*ret;
+	size_t	vallen;
+
+	ret = ft_itoa(exit_status_child(0, true));
+	vallen = ft_strlen(ret);
+	while (posbuf[BUF] - posbuf[POS] < vallen)
+		reallocate_string(s, &posbuf[BUF]);
+	strlcpy((*s) + posbuf[POS], ret, posbuf[BUF] - posbuf[POS]);
+	posbuf[POS] += vallen;
+	(*in) += 2;
+	return (1);
+}
+
 int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 	struct s_state *state)
 {
@@ -44,6 +59,8 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 
 	if (**in != '$' || !**in || *((*in) + 1) == ' ')
 		return (0);
+	if (*((*in) + 1) == '?')
+		return (insert_exit_status_into_string(in, s, posbuf));
 	keylen = getkey((*in) + 1, key);
 	if (keylen)
 	{
