@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/16 19:08:22 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 17:51:10 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,35 @@ static void	start_builtin_ipc(t_state *state, t_token *tokens)
 	}
 }
 
+// if get is true it gets the variable.
+// if false it sets the variable.
+pid_t		exit_status_child(pid_t new_status, _Bool get)
+{
+	static int status;
+
+	if (get == true)
+		return (status);
+	status = new_status;
+	return (__INT_MAX__);
+}
+
+// Waits for all children and reaps them if neccessary.
+static void	wait_children(void)
+{
+	pid_t ret;
+	int status;
+
+	ret = __INT_MAX__;
+	while (true)
+	{
+		ret = waitpid(-1, &status, WNOHANG);
+		if (ret < 0)
+			break;
+		exit_status_child(status, false);
+	}
+	return ;
+}
+
 static void	process_input(t_state *state, char *input)
 {
 	t_token		*tokens;
@@ -47,6 +76,7 @@ static void	process_input(t_state *state, char *input)
 	pipes_init(tokens);
 	setup_nonint_signals();
 	exec(state, tokens);
+	wait_children();
 	start_builtin_ipc(state, tokens);
 	while (wait(&state->ret) > 0)
 	{
