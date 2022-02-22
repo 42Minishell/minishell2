@@ -46,15 +46,10 @@ static void	process_input(t_state *state, char *input)
 	tokens = replace_delims_with_pipes(tokens);
 	pipes_init(tokens);
 	setup_nonint_signals();
-	if (state->tokenizer_debug_mode)
-		print_tokens(tokens);
-	else
+	exec(state, tokens);
+	start_builtin_ipc(state, tokens);
+	while (wait(&state->ret) > 0)
 	{
-		exec(state, tokens);
-		start_builtin_ipc(state, tokens);
-		while (wait(&state->ret) > 0)
-		{
-		}
 	}
 	free_token_list(tokens);
 	setup_int_signals();

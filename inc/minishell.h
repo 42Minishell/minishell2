@@ -129,8 +129,6 @@ int						pipes_init(t_token *token);
 
 /// Reads command line arguments and sets debug flags
 void					parse_flags(int argc, char **argv, t_state *state);
-/// Prints all tokens in chain
-void					print_tokens(t_token *tokens);
 
 void					ft_error(char *s, size_t len);
 
