@@ -6,7 +6,7 @@
 /*   By: tjans <tjans@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 16:24:17 by tjans         #+#    #+#                 */
-/*   Updated: 2022/02/16 19:23:54 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:15:42 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void			strlist_free(t_strlist **lst);
 ** Malloc with protection.
  */
 
-void	*ft_malloc(size_t size);
+void			*ft_malloc(size_t size);
 #endif

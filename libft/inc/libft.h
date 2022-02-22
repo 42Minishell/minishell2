@@ -6,7 +6,7 @@
 /*   By: tjans <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 15:36:12 by tjans         #+#    #+#                 */
-/*   Updated: 2022/02/16 19:21:18 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:15:32 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int				ternary_i(int condition, int ret_true, int ret_false);
 ** Malloc with protection.
  */
 
-void	*ft_malloc(size_t size);
+void			*ft_malloc(size_t size);
 #endif

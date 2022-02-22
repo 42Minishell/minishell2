@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/16 19:10:11 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:13:22 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ void					setup_nonint_signals(void);
 int						pipes_init(t_token *token);
 
 /// Our protected malloc function.
-void	*ft_malloc(size_t size);
+void					*ft_malloc(size_t size);
 
+// functions to monitor the child exit status, 
+// manage zombies and set the exit status.
+
+pid_t					exit_status_child(pid_t new_status, _Bool get);
+void					wait_children(void);
 #endif

@@ -20,7 +20,7 @@ SRCS := builtin_cd.c builtin_echo.c builtin_exit.c builtin_export.c \
 		tokenizer_copy.c tokenizer_len.c tokenizer_list_free.c \
 		tokenizer_list.c tokenizer_res_env.c tokenizer_type.c \
 		tokenizer_utils.c tokenizer.c ipc.c exec_builtin.c builtin_reader.c\
-		io_read_until_delimiter.c utils.c
+		io_read_until_delimiter.c utils.c parent_child_ipc.c
 HDRS := inc/builtins.h inc/config.h inc/env.h inc/hashtable.h inc/io.h \
 		inc/minishell.h inc/tokenizer.h libft/inc/libft.h \
 		libft/inc/fd.h inc/ipc.h

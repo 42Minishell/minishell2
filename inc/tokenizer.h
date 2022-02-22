@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/05 17:05:42 by zilisabethp   #+#    #+#                 */
-/*   Updated: 2022/02/16 19:10:27 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/22 18:13:42 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,5 @@ size_t			copy_str_to_token(char *dst, char *src, size_t len, \
 	t_token_type *type);
 
 /// Our protected malloc function.
-void	*ft_malloc(size_t size);
+void			*ft_malloc(size_t size);
 #endif
