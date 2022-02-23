@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:33 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:13:34 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 22:27:08 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ int	builtin_echo(int argc, char **argv, t_state *state, int ipc[2])
 
 	(void)state;
 	send_ipc_int(ipc[1], END_IPC, 0);
-	if (argc < 2)
+	if (argc == 1)
+	{
+		printf("\n");
 		exit(0);
+	}
 	print_newline = check_opt(argv[1]);
 	i = 2 - print_newline;
 	while (i < argc)
