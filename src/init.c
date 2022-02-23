@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:49 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:13:50 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 20:39:10 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,24 @@ void	env_init_pwd(t_env *env)
 
 void	state_init(t_state *state, char **argv, char **envp)
 {
+	char	*shlvl;
+
 	state->env = env_init();
 	env_populate(state->env, *argv, envp);
 	env_init_pwd(state->env);
-	state->sin = fd_openfd(0);
+	shlvl = bucket_get_value(state->env->env, "SHLVL");
+	if (shlvl == NULL)
+		bucket_add(state->env->env, "SHLVL", "1");
+	else
+	{
+		shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+		bucket_add(state->env->env, "SHLVL", shlvl);
+		free(shlvl);
+	}
 	state->ret = 0;
 }
 
 void	state_free(t_state *state)
 {
 	env_free(state->env);
-	fd_close(state->sin);
-	free(state->sin);
 }

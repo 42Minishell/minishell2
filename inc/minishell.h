@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:30:10 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 20:05:11 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@
 typedef struct s_state
 {
 	t_env		*env;
-	t_fdstream	*sin;
-
 	int			ret;
 }	t_state;
 
