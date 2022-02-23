@@ -14,6 +14,8 @@
 
 int	process_heredocs(t_token *head)
 {
-	(void)head;
+	t_heredoc_list	*list;
+
+	list = create_list_from_tokens(head);
 	return (0);
 }
