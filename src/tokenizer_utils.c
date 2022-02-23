@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer_utils.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 13:53:49 by tjans             #+#    #+#             */
-/*   Updated: 2022/02/16 13:53:50 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer_utils.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/16 13:53:49 by tjans         #+#    #+#                 */
+/*   Updated: 2022/02/23 16:29:02 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ void	reallocate_string(char **s, size_t *buf_size)
 
 char	*copy_str_until_special_char(char **in, struct s_state *state)
 {
-	size_t			posbuf[2];
+	size_t			*posbuf;
 	size_t			copy_ret;
 	char			*s;
 	t_literal_mode	literal_mode;
 
 	s = malloc(TOK_ALLOC_BLK_SIZE);
-	posbuf[POS] = 0;
-	posbuf[BUF] = TOK_ALLOC_BLK_SIZE;
+	posbuf = (size_t[2]){0, TOK_ALLOC_BLK_SIZE};
 	literal_mode = DEFAULT;
 	if (!s)
 		return (NULL);

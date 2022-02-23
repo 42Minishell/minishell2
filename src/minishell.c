@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 20:42:52 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:30:54 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include "ipc.h"
 #include "io.h"
+#include <signal.h>
 
 static void	start_builtin_ipc(t_state *state, t_token *tokens)
 {
@@ -46,12 +47,14 @@ static void	process_input(t_state *state, char *input)
 	tokens = replace_delims_with_pipes(tokens);
 	pipes_init(tokens);
 	setup_nonint_signals();
+	g_pid = NULL;
 	exec(state, tokens);
-	wait_children();
 	start_builtin_ipc(state, tokens);
 	while (wait(&state->ret) > 0)
 	{
 	}
+	wait_children();
+	free_pid_list();
 	free_token_list(tokens);
 	setup_int_signals();
 }

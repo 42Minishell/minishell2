@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 20:17:01 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:32:21 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	exec(t_state *state, t_token *cur_token)
 	char			**argv;
 
 	pipe = get_next_pipe_token(cur_token->next);
-	cur_token->pid = fork();
+	cur_token->pid = fork_wrapper();
 	if (cur_token->pid == -1)
 		ft_error("fork went wrong", 16);
 	if (!cur_token->pid)

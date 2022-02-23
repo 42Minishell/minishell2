@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:36 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:13:37 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:33:05 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 		bucket_iter(state->env->env, &print_env, NULL);
 	else
 	{
-		while (i < argc) {
+		while (i < argc)
+		{
 			add_env(argv[i], ipc);
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 18:13:22 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:30:10 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,18 @@ void					wait_children(void);
 
 void					ft_error(char *s, size_t len);
 
+/// Struct for pids of children
+typedef struct s_pid_list
+{
+	pid_t				pid;
+	struct s_pid_list	*next;
+}				t_pid_list;
+
+t_pid_list				*g_pid;
+
+/// Wrapper function for the fork, to save all PIDs
+pid_t					fork_wrapper(void);
+
+/// Frees the g_pid list, and sets it to NULL
+void					free_pid_list(void);
 #endif

@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:14:05 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:15:00 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:30:30 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,28 @@
 
 static void	handle_ctrlc(int signal)
 {
+	t_pid_list	*current;
+
 	(void)signal;
-	kill(0, SIGINT);
+	current = g_pid;
+	while (current->next)
+	{
+		kill(current->pid, SIGINT);
+		current = current->next;
+	}
 }
 
 static void	handle_backslash(int signal)
 {
+	t_pid_list	*current;
+
 	(void)signal;
-	kill(0, SIGTERM);
+	current = g_pid;
+	while (current->next)
+	{
+		kill(current->pid, SIGTERM);
+		current = current->next;
+	}
 }
 
 void	setup_nonint_signals(void)
