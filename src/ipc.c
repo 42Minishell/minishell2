@@ -28,8 +28,8 @@ int	receive_and_process_ipc(int fd, t_state *state)
 {
 	t_builtin_message	ipc_msg;
 	ssize_t				recv_len;
-	char				key[255];
-	char				value[255];
+	char				key[4096];
+	char				value[4096];
 
 	while (1)
 	{
@@ -62,6 +62,11 @@ void	send_ipc(int fd, t_builtin_message_type type, char *key, char *value)
 		ipc_msg.value_len = ft_strlen(value) + 1;
 	else
 		ipc_msg.value_len = 0;
+	if (ipc_msg.key_len > 4096 || ipc_msg.value_len > 4096)
+	{
+		printf("IPC Error: Message too long!\n");
+		return ;
+	}
 	write(fd, &ipc_msg, sizeof(t_builtin_message));
 	write(fd, key, ft_strlen(key) + 1);
 	if (value)
