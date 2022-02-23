@@ -70,7 +70,11 @@ t_token	*tokenizer(char *in, t_state *state)
 	(void)state;
 	head = NULL;
 	if (get_tokens_from_str(in, &head, state))
+	{
 		printf("Syntax error.\n");
+		free_token_list(head);
+		head = NULL;
+	}
 	free(in);
 	if (head)
 		head->type = executable;
