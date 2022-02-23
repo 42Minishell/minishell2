@@ -40,15 +40,22 @@ t_token	*insert_pipe_token(t_token *delim, t_token *head)
 {
 	t_token	*insert_point;
 	t_token	*new;
+	t_token	*prev;
 
 	insert_point = delim;
 	while (insert_point->prev)
 	{
+		if (insert_point->type == redirect_to_pipe)
+			break ;
 		insert_point = insert_point->prev;
 	}
+	prev = insert_point->prev;
 	new = create_pipe_token(insert_point, delim);
 	if (insert_point == head)
 		return (new);
+	new->prev = prev;
+	prev->next = new;
+	new->type = redirect_to_pipe;
 	return (head);
 }
 
