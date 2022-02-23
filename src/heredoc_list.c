@@ -31,9 +31,12 @@ static void	append_to_list(t_heredoc_list **head, t_token *insert, \
 {
 	t_heredoc_list	*end;
 	t_heredoc_list	*new;
+	size_t			ptrint;
 
 	new = ft_malloc(sizeof(t_heredoc_list));
-	gen_filename(new->tmp_fn, insert->token, (int)head);
+	ptrint = (size_t)(insert);
+	ptrint >>= 16;
+	gen_filename(new->tmp_fn, insert->token, (int)ptrint);
 	new->insert_point = insert;
 	new->delim = strdup(delim->token);
 	new->next = NULL;
