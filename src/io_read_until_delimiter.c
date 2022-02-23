@@ -30,6 +30,7 @@ static t_token	*create_pipe_token(t_token *next, t_token *delim)
 	pipe_arg->token = ft_strdup(delim->token);
 	pipe_arg->type = non_special;
 	pipe_arg->next = next;
+	pipe_arg->prev = pipe;
 	next->prev = pipe_arg;
 	next->type = redirect_to_pipe;
 	return (pipe);
@@ -67,7 +68,8 @@ t_token	*replace_delims_with_pipes(t_token *head)
 			free(cur->next->token);
 			free(cur->next);
 			cur->next = new_next;
-			cur->next->prev = cur;
+			if (cur->next)
+				cur->next->prev = cur;
 		}
 		cur = cur->next;
 	}
