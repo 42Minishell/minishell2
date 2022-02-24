@@ -17,8 +17,7 @@ SRCS := builtin_cd.c builtin_echo.c builtin_exit.c builtin_export.c \
 		hashtable_iter.c hashtable_resolver.c hashtable.c \
 		init.c io.c minishell.c path_resolver.c pipe.c prompt.c \
 		resolver.c signals_interactive.c signals_noninteractive.c \
-		tokenizer.c ipc.c exec_builtin.c builtin_reader.c\
-		io_read_until_delimiter.c \
+		tokenizer.c ipc.c exec_builtin.c \
 		tokenizer_list.c tokenizer_action_whitespace.c \
 		tokenizer_action_non_special.c ft_error.c tokenizer_utils.c \
 		tokenizer_action_redirections.c tokenizer_action_pipe.c \
