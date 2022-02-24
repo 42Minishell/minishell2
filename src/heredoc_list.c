@@ -68,7 +68,7 @@ t_heredoc_list	*create_list_from_tokens(t_token *head)
 	return (list);
 }
 
-int	free_heredoc_list(t_heredoc_list *head)
+int	free_heredoc_list(t_heredoc_list *head, int err)
 {
 	t_heredoc_list	*prev;
 
@@ -76,8 +76,10 @@ int	free_heredoc_list(t_heredoc_list *head)
 	{
 		prev = head;
 		head = head->next;
+		if (err)
+			unlink(prev->fullpath);
 		free(prev->delim);
 		free(prev);
 	}
-	return (1);
+	return (err);
 }

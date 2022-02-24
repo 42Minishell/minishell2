@@ -26,6 +26,6 @@ typedef struct s_heredoc_list
 
 int				process_heredocs(t_token *head);
 t_heredoc_list	*create_list_from_tokens(t_token *head);
-int 			free_heredoc_list(t_heredoc_list *head);
+int 			free_heredoc_list(t_heredoc_list *head, int err);
 int				heredoc_reader(t_heredoc_list *heredoc);
 #endif

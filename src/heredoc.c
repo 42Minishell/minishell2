@@ -50,11 +50,16 @@ int	process_heredocs(t_token *head)
 	iterator = list;
 	while (iterator)
 	{
+		if (iterator->next && iterator->next->insert_point == \
+			iterator->insert_point)
+		{
+			printf("Error: Multiple heredocs for one command.\n");
+			return (free_heredoc_list(list, 1));
+		}
 		if (heredoc_reader(iterator))
-			return (free_heredoc_list(list));
+			return (free_heredoc_list(list, 1));
 		insert_redir_token(iterator);
 		iterator = iterator->next;
 	}
-	free_heredoc_list(list);
-	return (0);
+	return (free_heredoc_list(list, 0));
 }
