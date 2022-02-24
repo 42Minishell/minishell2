@@ -53,6 +53,8 @@ static void	process_input(t_state *state, char *input)
 		wait_children();
 		free_pid_list();
 	}
+	else
+		printf("Error: heredoc failed.\n%s\n", strerror(errno));
 	free_token_list(tokens);
 	setup_int_signals();
 }

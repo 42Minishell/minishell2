@@ -68,7 +68,7 @@ t_heredoc_list	*create_list_from_tokens(t_token *head)
 	return (list);
 }
 
-void	free_heredoc_list(t_heredoc_list *head)
+int	free_heredoc_list(t_heredoc_list *head)
 {
 	t_heredoc_list	*prev;
 
@@ -79,4 +79,5 @@ void	free_heredoc_list(t_heredoc_list *head)
 		free(prev->delim);
 		free(prev);
 	}
+	return (1);
 }
