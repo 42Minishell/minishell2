@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/24 17:06:36 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/02/24 17:15:30 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 	{
 		close(pipe->pipe_fd[0]);
 		if (dup2(pipe->pipe_fd[1], 1) == -1)
-			ft_error("exec error", 10);
+			ft_error("exec error", 11);
 		close(pipe->pipe_fd[1]);
 	}
 	if (cur_token->type == redirect_to_pipe)
 	{
 		close(cur_token->pipe_fd[1]);
 		if (dup2(cur_token->pipe_fd[0], 0) == -1)
-			ft_error("exec error", 10);
+			ft_error("exec error", 11);
 		close(cur_token->pipe_fd[0]);
 	}
 }
