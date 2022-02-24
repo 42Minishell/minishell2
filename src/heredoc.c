@@ -13,6 +13,32 @@
 #include "minishell.h"
 #include "heredoc.h"
 
+static t_token	*create_redir_token(t_heredoc_list *heredoc, t_token *insert)
+{
+	t_token *token;
+
+	token = ft_calloc(1, sizeof(t_token));
+	token->token = ft_strdup(heredoc->fullpath);
+	token->type = redirect_from_file_and_unlink;
+	token->prev = insert;
+	token->next = insert->next;
+	if (token->next)
+		token->next->prev = token;
+	insert->next = token;
+	return (token);
+}
+
+static void	insert_redir_token(t_heredoc_list *heredoc)
+{
+	t_token	*insert_point_after_args;
+
+	insert_point_after_args = heredoc->insert_point;
+	while (insert_point_after_args->next && \
+		insert_point_after_args->next->type == non_special)
+		insert_point_after_args = insert_point_after_args->next;
+	create_redir_token(heredoc, insert_point_after_args);
+}
+
 int	process_heredocs(t_token *head)
 {
 	t_heredoc_list	*list;
@@ -26,6 +52,7 @@ int	process_heredocs(t_token *head)
 	{
 		if (heredoc_reader(iterator))
 			return (free_heredoc_list(list));
+		insert_redir_token(iterator);
 		iterator = iterator->next;
 	}
 	free_heredoc_list(list);
