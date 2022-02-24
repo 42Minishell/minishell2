@@ -46,6 +46,7 @@ static void	read_loop(int fd, char *delim)
 
 	signal(SIGINT, &return_error);
 	signal(SIGQUIT, &return_error);
+	rl_clear_history();
 	line = readline("heredoc> ");
 	nl = '\n';
 	while (line)
