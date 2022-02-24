@@ -42,10 +42,12 @@ static void	read_loop(int fd, char *delim)
 {
 	char	*line;
 	char	*ret;
+	char	nl;
 
 	signal(SIGINT, &return_error);
 	signal(SIGQUIT, &return_error);
 	line = readline("heredoc> ");
+	nl = '\n';
 	while (line)
 	{
 		ret = ft_strnstr(line, delim, ft_strlen(delim));
@@ -55,6 +57,7 @@ static void	read_loop(int fd, char *delim)
 			exit(0);
 		}
 		write(fd, line, ft_strlen(line));
+		write(fd, &nl, 1);
 		free(line);
 		line = readline("heredoc> ");
 	}
