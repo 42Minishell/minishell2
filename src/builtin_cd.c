@@ -13,9 +13,10 @@
 #include "builtins.h"
 #include "ipc.h"
 
-static int	prterror(char *err, char *bin)
+static int	prterror(char *err, char *bin, int ipc[2])
 {
 	printf("%s: %s\n", bin, err);
+	send_ipc_int(ipc[1], END_IPC, 0);
 	return (1);
 }
 
@@ -29,7 +30,7 @@ int	builtin_cd(int argc, char **argv, t_state *state, int ipc[2])
 	{
 		path = bucket_get_value(state->env->env, "HOME");
 		if (!path)
-			exit(prterror("HOME not set", *argv));
+			exit(prterror("HOME not set", *argv, ipc));
 	}
 	else
 	{
@@ -37,7 +38,7 @@ int	builtin_cd(int argc, char **argv, t_state *state, int ipc[2])
 	}
 	ret = chdir(path);
 	if (ret)
-		exit(prterror(strerror(errno), *argv));
+		exit(prterror(strerror(errno), *argv, ipc));
 	getcwd(cwd, 255);
 	send_ipc(ipc[1], CHDIR, path, NULL);
 	send_ipc(ipc[1], ENV_ADD, "PWD", cwd);

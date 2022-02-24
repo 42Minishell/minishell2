@@ -25,6 +25,7 @@ int	builtin_unset(int argc, char **argv, t_state *state, int ipc[2])
 	if (argc < 2)
 	{
 		printf("%s: not enough arguments\n", argv[0]);
+		send_ipc_int(ipc[1], END_IPC, 0);
 		return (-1);
 	}
 	while (i < argc)
