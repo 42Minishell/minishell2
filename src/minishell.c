@@ -54,7 +54,7 @@ static void	process_input(t_state *state, char *input)
 		free_pid_list();
 	}
 	else
-		printf("Error: heredoc failed.\n%s\n", strerror(errno));
+		printf("Heredoc aborted.\n");
 	free_token_list(tokens);
 	setup_int_signals();
 }

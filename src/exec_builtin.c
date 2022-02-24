@@ -27,7 +27,7 @@ void	exec_builtin(t_state *state, t_token *token, char **argv)
 	int	argc;
 
 	signal(SIGINT, SIG_DFL);
-	signal(SIGKILL, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	argc = count_args(argv);
 	token->result.builtin(argc, argv, state, token->ipc_fd);
 	exit(0);

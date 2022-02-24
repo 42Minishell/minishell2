@@ -16,6 +16,12 @@
 #include "heredoc.h"
 #include "tokenizer.h"
 
+static void	return_error(int signal)
+{
+	(void)signal;
+	exit(128 + 1);
+}
+
 static int	open_heredoc_fd(t_heredoc_list *heredoc)
 {
 	char	path[255];
@@ -26,8 +32,8 @@ static int	open_heredoc_fd(t_heredoc_list *heredoc)
 		getcwd(path, 255);
 	ft_strlcat(path, "/", 255);
 	ft_strlcat(path, heredoc->tmp_fn, 255);
-	if (access(path, W_OK | F_OK ) == 0)
-		return (-1);
+	if (access(path, F_OK ) == 0)
+		unlink(path);
 	ft_strlcpy(heredoc->fullpath, path, 255);
 	return (open(path, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG));
 }
@@ -37,6 +43,8 @@ static void	read_loop(int fd, char *delim)
 	char	*line;
 	char	*ret;
 
+	signal(SIGINT, &return_error);
+	signal(SIGQUIT, &return_error);
 	line = readline("heredoc> ");
 	while (line)
 	{
