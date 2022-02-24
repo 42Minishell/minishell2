@@ -26,7 +26,7 @@ int	builtin_exit(int argc, char **argv, t_state *state, int ipc[2])
 		if (!ft_isdigit(*argv[1]))
 		{
 			printf("%s: numeric argument required\n", *argv);
-			send_ipc_int(ipc[1], EXIT, exit_no);
+			send_ipc_int(ipc[1], END_IPC, 0);
 			exit(2);
 		}
 		argv[1]++;
