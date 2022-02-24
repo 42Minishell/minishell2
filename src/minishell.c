@@ -17,6 +17,12 @@
 #include "ipc.h"
 #include "heredoc.h"
 
+static void	set_err_and_prt(char *s)
+{
+	exit_status_child(127, false);
+	printf("Error: %s\n", s);
+}
+
 static void	start_builtin_ipc(t_state *state, t_token *tokens)
 {
 	while (tokens)
@@ -42,7 +48,7 @@ static void	process_input(t_state *state, char *input)
 		return ;
 	}
 	if (path_resolve_token_list(state->env, tokens))
-		printf("Error: %s\n", strerror(errno));
+		set_err_and_prt(strerror(errno));
 	else if (process_heredocs(tokens) == 0)
 	{
 		pipes_init(tokens);
@@ -54,7 +60,7 @@ static void	process_input(t_state *state, char *input)
 		free_pid_list();
 	}
 	else
-		printf("Heredoc aborted.\n");
+		set_err_and_prt("Heredoc aborted.\n");
 	free_token_list(tokens);
 	setup_int_signals();
 }
