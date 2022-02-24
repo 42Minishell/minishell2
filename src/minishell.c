@@ -15,8 +15,7 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ipc.h"
-#include "io.h"
-#include <signal.h>
+#include "heredoc.h"
 
 static void	start_builtin_ipc(t_state *state, t_token *tokens)
 {
@@ -43,18 +42,19 @@ static void	process_input(t_state *state, char *input)
 		return ;
 	}
 	if (path_resolve_token_list(state->env, tokens))
-		return ((void)printf("Error: %s\n", strerror(errno)));
-	tokens = replace_delims_with_pipes(tokens);
-	pipes_init(tokens);
-	setup_nonint_signals();
-	g_pid = NULL;
-	exec(state, tokens);
-	start_builtin_ipc(state, tokens);
-	while (wait(&state->ret) > 0)
+		printf("Error: %s\n", strerror(errno));
+	else if (process_heredocs(tokens) == 0)
 	{
+		pipes_init(tokens);
+		setup_nonint_signals();
+		g_pid = NULL;
+		exec(state, tokens);
+		start_builtin_ipc(state, tokens);
+		wait_children();
+		free_pid_list();
 	}
-	wait_children();
-	free_pid_list();
+	else
+		printf("Heredoc aborted.\n");
 	free_token_list(tokens);
 	setup_int_signals();
 }

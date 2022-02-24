@@ -87,5 +87,6 @@ char	*copy_str_until_special_char(char **in, struct s_state *state)
 		posbuf[POS] += copy_ret;
 		(*in) += copy_ret;
 	}
+	s[posbuf[POS]] = 0;
 	return (s);
 }

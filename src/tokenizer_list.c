@@ -50,6 +50,8 @@ t_token	*free_token_list(t_token *head)
 
 	while (head)
 	{
+		if (head->type == redirect_from_file_and_unlink)
+			unlink(head->token);
 		if (head->token)
 		{
 			if (head->result_type == EXTERNAL_BINARY && head->result.path)
