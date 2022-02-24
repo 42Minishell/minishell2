@@ -15,7 +15,7 @@
 
 static t_token	*create_redir_token(t_heredoc_list *heredoc, t_token *insert)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = ft_calloc(1, sizeof(t_token));
 	token->token = ft_strdup(heredoc->fullpath);

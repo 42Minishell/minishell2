@@ -32,7 +32,7 @@ static int	open_heredoc_fd(t_heredoc_list *heredoc)
 		getcwd(path, 255);
 	ft_strlcat(path, "/", 255);
 	ft_strlcat(path, heredoc->tmp_fn, 255);
-	if (access(path, F_OK ) == 0)
+	if (access(path, F_OK) == 0)
 		unlink(path);
 	ft_strlcpy(heredoc->fullpath, path, 255);
 	return (open(path, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG));
