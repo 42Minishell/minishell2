@@ -40,6 +40,7 @@ typedef enum e_token_type
 	redirect_to_overwrite,
 	redirect_to_append,
 	redirect_from_file,
+	redirect_from_file_and_unlink,
 	redirect_to_pipe,
 	read_until_delimiter
 }			t_token_type;

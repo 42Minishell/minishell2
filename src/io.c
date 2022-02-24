@@ -70,7 +70,8 @@ int	io_setup(t_token *head)
 			res = setup_redir_to_overwrite(head, head_prev);
 		if (head->type == redirect_to_append)
 			res = setup_redir_to_append(head, head_prev);
-		if (head->type == redirect_from_file)
+		if (head->type == redirect_from_file || \
+			head->type == redirect_from_file_and_unlink)
 			res = setup_redir_from_file(head, head_prev);
 		head_prev = head;
 		head = head->next;
