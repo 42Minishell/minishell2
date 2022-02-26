@@ -19,7 +19,10 @@ int	builtin_exit(int argc, char **argv, t_state *state, int ipc[2])
 
 	(void)state;
 	if (argc < 2)
+	{
 		send_ipc_int(ipc[1], EXIT, 0);
+		exit(0);
+	}
 	exit_no = ft_atoi(argv[1]);
 	while (*argv[1])
 	{
