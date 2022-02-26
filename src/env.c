@@ -34,8 +34,8 @@ static void	*env_iterator_envp(char *key, char *val, void *data)
 	size_t	klen;
 	size_t	vlen;
 
-	klen = strlen(key);
-	vlen = strlen(val);
+	klen = ft_strlen(key);
+	vlen = ft_strlen(val);
 	str = ft_malloc(klen + vlen + 2 * sizeof(char));
 	ft_strlcpy(str, key, klen + vlen + 2);
 	ft_strlcpy(str + klen, "=", vlen + 2);
@@ -67,7 +67,7 @@ void	env_update_envp(t_env *env)
 
 	if (env->envp)
 		env_free_envp(env);
-	envp = calloc(HASHTABLE_SIZE, sizeof(char *) + 1);
+	envp = ft_calloc(HASHTABLE_SIZE, sizeof(char *) + 1);
 	bucket_iter(env->env, &env_iterator_envp, envp);
 	env->envp = envp;
 }
