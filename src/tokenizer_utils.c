@@ -45,7 +45,7 @@ static size_t	copy_byte(char *in, char *dst, t_literal_mode mode)
 	if (*in && (!is_special_character(*in) || mode))
 	{
 		*dst = *in;
-		*(dst+1) = 0;
+		*(dst + 1) = 0;
 		return (1);
 	}
 	dst++;
