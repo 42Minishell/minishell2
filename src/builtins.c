@@ -14,7 +14,7 @@
 
 #include "builtins.h"
 
-const static t_function_lookup	g_lookup_table[8] = {
+static const t_function_lookup	g_lookup_table[8] = {
 {"unset", &builtin_unset},
 {"export", &builtin_export},
 {"echo", &builtin_echo},
