@@ -141,7 +141,7 @@ typedef struct s_pid_list
 	struct s_pid_list	*next;
 }				t_pid_list;
 
-t_pid_list				*g_pid;
+extern t_pid_list		*g_pid;
 
 /// Wrapper function for the fork, to save all PIDs
 pid_t					fork_wrapper(void);

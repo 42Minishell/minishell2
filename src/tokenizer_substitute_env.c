@@ -43,7 +43,7 @@ static int	insert_exit_status_into_string(char **in, char **s, size_t *posbuf)
 	vallen = ft_strlen(ret);
 	while (posbuf[BUF] - posbuf[POS] < vallen)
 		reallocate_string(s, &posbuf[BUF]);
-	strlcpy((*s) + posbuf[POS], ret, posbuf[BUF] - posbuf[POS]);
+	ft_strlcpy((*s) + posbuf[POS], ret, posbuf[BUF] - posbuf[POS]);
 	posbuf[POS] += vallen;
 	(*in) += 2;
 	return (1);
@@ -71,7 +71,7 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 			vallen = ft_strlen(val);
 			while (posbuf[BUF] - posbuf[POS] < vallen)
 				reallocate_string(s, &posbuf[BUF]);
-			strlcpy((*s) + posbuf[POS], val, posbuf[BUF] - posbuf[POS]);
+			ft_strlcpy((*s) + posbuf[POS], val, posbuf[BUF] - posbuf[POS]);
 			posbuf[POS] += vallen;
 		}
 		return (1);

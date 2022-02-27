@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/signal.h>
 #include "builtins.h"
 
 static int	count_args(char **argv)

@@ -13,6 +13,8 @@
 #include <sys/wait.h>
 #include "minishell.h"
 
+t_pid_list	*g_pid;
+
 // if get is true it gets the variable.
 // if false it sets the variable.
 pid_t	exit_status_child(pid_t new_status, _Bool get)

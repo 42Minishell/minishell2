@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "unistd.h"
-#include "fcntl.h"
+#include <sys/signal.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include "minishell.h"
 #include "heredoc.h"
 #include "tokenizer.h"
