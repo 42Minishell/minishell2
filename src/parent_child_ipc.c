@@ -32,16 +32,8 @@ pid_t	exit_status_child(pid_t new_status, _Bool get)
 // Waits for all children and reaps them if neccessary.
 void	wait_children(void)
 {
-	pid_t	ret;
 	int		status;
 
-	ret = __INT_MAX__;
-	while (true)
-	{
-		ret = waitpid(-1, &status, WNOHANG);
-		if (ret < 0)
-			break ;
-		exit_status_child(status, false);
-	}
-	return ;
+	waitpid(-1, &status, 0);
+	exit_status_child(status, false);
 }
