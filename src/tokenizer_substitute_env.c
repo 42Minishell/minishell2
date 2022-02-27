@@ -66,7 +66,7 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 	{
 		(*in) += keylen + 1;
 		val = bucket_get_value(state->env->env, key);
-		if (val)
+		if (val && *val)
 		{
 			vallen = ft_strlen(val);
 			while (posbuf[BUF] - posbuf[POS] < vallen)
@@ -74,6 +74,8 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 			ft_strlcpy((*s) + posbuf[POS], val, posbuf[BUF] - posbuf[POS]);
 			posbuf[POS] += vallen;
 		}
+		else
+			**s = 0;
 		return (1);
 	}
 	return (0);

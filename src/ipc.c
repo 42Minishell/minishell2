@@ -79,5 +79,6 @@ void	send_ipc_int(int fd, t_builtin_message_type type, int value)
 
 	ipc_msg.type = type;
 	ipc_msg.key_len = value;
+	ipc_msg.value_len = 0;
 	write(fd, &ipc_msg, sizeof(t_builtin_message));
 }

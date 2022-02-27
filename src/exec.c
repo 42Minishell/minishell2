@@ -23,6 +23,11 @@ static int	token_len(t_token *head)
 	head = head->next;
 	while (head && head->type == non_special && head->token)
 	{
+		if (!*head->token)
+		{
+			head = head->next;
+			continue;
+		}
 		head = head->next;
 		len++;
 	}
@@ -42,6 +47,11 @@ static char	**populate_argv(t_token *head)
 	i = 0;
 	while (i < len)
 	{
+		if (head && !*head->token)
+		{
+			head = head->next;
+			continue;
+		}
 		argv[i] = head->token;
 		head = head->next;
 		i++;
