@@ -34,6 +34,7 @@ void	wait_children(void)
 {
 	int		status;
 
-	waitpid(-1, &status, 0);
+	while (waitpid(-1, &status, 0) >= 0)
+		continue ;
 	exit_status_child(status, false);
 }
