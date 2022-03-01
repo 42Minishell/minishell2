@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:16 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:12:34 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/01 22:21:15 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	bucket_del(t_bucket *table, char *key)
 		free(table->key);
 		free(table->value);
 		table->key = "";
+		table->value = NULL;
 	}
 }
 
