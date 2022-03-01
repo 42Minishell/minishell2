@@ -111,7 +111,7 @@ void	exec(t_state *state, t_token *cur_token)
 		argv = populate_argv(cur_token);
 		if (cur_token->result_type == BUILTIN)
 			exec_builtin(state, cur_token, argv);
-		else
+		else if (cur_token->result_type != NOTFOUND)
 			execve(cur_token->result.path, argv, state->env->envp);
 		exit(1);
 	}

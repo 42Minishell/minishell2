@@ -48,8 +48,8 @@ static void	process_input(t_state *state, char *input)
 		return ;
 	}
 	if (path_resolve_token_list(state->env, tokens))
-		set_err_and_prt(strerror(errno));
-	else if (process_heredocs(tokens) == 0)
+		set_err_and_prt("Command not found.");
+	if (process_heredocs(tokens) == 0)
 	{
 		pipes_init(tokens);
 		setup_nonint_signals();
