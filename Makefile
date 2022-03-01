@@ -3,7 +3,7 @@ INC_DIR := inc libft/inc
 OUT_DIR := out
 OBJ_DIR := obj
 
-NAME := minishell2
+NAME := minishell
 VPATH := $(SRC_DIR)
 
 CFLAGS := -Wall -Wextra -Werror -I inc -I libft/inc -g

@@ -1,4 +1,4 @@
-# minishell2
+# minishell
 
 Minishell 42 project; second iteration
 
