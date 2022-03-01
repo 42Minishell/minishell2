@@ -20,7 +20,7 @@
 static void	return_error(int signal)
 {
 	(void)signal;
-	exit(128 + 1);
+	exit(1);
 }
 
 static int	open_heredoc_fd(t_heredoc_list *heredoc)
