@@ -38,7 +38,7 @@ static void	append_to_list(t_heredoc_list **head, t_token *insert, \
 	ptrint >>= 16;
 	gen_filename(new->tmp_fn, insert->token, (int)ptrint);
 	new->insert_point = insert;
-	new->delim = strdup(delim->token);
+	new->delim = ft_strdup(delim->token);
 	new->next = NULL;
 	if (*head)
 	{
