@@ -49,9 +49,9 @@ static int	insert_exit_status_into_string(char **in, char **s, size_t *posbuf)
 	return (1);
 }
 
-static int	return_one_and_terminate_string(char **s)
+static int	return_one_and_terminate_string(char **s, size_t pos)
 {
-	**s = 0;
+	*((*s) + pos) = 0;
 	return (1);
 }
 
@@ -80,7 +80,7 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 			ft_strlcpy((*s) + posbuf[POS], val, posbuf[BUF] - posbuf[POS]);
 			posbuf[POS] += vallen;
 		}
-		return (return_one_and_terminate_string(s));
+		return (return_one_and_terminate_string(s, posbuf[POS]));
 	}
 	return (0);
 }
