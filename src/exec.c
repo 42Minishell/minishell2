@@ -27,7 +27,7 @@ static int	token_len(t_token *head)
 		if (!*head->token)
 		{
 			head = head->next;
-			continue;
+			continue ;
 		}
 		head = head->next;
 		len++;
@@ -51,7 +51,7 @@ static char	**populate_argv(t_token *head)
 		if (head && !*head->token)
 		{
 			head = head->next;
-			continue;
+			continue ;
 		}
 		argv[i] = head->token;
 		head = head->next;
@@ -76,7 +76,7 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 	if (!io_setup(cur_token))
 	{
 		printf("Redirection failed: %s\n", strerror(errno));
-		if(cur_token->result_type == BUILTIN)
+		if (cur_token->result_type == BUILTIN)
 			send_ipc_int(cur_token->ipc_fd[1], END_IPC, 0);
 		exit(1);
 	}
