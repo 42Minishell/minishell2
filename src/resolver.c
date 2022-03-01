@@ -63,10 +63,7 @@ int	path_resolve_token_list(t_env *env, t_token *tokens)
 			tokens->result_type = \
 				path_resolve(env, tokens->token, &tokens->result);
 			if (tokens->result_type == NOTFOUND)
-			{
-				tokens->result_type = EXTERNAL_BINARY;
-				tokens->result.path = ft_strdup("");
-			}
+				return (1);
 		}
 		tokens = tokens->next;
 	}

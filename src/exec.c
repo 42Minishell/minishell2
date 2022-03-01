@@ -112,7 +112,7 @@ void	exec(t_state *state, t_token *cur_token)
 		if (cur_token->result_type == BUILTIN)
 			exec_builtin(state, cur_token, argv);
 		else
-			chad_execve(cur_token->result.path, argv, state->env->envp);
+			execve(cur_token->result.path, argv, state->env->envp);
 		exit(1);
 	}
 	else if (cur_token->type == redirect_to_pipe)

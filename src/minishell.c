@@ -47,8 +47,9 @@ static void	process_input(t_state *state, char *input)
 		free_token_list(tokens);
 		return ;
 	}
-	path_resolve_token_list(state->env, tokens);
-	if (process_heredocs(tokens) == 0)
+	if (path_resolve_token_list(state->env, tokens))
+		set_err_and_prt(strerror(errno));
+	else if (process_heredocs(tokens) == 0)
 	{
 		pipes_init(tokens);
 		setup_nonint_signals();

@@ -109,8 +109,6 @@ void					setup_int_signals(void);
 /// Setups non-interactive signals, to send signals to the child process
 void					setup_nonint_signals(void);
 
-void					chad_execve(char *exec, char **argv, char **envp);
-
 /**
  * @brief Initializes pipes and IPC
  *
