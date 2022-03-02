@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/23 20:07:12 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/01 22:34:31 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static void	set_err_and_prt(char *s)
 {
-	exit_status_child(127, false);
+	exit_status_child(127, false, false);
 	printf("Error: %s\n", s);
 }
 

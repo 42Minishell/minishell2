@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 18:09:00 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/22 20:47:20 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 15:34:38 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ t_pid_list	*g_pid;
 
 // if get is true it gets the variable.
 // if false it sets the variable.
-pid_t	exit_status_child(pid_t new_status, _Bool get)
+pid_t	exit_status_child(pid_t new_status, _Bool get, _Bool non_stat)
 {
 	static int	status;
 
+	if (non_stat == true)
+	{
+		status = (int)new_status;
+		return (__INT_MAX__);
+	}
 	if (get == true)
 		return (status);
 	status = new_status;
@@ -36,5 +41,5 @@ void	wait_children(void)
 
 	while (waitpid(-1, &status, 0) >= 0)
 		continue ;
-	exit_status_child(status, false);
+	exit_status_child(status, false, false);
 }

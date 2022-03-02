@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc_reader.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 22:11:27 by tjans             #+#    #+#             */
-/*   Updated: 2022/02/23 22:11:28 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc_reader.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/23 22:11:27 by tjans         #+#    #+#                 */
+/*   Updated: 2022/03/01 22:35:01 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int	heredoc_reader(t_heredoc_list *heredoc)
 		free_pid_list();
 	}
 	setup_int_signals();
-	return (exit_status_child(0, true));
+	return (exit_status_child(0, true, false));
 }

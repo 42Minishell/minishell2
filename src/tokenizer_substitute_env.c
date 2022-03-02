@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer_substitute_env.c                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/16 16:34:57 by tjans             #+#    #+#             */
-/*   Updated: 2022/02/16 16:35:00 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer_substitute_env.c                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/02/16 16:34:57 by tjans         #+#    #+#                 */
+/*   Updated: 2022/03/01 22:34:13 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	insert_exit_status_into_string(char **in, char **s, size_t *posbuf)
 	char	*ret;
 	size_t	vallen;
 
-	ret = ft_itoa(exit_status_child(0, true));
+	ret = ft_itoa(exit_status_child(0, true, false));
 	vallen = ft_strlen(ret);
 	while (posbuf[BUF] - posbuf[POS] < vallen)
 		reallocate_string(s, &posbuf[BUF]);

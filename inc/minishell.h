@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/23 20:05:11 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/01 22:33:42 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void					*ft_malloc(size_t size);
 // functions to monitor the child exit status,
 // manage zombies and set the exit status.
 
-pid_t					exit_status_child(pid_t new_status, _Bool get);
+pid_t					exit_status_child(pid_t new_status, _Bool get, _Bool non_stat);
 void					wait_children(void);
 
 void					ft_error(char *s, size_t len);

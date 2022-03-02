@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tjans <tnjans@outlook.de>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/03 14:36:01 by zilisabethp   #+  #+#    #+#             */
-/*   Updated: 2022/02/16 11:32:57 by tjans            ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   tokenizer.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tjans <tnjans@outlook.de>                    +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/03/03 14:36:01 by zilisabethp   #+#    #+#                 */
+/*   Updated: 2022/03/01 22:38:48 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_token	*tokenizer(char *in, t_state *state)
 	if (get_tokens_from_str(in, &head, state))
 	{
 		printf("Syntax error.\n");
+		exit_status_child((int)1, false, true);
 		free_token_list(head);
 		head = NULL;
 	}
