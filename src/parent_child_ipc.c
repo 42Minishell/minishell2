@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/22 18:09:00 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/03/02 20:04:44 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 21:07:57 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ pid_t	exit_status_child(pid_t new_status, _Bool get, _Bool non_stat)
 	return (__INT_MAX__);
 }
 
-// Waits for all children and reaps them if neccessary.
+/// Waits for all children and reaps them if neccessary.
 void	wait_children(void)
 {
 	int				status;

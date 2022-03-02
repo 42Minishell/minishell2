@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 22:11:27 by tjans         #+#    #+#                 */
-/*   Updated: 2022/03/02 21:00:09 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 22:02:00 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	read_loop(int fd, char *delim)
 		free(line);
 		line = readline("heredoc> ");
 	}
-	exit(1);
+	exit(0);
 }
 
 int	heredoc_reader(t_heredoc_list *heredoc)

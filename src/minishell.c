@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:51 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/03/02 19:54:33 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 21:46:25 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static void	set_err_and_prt(char *s)
 {
-	exit_status_child(127, false, false);
+	exit_status_child(1, false, true);
 	printf("Error: %s\n", s);
 }
 
@@ -60,7 +60,7 @@ static void	process_input(t_state *state, char *input)
 		free_pid_list();
 	}
 	else
-		set_err_and_prt("Heredoc aborted.\n");
+		return ((void)(exit_status_child(1, false, true), printf("\n")));
 	free_token_list(tokens);
 	setup_int_signals();
 }
