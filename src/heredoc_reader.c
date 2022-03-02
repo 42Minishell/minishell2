@@ -6,7 +6,7 @@
 /*   By: tjans <tnjans@outlook.de>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 22:11:27 by tjans         #+#    #+#                 */
-/*   Updated: 2022/03/01 22:35:01 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 21:00:09 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include "heredoc.h"
 #include "tokenizer.h"
+#include <limits.h>
 
 static void	return_error(int signal)
 {
@@ -25,17 +26,17 @@ static void	return_error(int signal)
 
 static int	open_heredoc_fd(t_heredoc_list *heredoc)
 {
-	char	path[255];
+	char	path[PATH_MAX];
 
 	if (access("/tmp", W_OK) == 0)
-		ft_strlcpy(path, "/tmp", 255);
+		ft_strlcpy(path, "/tmp", PATH_MAX);
 	else
-		getcwd(path, 255);
-	ft_strlcat(path, "/", 255);
-	ft_strlcat(path, heredoc->tmp_fn, 255);
+		getcwd(path, PATH_MAX);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, heredoc->tmp_fn, PATH_MAX);
 	if (access(path, F_OK) == 0)
 		unlink(path);
-	ft_strlcpy(heredoc->fullpath, path, 255);
+	ft_strlcpy(heredoc->fullpath, path, PATH_MAX);
 	return (open(path, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG));
 }
 

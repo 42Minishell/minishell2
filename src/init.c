@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:49 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/23 20:39:10 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 21:04:02 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ void	env_populate(t_env *env, char *shell, char **envp)
 
 void	env_init_pwd(t_env *env)
 {
-	char	pwd[255];
+	char	*pwd;
 
-	getcwd(pwd, 255);
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		exit(1);
 	bucket_add(env->env, "PWD", pwd);
 	env_update_envp(env);
+	free(pwd);
 }
 
 void	state_init(t_state *state, char **argv, char **envp)
