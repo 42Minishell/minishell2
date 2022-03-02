@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:27:47 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/03/01 22:33:42 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 20:04:11 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void					*ft_malloc(size_t size);
 // functions to monitor the child exit status,
 // manage zombies and set the exit status.
 
-pid_t					exit_status_child(pid_t new_status, _Bool get, _Bool non_stat);
+pid_t					exit_status_child(pid_t new_status, _Bool get, \
+						_Bool non_stat);
 void					wait_children(void);
 
 void					ft_error(char *s, size_t len);
@@ -148,4 +149,11 @@ pid_t					fork_wrapper(void);
 
 /// Frees the g_pid list, and sets it to NULL
 void					free_pid_list(void);
+
+/// util function for exec, executes the child.
+void					exec_child(t_token *cur_token, \
+						t_state *state, t_token *pipe_);
+
+/// sets up the io handling for the child.
+void					io_setup_child(t_token *cur_token, t_token *next_token);
 #endif

@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:56 by zgargasc      #+#    #+#                 */
-/*   Updated: 2021/12/18 17:15:12 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 19:49:17 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int	pipes_init(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == redirect_to_pipe)
-		{
-			if (pipe(token->pipe_fd))
-				return (1);
-		}
 		if (token->result_type == BUILTIN)
 		{
 			if (pipe(token->ipc_fd))

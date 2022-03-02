@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:12:26 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/24 17:15:30 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/02 20:00:35 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,6 @@
 #include "minishell.h"
 #include "io.h"
 #include "ipc.h"
-
-static int	token_len(t_token *head)
-{
-	int	len;
-
-	len = 1;
-	head = head->next;
-	while (head && head->type == non_special && head->token)
-	{
-		if (!*head->token)
-		{
-			head = head->next;
-			continue ;
-		}
-		head = head->next;
-		len++;
-	}
-	return (len);
-}
-
-static char	**populate_argv(t_token *head)
-{
-	char	**argv;
-	int		len;
-	int		i;
-
-	len = token_len(head);
-	argv = ft_calloc(len + 1, sizeof(char *));
-	if (!argv)
-		ft_error("calloc went wrong", 18);
-	i = 0;
-	while (i < len)
-	{
-		if (head && !*head->token)
-		{
-			head = head->next;
-			continue ;
-		}
-		argv[i] = head->token;
-		head = head->next;
-		i++;
-	}
-	return (argv);
-}
 
 static t_token	*get_next_pipe_token(t_token *head)
 {
@@ -71,7 +27,7 @@ static t_token	*get_next_pipe_token(t_token *head)
 	return (NULL);
 }
 
-void	io_setup_child(t_token *cur_token, t_token *pipe)
+void	io_setup_child(t_token *cur_token, t_token *next_token)
 {
 	if (!io_setup(cur_token))
 	{
@@ -80,13 +36,6 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 			send_ipc_int(cur_token->ipc_fd[1], END_IPC, 0);
 		exit(1);
 	}
-	if (pipe)
-	{
-		close(pipe->pipe_fd[0]);
-		if (dup2(pipe->pipe_fd[1], 1) == -1)
-			ft_error("exec error", 11);
-		close(pipe->pipe_fd[1]);
-	}
 	if (cur_token->type == redirect_to_pipe)
 	{
 		close(cur_token->pipe_fd[1]);
@@ -94,32 +43,32 @@ void	io_setup_child(t_token *cur_token, t_token *pipe)
 			ft_error("exec error", 11);
 		close(cur_token->pipe_fd[0]);
 	}
+	if (next_token)
+	{
+		close(next_token->pipe_fd[0]);
+		if (dup2(next_token->pipe_fd[1], 1) == -1)
+			ft_error("exec error", 11);
+		close(next_token->pipe_fd[1]);
+	}
 }
 
 void	exec(t_state *state, t_token *cur_token)
 {
-	t_token			*pipe;
-	char			**argv;
+	t_token			*next_token;
 
-	pipe = get_next_pipe_token(cur_token->next);
+	next_token = get_next_pipe_token(cur_token->next);
+	if (next_token && pipe(next_token->pipe_fd))
+		ft_error("pipe baaaad\n", 13);
 	cur_token->pid = fork_wrapper();
 	if (cur_token->pid == -1)
 		ft_error("fork went wrong", 16);
 	if (!cur_token->pid)
-	{
-		io_setup_child(cur_token, pipe);
-		argv = populate_argv(cur_token);
-		if (cur_token->result_type == BUILTIN)
-			exec_builtin(state, cur_token, argv);
-		else if (cur_token->result_type != NOTFOUND)
-			execve(cur_token->result.path, argv, state->env->envp);
-		exit(1);
-	}
+		exec_child(cur_token, state, next_token);
 	else if (cur_token->type == redirect_to_pipe)
 	{
 		close(cur_token->pipe_fd[0]);
 		close(cur_token->pipe_fd[1]);
 	}
-	if (pipe)
-		exec(state, pipe);
+	if (next_token)
+		exec(state, next_token);
 }
