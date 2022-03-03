@@ -42,7 +42,6 @@ void	free_pid_list(void)
 		free(temp);
 	}
 	g_pid = NULL;
-	return ;
 }
 
 pid_t	fork_wrapper(void)

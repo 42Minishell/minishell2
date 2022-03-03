@@ -41,6 +41,8 @@ void	wait_children(void)
 	t_pid_list		*current;
 
 	current = g_pid;
+	if (!current)
+		return ;
 	while (current->next)
 		current = current->next;
 	while (waitpid(-1, &status, 0) >= 0)

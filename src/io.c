@@ -75,15 +75,15 @@ int	io_setup(t_token *head)
 	while (iterator->prev && iterator->prev->type != redirect_to_pipe && \
 		iterator->prev->type != executable)
 	{
-		res = setup_redir(iterator);
+		res = setup_redir(iterator->prev);
 		iterator = iterator->prev;
 	}
 	iterator = head->next;
 	while (iterator && iterator->type != executable && iterator->type != \
 		redirect_to_pipe)
 	{
-		res = setup_redir(head);
-		head = head->next;
+		res = setup_redir(iterator);
+		iterator = iterator->next;
 	}
 	return (res);
 }

@@ -66,6 +66,7 @@ static int	get_tokens_from_str(char *in, t_token **head, t_state *state)
 t_token	*tokenizer(char *in, t_state *state)
 {
 	t_token	*head;
+	t_token *iterator;
 
 	(void)state;
 	head = NULL;
@@ -77,7 +78,10 @@ t_token	*tokenizer(char *in, t_state *state)
 		head = NULL;
 	}
 	free(in);
-	if (head)
-		head->type = executable;
+	iterator = head;
+	while (iterator && iterator->type != non_special)
+		iterator = iterator->next;
+	if (iterator)
+		iterator->type = executable;
 	return (head);
 }

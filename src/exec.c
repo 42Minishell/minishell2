@@ -56,6 +56,11 @@ void	exec(t_state *state, t_token *cur_token)
 {
 	t_token			*next_token;
 
+	while (cur_token &&
+			cur_token->type != executable && cur_token->type != redirect_to_pipe)
+		cur_token = cur_token->next;
+	if (!cur_token)
+		return ;
 	next_token = get_next_pipe_token(cur_token->next);
 	if (next_token && pipe(next_token->pipe_fd))
 		ft_error("pipe baaaad\n", 13);
