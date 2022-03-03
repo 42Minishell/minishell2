@@ -45,6 +45,20 @@ typedef enum e_token_type
 	read_until_delimiter
 }			t_token_type;
 
+typedef enum e_redirection_type
+{
+	out_overwrite,
+	out_append,
+	in_file,
+	in_file_and_unlink
+}			t_redirection_type;
+
+typedef struct s_redirection
+{
+	t_redirection_type	*redirection;
+	char				*filename;
+}	t_redirection;
+
 /**
  * @brief Type for the builtin function
  */
