@@ -50,21 +50,39 @@ static int	setup_redir_from_file(t_token *redir)
 	return (1);
 }
 
-int	io_setup(t_token *head)
+static int	setup_redir(t_token *head)
 {
-	int				res;
+	int	res;
 
 	res = 1;
-	head = head->next;
-	while (head && head->type != executable && head->type != redirect_to_pipe)
+	if (head->type == redirect_to_overwrite)
+		res = setup_redir_to_overwrite(head);
+	if (head->type == redirect_to_append)
+		res = setup_redir_to_append(head);
+	if (head->type == redirect_from_file || \
+		head->type == redirect_from_file_and_unlink)
+		res = setup_redir_from_file(head);
+	return (res);
+}
+
+int	io_setup(t_token *head)
+{
+	int		res;
+	t_token	*iterator;
+
+	res = 1;
+	iterator = head;
+	while (iterator->prev && iterator->prev->type != redirect_to_pipe && \
+		iterator->prev->type != executable)
 	{
-		if (head->type == redirect_to_overwrite)
-			res = setup_redir_to_overwrite(head);
-		if (head->type == redirect_to_append)
-			res = setup_redir_to_append(head);
-		if (head->type == redirect_from_file || \
-			head->type == redirect_from_file_and_unlink)
-			res = setup_redir_from_file(head);
+		res = setup_redir(iterator);
+		iterator = iterator->prev;
+	}
+	iterator = head->next;
+	while (iterator && iterator->type != executable && iterator->type != \
+		redirect_to_pipe)
+	{
+		res = setup_redir(head);
 		head = head->next;
 	}
 	return (res);

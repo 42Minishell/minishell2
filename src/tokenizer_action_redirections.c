@@ -19,8 +19,6 @@ int	lexer_action_redirection_right(t_token **dst, char **in, \
 	t_token	*token;
 	int		is_double;
 
-	if (!*dst)
-		return (1);
 	token = create_token(dst);
 	if (!token)
 		return (1);
@@ -44,8 +42,6 @@ int	lexer_action_redirection_left(t_token **dst, char **in, \
 	t_token	*token;
 	int		is_double;
 
-	if (!*dst)
-		return (1);
 	token = create_token(dst);
 	if (!token)
 		return (1);
