@@ -12,6 +12,7 @@
 
 // Created by Tom Jans on 28-03-21.
 
+#include <unistd.h>
 #include "builtins.h"
 #include "ipc.h"
 
@@ -23,8 +24,15 @@ int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 	(void)argv;
 	send_ipc_int(ipc[1], END_IPC, 0);
 	pwd = bucket_get_value(state->env->env, "PWD");
-	if (!pwd)
-		exit(1);
+	if (!pwd || access(pwd, X_OK))
+	{
+		pwd = getcwd(NULL, 0);
+		if (!pwd)
+		{
+			printf("%s: Cannot get current working directory\n", *argv);
+			exit(1);
+		}
+	}
 	printf("%s\n", pwd);
 	exit(0);
 }
