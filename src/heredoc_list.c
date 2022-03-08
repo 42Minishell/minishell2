@@ -62,7 +62,17 @@ t_heredoc_list	*create_list_from_tokens(t_token *head)
 		if (head->type == executable || head->type == redirect_to_pipe)
 			insert = head;
 		else if (head->type == read_until_delimiter)
+		{
+			if (!insert)
+				insert = head;
+			while (insert && insert->type != executable && \
+				insert->type != redirect_to_pipe)
+				insert = insert->next;
+			if (!insert)
+				return (list);
 			append_to_list(&list, insert, head);
+			insert = NULL;
+		}
 		head = head->next;
 	}
 	return (list);

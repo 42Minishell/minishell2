@@ -66,7 +66,7 @@ static int	get_tokens_from_str(char *in, t_token **head, t_state *state)
 t_token	*tokenizer(char *in, t_state *state)
 {
 	t_token	*head;
-	t_token *iterator;
+	t_token	*iterator;
 
 	(void)state;
 	head = NULL;

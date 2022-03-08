@@ -56,8 +56,8 @@ void	exec(t_state *state, t_token *cur_token)
 {
 	t_token			*next_token;
 
-	while (cur_token &&
-			cur_token->type != executable && cur_token->type != redirect_to_pipe)
+	while (cur_token && cur_token->type != executable && \
+		cur_token->type != redirect_to_pipe)
 		cur_token = cur_token->next;
 	if (!cur_token)
 		return ;

@@ -37,6 +37,10 @@ list(
   src/signals_interactive.c
   src/signals_noninteractive.c
   src/pipe.c
+        src/exec_utils.c
+        src/fork_wrapper_utils.c
+        src/parent_child_ipc.c
+        src/utils.c
 src/ipc.c
 inc/ipc.h)
 
