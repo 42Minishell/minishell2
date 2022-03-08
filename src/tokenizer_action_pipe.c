@@ -12,12 +12,27 @@
 
 #include "tokenizer.h"
 
+static int	prev_exec(t_token **head)
+{
+	t_token	*iterator;
+
+	iterator = *head;
+	while (iterator)
+	{
+		if (iterator->type == non_special || iterator->type == redirect_to_pipe
+			|| iterator->type == executable)
+			return (1);
+		iterator = iterator->prev;
+	}
+	return (0);
+}
+
 int	lexer_action_pipe(t_token **dst, char **in, \
 	struct s_state *state)
 {
 	t_token	*token;
 
-	if (!*dst)
+	if (!*dst || !prev_exec(dst))
 		return (1);
 	token = create_token(dst);
 	if (!token)
