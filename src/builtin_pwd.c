@@ -22,16 +22,14 @@ int	builtin_pwd(int argc, char **argv, t_state *state, int ipc[2])
 
 	(void)argc;
 	(void)argv;
+	(void)state;
 	send_ipc_int(ipc[1], END_IPC, 0);
-	pwd = bucket_get_value(state->env->env, "PWD");
-	if (!pwd || access(pwd, X_OK))
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
 	{
-		pwd = getcwd(NULL, 0);
-		if (!pwd)
-		{
-			printf("%s: Cannot get current working directory\n", *argv);
-			exit(1);
-		}
+		printf("%s: error retrieving current directory: %s\n", *argv, \
+			strerror(errno));
+		exit(1);
 	}
 	printf("%s\n", pwd);
 	exit(0);
