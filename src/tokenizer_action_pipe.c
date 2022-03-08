@@ -34,12 +34,12 @@ int	lexer_action_pipe(t_token **dst, char **in, \
 
 	if (!*dst || !prev_exec(dst))
 		return (1);
-	token = create_token(dst);
-	if (!token)
-		return (1);
 	(*in)++;
 	lexer_action_whitespace(NULL, in, state);
 	if (!**in || is_special_character(**in))
+		return (1);
+	token = create_token(dst);
+	if (!token)
 		return (1);
 	token->token = copy_str_until_special_char(in, state);
 	token->type = redirect_to_pipe;

@@ -19,14 +19,14 @@ int	lexer_action_redirection_right(t_token **dst, char **in, \
 	t_token	*token;
 	int		is_double;
 
-	token = create_token(dst);
-	if (!token)
-		return (1);
 	(*in)++;
 	is_double = (**in == '>');
 	(*in) += is_double;
 	lexer_action_whitespace(NULL, in, state);
 	if (!**in || is_special_character(**in))
+		return (1);
+	token = create_token(dst);
+	if (!token)
 		return (1);
 	token->token = copy_str_until_special_char(in, state);
 	if (is_double)
@@ -42,14 +42,14 @@ int	lexer_action_redirection_left(t_token **dst, char **in, \
 	t_token	*token;
 	int		is_double;
 
-	token = create_token(dst);
-	if (!token)
-		return (1);
 	(*in)++;
 	is_double = (**in == '<');
 	(*in) += is_double;
 	lexer_action_whitespace(NULL, in, state);
 	if (!**in || is_special_character(**in))
+		return (1);
+	token = create_token(dst);
+	if (!token)
 		return (1);
 	token->token = copy_str_until_special_char(in, state);
 	if (is_double)
