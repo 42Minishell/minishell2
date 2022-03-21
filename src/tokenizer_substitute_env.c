@@ -46,6 +46,7 @@ static int	insert_exit_status_into_string(char **in, char **s, size_t *posbuf)
 	ft_strlcpy((*s) + posbuf[POS], ret, posbuf[BUF] - posbuf[POS]);
 	posbuf[POS] += vallen;
 	(*in) += 2;
+	free(ret);
 	return (1);
 }
 
