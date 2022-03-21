@@ -18,9 +18,10 @@ static int	token_len(t_token *head)
 
 	len = 1;
 	head = head->next;
-	while (head && head->type == non_special && head->token)
+	while (head && head->type != executable && head->type != redirect_to_pipe
+		&& head->token)
 	{
-		if (!*head->token)
+		if (!*head->token || head->type != non_special)
 		{
 			head = head->next;
 			continue ;
@@ -44,7 +45,7 @@ static char	**populate_argv(t_token *head)
 	i = 0;
 	while (i < len)
 	{
-		if (head && !*head->token)
+		if (head && (!*head->token || head->type != non_special))
 		{
 			head = head->next;
 			continue ;
