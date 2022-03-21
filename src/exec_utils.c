@@ -45,7 +45,7 @@ static char	**populate_argv(t_token *head)
 	i = 0;
 	while (i < len)
 	{
-		if (head && (!*head->token || head->type != non_special))
+		if (head && (!*head->token || (head->type != non_special && i > 0)))
 		{
 			head = head->next;
 			continue ;
