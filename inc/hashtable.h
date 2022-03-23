@@ -36,7 +36,7 @@
  */
 #ifndef HASHTABLE_H
 # define HASHTABLE_H
-# define HASHTABLE_SIZE 64
+# define HASHTABLE_SIZE 149
 # include <stdlib.h>
 # include <string.h>
 
