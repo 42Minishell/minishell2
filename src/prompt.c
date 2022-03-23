@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:58 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/03/23 20:37:53 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/23 20:40:10 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*prompt(t_state *state)
 	char	*input;
 
 	(void)state;
-	input = readline("\033[1;31mMaccie\033[1;33mShell\033[0m > \033[1;32m");
+	input = readline("\033[1;31mMaccie\033[1;33mShell\033[0m > \033[0;32m");
 	if (!input)
 	{
 		printf("\n");
