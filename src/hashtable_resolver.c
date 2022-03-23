@@ -32,7 +32,8 @@ static t_bucket	*bucket_get_overflow(t_bucket *bucket, char *key, int create)
 {
 	while (bucket)
 	{
-		if (ft_strncmp(bucket->key, key, ft_strlen(bucket->key)) == 0)
+		if (bucket->key
+			&& ft_strncmp(bucket->key, key, ft_strlen(bucket->key)) == 0)
 		{
 			if (create)
 				free(key);
@@ -61,7 +62,7 @@ t_bucket	*bucket_get(t_bucket *table, char *key, int create)
 		ft_error("strdup, bucket key error", 25);
 	keyhash = hash(key);
 	bucket = table + keyhash;
-	if (bucket->key)
+	if (bucket->key || bucket->next)
 		return (bucket_get_overflow(bucket, key, create));
 	else if (create)
 	{
