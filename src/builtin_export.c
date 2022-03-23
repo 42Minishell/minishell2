@@ -6,7 +6,7 @@
 /*   By: zgargasc <zgargasc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/18 17:13:36 by zgargasc      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:33:05 by zgargasc      ########   odam.nl         */
+/*   Updated: 2022/03/23 21:41:41 by zgargasc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,27 @@ static void	*print_env(char *key, char *value, void *data)
 
 int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 {
-	int	i;
+	int		i;
+	int		exit_code;
 
 	i = 1;
+	exit_code = 0;
 	if (ft_strncmp("env", *argv, 4) == 0 || argc < 2)
 		bucket_iter(state->env->env, &print_env, NULL);
 	else
 	{
 		while (i < argc)
 		{
-			add_env(argv[i], ipc);
+			if (argv[i] && argv[i][0] && ft_isdigit(argv[i][0]) == true)
+			{
+				printf("export: `%.*s': not a valid identifier\n", (int)ft_strclen(argv[i], '='), argv[i]);
+				exit_code = 1;
+			}
+			else
+				add_env(argv[i], ipc);
 			i++;
 		}
 	}
 	send_ipc_int(ipc[1], END_IPC, 0);
-	exit(0);
+	exit(exit_code);
 }
