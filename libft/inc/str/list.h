@@ -13,6 +13,7 @@
 #ifndef LIST_H
 # define LIST_H
 # include <stddef.h>
+# include "libft.h"
 
 typedef struct s_strlist
 {
@@ -26,9 +27,4 @@ size_t			strlist_len(t_strlist *lst);
 char			*strlist_join(t_strlist *lst);
 void			strlist_free(t_strlist **lst);
 
-/*
-** Malloc with protection.
- */
-
-void			*ft_malloc(size_t size);
 #endif

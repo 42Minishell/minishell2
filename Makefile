@@ -21,7 +21,7 @@ SRCS := builtin_cd.c builtin_echo.c builtin_exit.c builtin_export.c \
 		tokenizer_list.c tokenizer_action_whitespace.c \
 		tokenizer_action_non_special.c ft_error.c tokenizer_utils.c \
 		tokenizer_action_redirections.c tokenizer_action_pipe.c \
-		tokenizer_substitute_env.c utils.c parent_child_ipc.c \
+		tokenizer_substitute_env.c parent_child_ipc.c \
 		fork_wrapper_utils.c heredoc.c heredoc_list.c heredoc_reader.c \
 		exec_utils.c
 HDRS := inc/builtins.h inc/config.h inc/env.h inc/hashtable.h inc/io.h \

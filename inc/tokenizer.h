@@ -153,6 +153,4 @@ int				lexer_action_redirection_left(t_token **dst, char **in, \
 int				lexer_action_pipe(t_token **dst, char **in, \
 	struct s_state *state);
 
-/// Our protected malloc function.
-void			*ft_malloc(size_t size);
 #endif

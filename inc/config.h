@@ -19,6 +19,14 @@
 #  define POPULATE_ENV 1
 # endif
 
+/// Block size for dynamic reallocation of strings
 # define TOK_ALLOC_BLK_SIZE 256
+
+/**
+ * Amount of buckets in the hashtable
+ * Prime number is preferred because it causes less hash collisions with string
+ * hashing algorithms
+ */
+# define HASHTABLE_SIZE 149
 
 #endif

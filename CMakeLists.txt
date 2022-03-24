@@ -40,7 +40,6 @@ list(
         src/exec_utils.c
         src/fork_wrapper_utils.c
         src/parent_child_ipc.c
-        src/utils.c
 src/ipc.c
 inc/ipc.h)
 

@@ -123,9 +123,6 @@ void					setup_nonint_signals(void);
  */
 int						pipes_init(t_token *token);
 
-/// Our protected malloc function.
-void					*ft_malloc(size_t size);
-
 // functions to monitor the child exit status,
 // manage zombies and set the exit status.
 

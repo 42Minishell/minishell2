@@ -95,7 +95,4 @@ void	send_ipc(int fd, t_builtin_message_type type, char *key, char *value);
  */
 void	send_ipc_int(int fd, t_builtin_message_type type, int value);
 
-/// Our protected malloc function.
-void	*ft_malloc(size_t size);
-
 #endif

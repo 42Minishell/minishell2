@@ -16,7 +16,4 @@
 
 int		io_setup(t_token *list);
 
-/// Our protected malloc function.
-void	*ft_malloc(size_t size);
-
 #endif

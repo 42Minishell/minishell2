@@ -36,9 +36,9 @@
  */
 #ifndef HASHTABLE_H
 # define HASHTABLE_H
-# define HASHTABLE_SIZE 149
 # include <stdlib.h>
 # include <string.h>
+# include "config.h"
 
 /**
  * @struct t_bucket
@@ -133,6 +133,4 @@ char		*bucket_get_value(t_bucket *table, char *key);
  */
 void		bucket_iter(t_bucket *table, t_bucket_iterator f, void *data);
 
-/// Our protected malloc function.
-void		*ft_malloc(size_t size);
 #endif

@@ -36,5 +36,5 @@ add_library(
   src/str/listcreate.c
   src/str/listfree.c
   src/str/listjoin.c
-  src/str/listlen.c)
+  src/str/listlen.c src/mem/ft_malloc.c)
 target_include_directories(libft PUBLIC inc/)

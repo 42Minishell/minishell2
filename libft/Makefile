@@ -19,7 +19,7 @@ SRCS	:= $(addprefix ft_, \
 			str_case.c str_is.c strchr.c strdup.c \
 			strjoin.c strlcat.c strlcpy.c strlen.c \
 			strmapi.c strncmp.c strnstr.c strrchr.c \
-			strtrim.c substr.c \
+			strtrim.c substr.c malloc.c \
 			)
 SRCS	:= $(SRCS) listappend.c listcreate.c \
 			listfree.c listjoin.c listlen.c \

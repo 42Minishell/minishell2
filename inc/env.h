@@ -56,9 +56,6 @@ void	env_populate(t_env *env, char *shell, char **envp);
 /// Get current directory and save it in the PWD environment variable
 void	env_init_pwd(t_env *env);
 
-/// Our protected malloc function.
-void	*ft_malloc(size_t size);
-
 /**
  * Check if binary is in PATH and returns the location if it is.
  * @param[in] env env object

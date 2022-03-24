@@ -78,9 +78,5 @@ void			ft_putnbr_fd(int n, int fd);
 
 int				ternary_i(int condition, int ret_true, int ret_false);
 
-/*
-** Malloc with protection.
- */
-
 void			*ft_malloc(size_t size);
 #endif
