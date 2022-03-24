@@ -52,12 +52,12 @@ static void	read_loop(int fd, char *delim)
 	nl = '\n';
 	while (line)
 	{
-		if (ft_strncmp(line, delim, ft_strlen(line)) == 0)
+		if (ft_strncmp(line, delim, ft_strlen(delim) + 1) == 0)
 		{
 			free(line);
 			exit(0);
 		}
-		write(fd, line, ft_strlen(line) + 1);
+		write(fd, line, ft_strlen(line));
 		write(fd, &nl, 1);
 		free(line);
 		line = readline("heredoc> ");
