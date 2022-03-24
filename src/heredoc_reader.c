@@ -53,7 +53,7 @@ static void	read_loop(int fd, char *delim)
 	nl = '\n';
 	while (line)
 	{
-		ret = ft_strnstr(line, delim, ft_strlen(delim));
+		ret = ft_strnstr(line, delim, ft_strlen(line));
 		if (ret)
 		{
 			free(line);
