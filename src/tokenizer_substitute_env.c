@@ -72,7 +72,7 @@ int	insert_env_into_string(char **in, char **s, size_t *posbuf, \
 	if (keylen)
 	{
 		(*in) += keylen + 1;
-		val = bucket_get_value(state->env->env, key);
+		val = bucket_get_value(state->env->env_hashtable, key);
 		if (val && *val)
 		{
 			vallen = ft_strlen(val);

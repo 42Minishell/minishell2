@@ -17,9 +17,9 @@ static void	mutate_state(t_state *state, t_builtin_message *ipc_msg, char *key,
 						char *value)
 {
 	if (ipc_msg->type == ENV_ADD)
-		bucket_add(state->env->env, key, value);
+		bucket_add(state->env->env_hashtable, key, value);
 	if (ipc_msg->type == ENV_DEL)
-		bucket_del(state->env->env, key);
+		bucket_del(state->env->env_hashtable, key);
 	if (ipc_msg->type == CHDIR)
 		chdir(key);
 }

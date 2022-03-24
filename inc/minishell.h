@@ -41,7 +41,7 @@
  * @brief Global state of the shell
  *
  * This keeps track of stuff like environment variables
- * @var t_state::env
+ * @var t_state::env_hashtable
  * Environment variables are stored here
  * @var t_state::sin
  * This is a GNL-Like "stream" for the standard input

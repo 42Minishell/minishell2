@@ -50,7 +50,7 @@ char	*env_path_lookup(t_env *env, char *exec)
 	char	**dirs;
 	char	*ret;
 
-	path = bucket_get_value(env->env, "PATH");
+	path = bucket_get_value(env->env_hashtable, "PATH");
 	if (!path)
 	{
 		errno = ENOENT;

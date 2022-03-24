@@ -54,7 +54,7 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 	i = 1;
 	exit_code = 0;
 	if (ft_strncmp("env", *argv, 4) == 0 || argc < 2)
-		bucket_iter(state->env->env, &print_env, NULL);
+		bucket_iter(state->env->env_hashtable, &print_env, NULL);
 	else
 	{
 		while (i < argc)

@@ -28,7 +28,7 @@ int	builtin_cd(int argc, char **argv, t_state *state, int ipc[2])
 
 	if (argc < 2)
 	{
-		path = bucket_get_value(state->env->env, "HOME");
+		path = bucket_get_value(state->env->env_hashtable, "HOME");
 		if (!path)
 			exit(prterror("HOME not set", *argv, ipc));
 	}

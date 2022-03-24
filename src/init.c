@@ -26,7 +26,7 @@ static void	add_env(char *argv, t_env *env)
 	{
 		key = split[0];
 		value = split[1];
-		bucket_add(env->env, key, value);
+		bucket_add(env->env_hashtable, key, value);
 	}
 	sfree = split;
 	while (*split)
@@ -44,7 +44,7 @@ void	env_populate(t_env *env, char *shell, char **envp)
 		add_env(*envp, env);
 		envp++;
 	}
-	bucket_add(env->env, "SHELL", shell);
+	bucket_add(env->env_hashtable, "SHELL", shell);
 	env_update_envp(env);
 }
 
@@ -55,7 +55,7 @@ void	env_init_pwd(t_env *env)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		exit(1);
-	bucket_add(env->env, "PWD", pwd);
+	bucket_add(env->env_hashtable, "PWD", pwd);
 	env_update_envp(env);
 	free(pwd);
 }
@@ -67,13 +67,13 @@ void	state_init(t_state *state, char **argv, char **envp)
 	state->env = env_init();
 	env_populate(state->env, *argv, envp);
 	env_init_pwd(state->env);
-	shlvl = bucket_get_value(state->env->env, "SHLVL");
+	shlvl = bucket_get_value(state->env->env_hashtable, "SHLVL");
 	if (shlvl == NULL)
-		bucket_add(state->env->env, "SHLVL", "1");
+		bucket_add(state->env->env_hashtable, "SHLVL", "1");
 	else
 	{
 		shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-		bucket_add(state->env->env, "SHLVL", shlvl);
+		bucket_add(state->env->env_hashtable, "SHLVL", shlvl);
 		free(shlvl);
 	}
 	state->ret = 0;

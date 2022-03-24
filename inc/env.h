@@ -24,14 +24,14 @@
  * @struct t_env
  * Struct that keeps track of environment variables in a hash table
  *
- * @var t_env::env
+ * @var t_env::env_hashtable
  * Hash table containing the environment variables
  * @var t_env::envp
  * Array of C strings containing key=value. Updated with env_update_envp()
  */
 typedef struct s_env
 {
-	t_bucket	*env;
+	t_bucket	*env_hashtable;
 	char		**envp;
 }	t_env;
 

@@ -49,7 +49,7 @@ t_env	*env_init(void)
 	t_env	*env;
 
 	env = ft_calloc(1, sizeof(t_env));
-	env->env = bucket_new_table();
+	env->env_hashtable = bucket_new_table();
 	env_update_envp(env);
 	return (env);
 }
@@ -57,7 +57,7 @@ t_env	*env_init(void)
 void	env_free(t_env *env)
 {
 	env_free_envp(env);
-	bucket_free_table(env->env);
+	bucket_free_table(env->env_hashtable);
 	free(env);
 }
 
@@ -68,6 +68,6 @@ void	env_update_envp(t_env *env)
 	if (env->envp)
 		env_free_envp(env);
 	envp = ft_calloc(HASHTABLE_SIZE, sizeof(char *) + 1);
-	bucket_iter(env->env, &env_iterator_envp, envp);
+	bucket_iter(env->env_hashtable, &env_iterator_envp, envp);
 	env->envp = envp;
 }

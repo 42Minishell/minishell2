@@ -130,11 +130,12 @@ typedef enum e_literal_mode
  * It splits the input up into separate arguments, and parses special directives
  * like environment variables.
  * @param in String to parse, will be freed
- * @param env Environment variables, bucket from t_env::env
+ * @param env Environment variables, bucket from t_env::env_hashtable
  * @return Returns linked lists of token objects
  */
 t_token			*tokenizer(char *in, struct s_state *state);
 int				is_special_character(char c);
+int				is_special_char_exclredir(char c);
 t_token			*create_token(t_token **dst);
 t_token			*free_token_list(t_token *head);
 char			*copy_str_until_special_char(char **in, struct s_state *state);
