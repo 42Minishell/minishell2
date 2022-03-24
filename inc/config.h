@@ -15,6 +15,8 @@
 #ifndef CONFIG_H
 # define CONFIG_H
 
+# define USE_COLOR 1
+
 # ifndef POPULATE_ENV
 #  define POPULATE_ENV 1
 # endif
@@ -28,5 +30,11 @@
  * hashing algorithms
  */
 # define HASHTABLE_SIZE 149
+
+# if USE_COLOR
+#  define PROMPT "\033[1;31mMaccie\033[1;33mShell\033[0m > \033[0;32m"
+# else
+#  define PROMPT "MaccieShell > "
+# endif
 
 #endif

@@ -12,15 +12,16 @@
 
 // Created by Tom Jans on 01-03-21.
 
-#include "minishell.h"
 #include <stdio.h>
+#include "minishell.h"
+#include "config.h"
 
 char	*prompt(t_state *state)
 {
 	char	*input;
 
 	(void)state;
-	input = readline("\033[1;31mMaccie\033[1;33mShell\033[0m > \033[0;32m");
+	input = readline(PROMPT);
 	if (!input)
 	{
 		printf("\n");
