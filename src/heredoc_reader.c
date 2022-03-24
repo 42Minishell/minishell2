@@ -57,7 +57,7 @@ static void	read_loop(int fd, char *delim)
 			free(line);
 			exit(0);
 		}
-		write(fd, line, ft_strlen(line));
+		write(fd, line, ft_strlen(line) + 1);
 		write(fd, &nl, 1);
 		free(line);
 		line = readline("heredoc> ");
