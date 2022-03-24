@@ -61,7 +61,8 @@ int	builtin_export(int argc, char **argv, t_state *state, int ipc[2])
 		{
 			if (argv[i] && argv[i][0] && ft_isdigit(argv[i][0]) == true)
 			{
-				printf("export: `%.*s': not a valid identifier\n", (int)ft_strclen(argv[i], '='), argv[i]);
+				printf("export: `%.*s': not a valid identifier\n",
+					(int)ft_strclen(argv[i], '='), argv[i]);
 				exit_code = 1;
 			}
 			else
