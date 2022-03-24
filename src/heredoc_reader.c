@@ -54,7 +54,7 @@ static void	read_loop(int fd, char *delim)
 	while (line)
 	{
 		ret = ft_strnstr(line, delim, ft_strlen(line));
-		if (ret)
+		if (ret && (ret == line && ft_strlen(delim) == ft_strlen(line)))
 		{
 			free(line);
 			exit(0);
