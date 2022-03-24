@@ -43,7 +43,6 @@ static int	open_heredoc_fd(t_heredoc_list *heredoc)
 static void	read_loop(int fd, char *delim)
 {
 	char	*line;
-	char	*ret;
 	char	nl;
 
 	signal(SIGINT, &return_error);
@@ -53,8 +52,7 @@ static void	read_loop(int fd, char *delim)
 	nl = '\n';
 	while (line)
 	{
-		ret = ft_strnstr(line, delim, ft_strlen(line));
-		if (ret && (ret == line && ft_strlen(delim) == ft_strlen(line)))
+		if (ft_strncmp(line, delim, ft_strlen(line)) == 0)
 		{
 			free(line);
 			exit(0);
